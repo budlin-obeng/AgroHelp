@@ -1,0 +1,84 @@
+{
+  "dataset": "NASA POWER Daily Agroclimatology",
+  "file_exists": true,
+  "file_size_bytes": 140664,
+  "metadata_exists": true,
+  "validation_timestamp": "2026-11-14T15:10:38.223687",
+  "checks": {},
+  "total_records": 3653,
+  "date_check": {
+    "start_date": "20160101",
+    "end_date": "20251231",
+    "invalid_date_formats": 0,
+    "expected_date_count": 3653,
+    "actual_date_count": 3653,
+    "date_gaps_count": 0
+  },
+  "parameter_checks": {
+    "PRECTOTCORR": {
+      "unit": "mm/day",
+      "fill_value_count (-999.0)": 0,
+      "null_count": 0,
+      "valid_observations": 3653,
+      "completeness_pct": 100.0,
+      "min_observed": 0.0,
+      "max_observed": 135.07,
+      "mean_observed": 3.86,
+      "out_of_physical_bounds": 0,
+      "physical_limits": "0.0 to 500.0 mm/day",
+      "thermal_inconsistencies": null
+    },
+    "T2M": {
+      "unit": "\u00b0C",
+      "fill_value_count (-999.0)": 0,
+      "null_count": 0,
+      "valid_observations": 3653,
+      "completeness_pct": 100.0,
+      "min_observed": 19.76,
+      "max_observed": 33.49,
+      "mean_observed": 26.83,
+      "out_of_physical_bounds": 0,
+      "physical_limits": "5.0 to 50.0 \u00b0C",
+      "thermal_inconsistencies": null
+    },
+    "T2M_MAX": {
+      "unit": "\u00b0C",
+      "fill_value_count (-999.0)": 0,
+      "null_count": 0,
+      "valid_observations": 3653,
+      "completeness_pct": 100.0,
+      "min_observed": 25.42,
+      "max_observed": 41.24,
+      "mean_observed": 32.04,
+      "out_of_physical_bounds": 0,
+      "physical_limits": "5.0 to 55.0 \u00b0C",
+      "thermal_inconsistencies": 0
+    },
+    "T2M_MIN": {
+      "unit": "\u00b0C",
+      "fill_value_count (-999.0)": 0,
+      "null_count": 0,
+      "valid_observations": 3653,
+      "completeness_pct": 100.0,
+      "min_observed": 13.23,
+      "max_observed": 27.23,
+      "mean_observed": 22.47,
+      "out_of_physical_bounds": 0,
+      "physical_limits": "5.0 to 45.0 \u00b0C",
+      "thermal_inconsistencies": null
+    },
+    "RH2M": {
+      "unit": "%",
+      "fill_value_count (-999.0)": 0,
+      "null_count": 0,
+      "valid_observations": 3653,
+      "completeness_pct": 100.0,
+      "min_observed": 21.77,
+      "max_observed": 93.32,
+      "mean_observed": 74.83,
+      "out_of_physical_bounds": 0,
+      "physical_limits": "0.0 to 100.0 %",
+      "thermal_inconsistencies": null
+    }
+  }
+}

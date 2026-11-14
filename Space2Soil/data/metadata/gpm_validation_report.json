@@ -1,0 +1,36 @@
+{
+  "dataset": "NASA GPM IMERG Daily Precipitation",
+  "file_exists": true,
+  "metadata_exists": true,
+  "validation_timestamp": "2026-11-14T15:55:24.299911",
+  "checks": {},
+  "total_records": 3653,
+  "date_check": {
+    "start_date": "20160101",
+    "end_date": "20251231",
+    "expected_date_count": 3653,
+    "actual_date_count": 3653,
+    "date_gaps": 0
+  },
+  "precipitation_checks": {
+    "unit": "mm/day",
+    "completeness_pct": 100.0,
+    "null_count": 0,
+    "negative_values_count": 0,
+    "min_daily_mm": 0.0,
+    "max_daily_mm": 135.07,
+    "mean_daily_mm": 3.86,
+    "total_10yr_rainfall_mm": 14088.6,
+    "annual_average_rainfall_mm": 1408.86
+  },
+  "rainfall_variability_and_extremes": {
+    "total_wet_days_ge_1mm": 2159,
+    "wet_days_frequency_pct": 59.1,
+    "heavy_rain_days_ge_25mm": 64,
+    "extreme_torrential_days_ge_50mm": 17,
+    "coefficient_of_variation_daily": 1.91,
+    "90th_percentile_wet_day_mm": 12.52,
+    "95th_percentile_wet_day_mm": 18.19,
+    "99th_percentile_wet_day_mm": 41.91
+  }
+}

@@ -1,0 +1,4 @@
+2026-11-14 15:11:47,962 [INFO] Loading raw NASA POWER dataset from C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\nasa_power\nasa_power_ejura_daily_raw.csv
+2026-11-14 15:11:48,370 [INFO] Saved clean daily dataset to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\climate\nasa_power_ejura_daily_clean.csv (3653 rows)
+2026-11-14 15:11:48,798 [INFO] Saved clean monthly aggregation to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\climate\nasa_power_ejura_monthly_clean.csv (120 months)
+2026-11-14 15:11:48,804 [INFO] Preprocessing metadata saved to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\nasa_power_preprocessing_metadata.json

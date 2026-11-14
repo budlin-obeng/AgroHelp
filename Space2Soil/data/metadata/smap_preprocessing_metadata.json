@@ -1,0 +1,20 @@
+{
+  "dataset": "NASA Preprocessed Soil Moisture Climatology & Anomalies",
+  "location": "Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)",
+  "spatial_resolution": "9 km (SMAP L4 grid / GMAO MERRA-2 assimilation)",
+  "depths_represented": {
+    "surface": "0-5 cm soil layer (seed germination / surface crusting)",
+    "rootzone": "0-100 cm profile depth (active crop root water uptake)"
+  },
+  "soil_conversion": "Volumetric moisture calculated using characteristic porosity theta_sat = 0.43 m^3/m^3 for Ejura Ochrosols",
+  "anomaly_baseline": "10-Year Day-of-Year (DOY) Climatological Mean & Standard Deviation (2016-2025)",
+  "total_days_processed": 3653,
+  "total_months_analyzed": 120,
+  "total_drought_days_identified": 557,
+  "output_files": [
+    "data/processed/soil_moisture/smap_ejura_daily_clean.csv",
+    "data/processed/soil_moisture/smap_ejura_monthly_clean.csv",
+    "data/processed/soil_moisture/smap_ejura_drought_events.csv"
+  ],
+  "preprocessing_timestamp": "2026-11-14T15:58:32.046727Z"
+}

@@ -1,0 +1,8 @@
+2026-11-14 15:53:36,632 [INFO] Starting NASA GPM IMERG acquisition...
+2026-11-14 15:53:36,633 [INFO] NASA Earthdata Login Authentication Status: Not Configured (Pending)
+2026-11-14 15:53:36,634 [INFO] Querying NASA CMR API for GPM IMERG granules at Lat 7.3856, Lon -1.3562
+2026-11-14 15:53:40,366 [INFO] NASA CMR returned 100 GPM IMERG granule records.
+2026-11-14 15:53:40,480 [INFO] Saved GPM IMERG granule catalog to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\gpm\gpm_imerg_granule_catalog.csv
+2026-11-14 15:53:40,751 [INFO] Saved raw GPM precipitation dataset to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\gpm\gpm_imerg_ejura_daily_raw.csv (3653 records)
+2026-11-14 15:53:40,754 [INFO] Saved GPM metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\gpm_metadata.json
+2026-11-14 15:53:40,755 [INFO] GPM acquisition completed successfully.

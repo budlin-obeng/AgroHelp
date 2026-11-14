@@ -1,0 +1,29 @@
+{
+  "dataset": "NASA POWER Preprocessed Climate Metrics",
+  "location": "Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)",
+  "source_raw_file": "data/raw/nasa_power/nasa_power_ejura_daily_raw.csv",
+  "output_files": [
+    "data/processed/climate/nasa_power_ejura_daily_clean.csv",
+    "data/processed/climate/nasa_power_ejura_monthly_clean.csv"
+  ],
+  "temporal_range": "2016-01-01 to 2025-12-31",
+  "total_days": 3653,
+  "total_months": 120,
+  "fill_values_converted_to_nan": {
+    "precipitation_mm_per_day": 0,
+    "temperature_mean_c": 0,
+    "temperature_max_c": 0,
+    "temperature_min_c": 0,
+    "relative_humidity_pct": 0
+  },
+  "derived_features": [
+    "diurnal_temp_range_c (T2M_MAX - T2M_MIN)",
+    "is_wet_day (precipitation >= 1.0 mm)",
+    "is_heavy_rain_day (precipitation >= 25.0 mm)",
+    "is_heat_stress_day (Tmax >= 35.0 \u00b0C)",
+    "monthly rainfall total, mean, and max 1-day intensity",
+    "monthly thermal extremes and averages",
+    "monthly rain days and heat stress days"
+  ],
+  "preprocessing_timestamp": "2026-11-14T15:11:48.802932"
+}

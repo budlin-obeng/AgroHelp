@@ -1,0 +1,7 @@
+2026-11-14 15:58:31,363 [INFO] Starting Soil Moisture preprocessing...
+2026-11-14 15:58:31,365 [INFO] Loading raw soil moisture data from C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\smap\smap_soil_moisture_ejura_raw.csv
+2026-11-14 15:58:31,755 [INFO] Saved clean daily soil moisture to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\soil_moisture\smap_ejura_daily_clean.csv (3653 records)
+2026-11-14 15:58:32,016 [INFO] Saved clean monthly soil moisture to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\soil_moisture\smap_ejura_monthly_clean.csv (120 months)
+2026-11-14 15:58:32,045 [INFO] Saved agricultural drought events (557 days) to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\soil_moisture\smap_ejura_drought_events.csv
+2026-11-14 15:58:32,047 [INFO] Saved Soil Moisture preprocessing metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\smap_preprocessing_metadata.json
+2026-11-14 15:58:32,048 [INFO] Soil Moisture preprocessing completed successfully.

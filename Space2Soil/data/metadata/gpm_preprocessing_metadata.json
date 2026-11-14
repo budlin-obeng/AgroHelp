@@ -1,0 +1,21 @@
+{
+  "dataset": "NASA GPM IMERG Preprocessed Rainfall Products",
+  "location": "Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)",
+  "spatial_resolution": "0.1\u00b0 \u00d7 0.1\u00b0 (~10 km)",
+  "temporal_range": "2016-01-01 to 2025-12-31",
+  "total_days_processed": 3653,
+  "total_months_analyzed": 120,
+  "total_extreme_rain_events_identified": 126,
+  "output_files": [
+    "data/processed/rainfall/gpm_ejura_daily_clean.csv",
+    "data/processed/rainfall/gpm_ejura_monthly_clean.csv",
+    "data/processed/rainfall/gpm_ejura_extreme_rainfall_events.csv"
+  ],
+  "metrics_calculated": [
+    "Daily precipitation and 7-day/30-day cumulative rainfall",
+    "Monthly total, mean, standard deviation, and coefficient of variation (variability)",
+    "Rain days, heavy rain days (>=25mm), extreme rain days (>=50mm)",
+    "Extreme rainfall periods and soil waterlogging risk events"
+  ],
+  "preprocessing_timestamp": "2026-11-14T15:57:02.292699Z"
+}

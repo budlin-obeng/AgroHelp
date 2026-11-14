@@ -1,0 +1,7 @@
+2026-11-14 15:57:00,776 [INFO] Starting GPM preprocessing...
+2026-11-14 15:57:00,778 [INFO] Loading raw GPM precipitation from C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\gpm\gpm_imerg_ejura_daily_raw.csv
+2026-11-14 15:57:01,419 [INFO] Saved clean daily GPM dataset to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\rainfall\gpm_ejura_daily_clean.csv (3653 records)
+2026-11-14 15:57:02,225 [INFO] Saved clean monthly GPM aggregations to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\rainfall\gpm_ejura_monthly_clean.csv (120 months)
+2026-11-14 15:57:02,232 [INFO] Saved extreme rainfall events (126 events) to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\rainfall\gpm_ejura_extreme_rainfall_events.csv
+2026-11-14 15:57:02,302 [INFO] Saved GPM preprocessing metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\gpm_preprocessing_metadata.json
+2026-11-14 15:57:02,303 [INFO] GPM preprocessing completed successfully.

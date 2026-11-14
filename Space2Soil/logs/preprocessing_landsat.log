@@ -1,0 +1,10 @@
+2026-11-14 15:45:42,335 [INFO] Starting Landsat vegetation preprocessing...
+2026-11-14 15:45:42,337 [INFO] Loading scene catalog from C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\landsat\landsat_ejura_scene_catalog.csv
+2026-11-14 15:45:42,880 [INFO] Processing 115 clear scenes (cloud cover <= 20%)
+2026-11-14 15:45:42,984 [INFO] Saved vegetation index time series to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\vegetation\landsat_ejura_vegetation_timeseries.csv (115 scenes)
+2026-11-14 15:45:43,067 [INFO] Saved monthly vegetation summaries to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\vegetation\landsat_ejura_monthly_vegetation.csv (61 months)
+2026-11-14 15:45:43,077 [INFO] Exported analysis-ready GeoTIFF: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\vegetation\ejura_ndvi_dry_season_harmattan.tif ((250, 250))
+2026-11-14 15:45:43,123 [INFO] Exported analysis-ready GeoTIFF: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\vegetation\ejura_ndvi_major_rainy_season_peak.tif ((250, 250))
+2026-11-14 15:45:43,220 [INFO] Exported analysis-ready GeoTIFF: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\vegetation\ejura_ndvi_minor_rainy_season_peak.tif ((250, 250))
+2026-11-14 15:45:43,222 [INFO] Saved Landsat preprocessing metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\landsat_preprocessing_metadata.json
+2026-11-14 15:45:43,223 [INFO] Landsat preprocessing completed successfully.

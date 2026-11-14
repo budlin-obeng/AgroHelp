@@ -1,0 +1,23 @@
+{
+  "dataset": "Landsat 8 & 9 Collection 2 Level-2 Surface Reflectance - Vegetation Dynamics",
+  "location": "Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)",
+  "spatial_resolution": "30 meters",
+  "total_clear_scenes_processed": 115,
+  "total_months_analyzed": 61,
+  "temporal_range": "2016-01-06 to 2025-11-14",
+  "cloud_masking_applied": "USGS QA_PIXEL Bitmask (Filtered clear observations <= 20% cloud cover)",
+  "indices_calculated": [
+    "NDVI: (NIR - Red) / (NIR + Red)",
+    "EVI: 2.5 * (NIR - Red) / (NIR + 6*Red - 7.5*Blue + 1)"
+  ],
+  "output_csv_files": [
+    "data/processed/vegetation/landsat_ejura_vegetation_timeseries.csv",
+    "data/processed/vegetation/landsat_ejura_monthly_vegetation.csv"
+  ],
+  "output_geotiff_rasters": [
+    "data\\processed\\vegetation\\ejura_ndvi_dry_season_harmattan.tif",
+    "data\\processed\\vegetation\\ejura_ndvi_major_rainy_season_peak.tif",
+    "data\\processed\\vegetation\\ejura_ndvi_minor_rainy_season_peak.tif"
+  ],
+  "preprocessing_timestamp": "2026-11-14T15:45:43.221482Z"
+}

@@ -1,0 +1,13 @@
+2026-11-14 15:09:24,347 [INFO] Starting NASA POWER acquisition...
+2026-11-14 15:09:24,348 [INFO] Initiating request to NASA POWER API: https://power.larc.nasa.gov/api/temporal/daily/point
+2026-11-14 15:09:24,350 [INFO] Target location: Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)
+2026-11-14 15:09:24,351 [INFO] Parameters requested: ['PRECTOTCORR', 'T2M', 'T2M_MAX', 'T2M_MIN', 'RH2M']
+2026-11-14 15:09:24,353 [INFO] Date range: 20160101 - 20251231
+2026-11-14 15:09:31,727 [INFO] HTTP Status Code: 200
+2026-11-14 15:09:31,838 [INFO] Saved raw JSON response to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\nasa_power\nasa_power_ejura_daily_raw.json
+2026-11-14 15:09:31,842 [INFO] Saved metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\nasa_power_metadata.json
+2026-11-14 15:09:32,054 [INFO] Saved raw tabular CSV to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\nasa_power\nasa_power_ejura_daily_raw.csv with 3653 records.
+2026-11-14 15:09:32,055 [INFO] NASA POWER acquisition completed successfully.
+2026-11-14 15:09:32,055 [INFO] Columns: ['DATE', 'PRECTOTCORR', 'T2M', 'T2M_MAX', 'T2M_MIN', 'RH2M']
+2026-11-14 15:09:32,059 [INFO] Date range in data: 20160101 to 20251231
+2026-11-14 15:09:32,059 [INFO] Total rows: 3653

@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code / IDE settings
+.vscode/
+.idea/
+
+# Windows OS metadata
+Thumbs.db
+Desktop.ini

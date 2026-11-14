@@ -1,0 +1,59 @@
+{
+  "dataset_name": "NASA POWER Daily Agroclimatology (Point)",
+  "source": "NASA Langley Research Center POWER Project",
+  "api_endpoint": "https://power.larc.nasa.gov/api/temporal/daily/point",
+  "retrieval_timestamp": "2026-11-14T15:09:31.840454Z",
+  "target_location": "Ejura, Ashanti Region, Ghana",
+  "target_coordinates": {
+    "requested_latitude": 7.3856,
+    "requested_longitude": -1.3562,
+    "actual_geometry": {
+      "type": "Point",
+      "coordinates": [
+        -1.356,
+        7.386,
+        188.06
+      ]
+    }
+  },
+  "spatial_resolution": "0.5 x 0.625 degree (MERRA-2 atmospheric assimilation model grid; ~50km x ~60km)",
+  "temporal_resolution": "Daily",
+  "fill_value": -999.0,
+  "parameters": {
+    "PRECTOTCORR": {
+      "units": "mm/day",
+      "longname": "Precipitation Corrected"
+    },
+    "T2M": {
+      "units": "C",
+      "longname": "Temperature at 2 Meters"
+    },
+    "T2M_MAX": {
+      "units": "C",
+      "longname": "Temperature at 2 Meters Maximum"
+    },
+    "T2M_MIN": {
+      "units": "C",
+      "longname": "Temperature at 2 Meters Minimum"
+    },
+    "RH2M": {
+      "units": "%",
+      "longname": "Relative Humidity at 2 Meters"
+    }
+  },
+  "api_header": {
+    "title": "NASA/POWER Source Native Resolution Daily Data",
+    "api": {
+      "version": "v2.10.3",
+      "name": "POWER Daily API"
+    },
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "fill_value": -999.0,
+    "time_standard": "LST",
+    "start": "20160101",
+    "end": "20251231"
+  }
+}

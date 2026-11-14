@@ -1,0 +1,8 @@
+2026-11-14 15:57:48,966 [INFO] Starting Soil Moisture acquisition...
+2026-11-14 15:57:48,968 [INFO] NASA Earthdata Login Authentication Status: Not Configured (Pending)
+2026-11-14 15:57:51,780 [INFO] Saved SMAP NSIDC granule catalog to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\smap\smap_nsidc_granule_catalog.csv
+2026-11-14 15:57:51,780 [INFO] Requesting NASA Soil Moisture parameters (['GWETTOP', 'GWETROOT']) for Ejura...
+2026-11-14 15:57:56,399 [INFO] Saved raw soil moisture JSON to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\smap\smap_soil_moisture_ejura_raw.json
+2026-11-14 15:57:56,653 [INFO] Saved raw soil moisture CSV to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\smap\smap_soil_moisture_ejura_raw.csv (3653 records)
+2026-11-14 15:57:56,657 [INFO] Saved SMAP metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\smap_metadata.json
+2026-11-14 15:57:56,658 [INFO] Soil Moisture acquisition completed successfully.

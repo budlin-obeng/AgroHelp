@@ -1,0 +1,28 @@
+{
+  "dataset_name": "NASA Soil Moisture: Surface & Root-Zone Climatology",
+  "mission_context": "NASA SMAP / GMAO Land Surface Assimilation",
+  "target_location": "Ejura, Ashanti Region, Ghana",
+  "coordinates": {
+    "latitude": 7.3856,
+    "longitude": -1.3562
+  },
+  "temporal_range": "20160101 to 20251231",
+  "total_records": 3653,
+  "variables_and_depths": {
+    "GWETTOP": {
+      "description": "Surface Soil Wetness",
+      "depth_represented": "Top 0 to 5 cm soil layer",
+      "units": "Fraction / dimensionless (0.0 to 1.0)",
+      "smap_equivalent": "SMAP L3 Radiometer Surface Soil Moisture (SPL3SMP_E 0-5cm)",
+      "agronomic_role": "Seedbed moisture, seed germination, evaporation, tillage workability"
+    },
+    "GWETROOT": {
+      "description": "Root-Zone Soil Wetness",
+      "depth_represented": "0 to 100 cm profile depth",
+      "units": "Fraction / dimensionless (0.0 to 1.0)",
+      "smap_equivalent": "SMAP L4 Global Root-Zone Soil Moisture (SPL4SMAU 0-100cm)",
+      "agronomic_role": "Crop transpiration, agricultural drought onset, deep root water uptake (maize/cassava/yam)"
+    }
+  },
+  "retrieval_timestamp": "2026-11-14T15:57:56.656178Z"
+}

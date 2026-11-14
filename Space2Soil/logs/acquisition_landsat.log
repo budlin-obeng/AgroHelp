@@ -1,0 +1,14 @@
+2026-11-14 15:36:28,098 [INFO] Starting Landsat STAC scene acquisition...
+2026-11-14 15:36:28,098 [INFO] Querying STAC catalog for Landsat Collection 2 Level-2 at Ejura, Ashanti Region, Ghana
+2026-11-14 15:36:28,099 [INFO] Temporal window: 2016-01-01T00:00:00Z to 2025-12-31T23:59:59Z
+2026-11-14 15:36:28,099 [INFO] Fetching STAC page 1...
+2026-11-14 15:37:01,500 [INFO] Page 1: Retrieved 250 features (Total so far: 250)
+2026-11-14 15:37:01,500 [INFO] Fetching STAC page 2...
+2026-11-14 15:37:13,819 [INFO] Page 2: Retrieved 204 features (Total so far: 454)
+2026-11-14 15:37:13,819 [INFO] Total Landsat scenes found over Ejura: 454
+2026-11-14 15:37:21,613 [INFO] Saved complete scene inventory to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\landsat\landsat_ejura_scene_catalog.csv (454 scenes)
+2026-11-14 15:37:26,373 [INFO] Saved raw STAC JSON features to C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\landsat\landsat_ejura_scene_catalog.json
+2026-11-14 15:37:26,890 [INFO] Saved Landsat metadata summary to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\landsat_metadata.json
+2026-11-14 15:37:26,891 [INFO] Landsat catalog acquisition successful.
+2026-11-14 15:37:26,892 [INFO] Total scenes cataloged: 454
+2026-11-14 15:37:27,110 [INFO] Cloud cover stats: Min 0.0%, Median 47.0%, Max 100.0%

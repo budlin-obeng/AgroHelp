@@ -1,0 +1,18 @@
+{
+  "dataset_name": "NASA GPM IMERG Historical Precipitation",
+  "instrument": "GPM Core Observatory & Partner Constellation (GMI & DPR)",
+  "spatial_resolution": "0.1\u00b0 \u00d7 0.1\u00b0 (~10 km \u00d7 10 km)",
+  "temporal_resolution": "Daily",
+  "target_location": "Ejura, Ashanti Region, Ghana",
+  "coordinates": {
+    "latitude": 7.3856,
+    "longitude": -1.3562
+  },
+  "historical_period": "2016-01-01 to 2025-12-31",
+  "total_days": 3653,
+  "earthdata_login_authenticated": false,
+  "archive_host": "NASA Goddard GES DISC",
+  "archive_url": "https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/",
+  "access_method": "NASA CMR Granule Inventory + NASA Satellite Precipitation Data Service",
+  "retrieval_timestamp": "2026-11-14T15:53:40.752923Z"
+}
