@@ -132,3 +132,4 @@ ROTATION_SCENARIOS = {
         "soil_cover_months": 9.0
     }
 }
+

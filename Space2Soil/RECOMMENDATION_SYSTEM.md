@@ -118,3 +118,4 @@ The Space2Soil decision engine translates real-time satellite thresholds into cl
 ### Information Gaps & Future Enhancements
 - **Field-Scale Soil Chemistry:** Incorporating localized soil pH and phosphorus availability from Ghana Soil Research Institute ground samples.
 - **Micro-Insurance Integration:** Linking SMAP root-zone drought triggers directly to parametric index insurance payouts for smallholders.
+

@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "project": "Space2Soil",
+    "challenge": "NASA Space Apps Challenge - Field Shift: Adapting Farms with NASA Data",
+    "target": "Ejura, Ashanti Region, Ghana",
+    "coordinates": {
+      "lat": 7.3856,
+      "lon": -1.3562
+    },
+    "baseline_period": "2016-2025 (10-Year Decadal Record, 3653 days)"
+  },
+  "recommendation_cards": [
+    {
+      "scenario_id": "BASELINE_CONVENTIONAL",
+      "title": "Baseline: Continuous Maize Monoculture",
+      "composite_rank": 3,
+      "composite_score": 51.2,
+      "verdict": "VULNERABLE & UNSUSTAINABLE UNDER PROJECTED CLIMATE SHIFTS",
+      "nasa_evidence": [
+        "NASA GPM decadal records demonstrate 32 dry spells (>= 5 days) during the growing season; conventional maize suffers severe yield drag when dry spells coincide with silking.",
+        "NASA POWER indicates 34 annual heat stress days (Tmax >= 35\u00b0C), coinciding with tassel flowering in unprotected monoculture.",
+        "NASA SMAP confirms topsoil (0-5cm) dries out in < 4 days, leaving bare post-harvest soil vulnerable to high rainfall erosivity (MFI > 140)."
+      ],
+      "agronomic_vulnerabilities": [
+        "Net soil nitrogen depletion of 75.0 kg N/ha per year, requiring heavy synthetic fertilizer expenditure (GHS 1800.0/ha).",
+        "Continuous host plant presence intensifies Fall Armyworm (Spodoptera frugiperda) pest pressure.",
+        "Monoculture price volatility exposes the farm family to single-crop market collapse."
+      ],
+      "financial_return": {
+        "net_profit_ghs": 7000.0,
+        "net_profit_usd": 466.67,
+        "roi": 1.84
+      }
+    },
+    {
+      "scenario_id": "SCENARIO_1_CLIMATE_RESILIENCE",
+      "title": "Scenario 1: Regenerative Climate-Resilient Rotation",
+      "composite_rank": 1,
+      "composite_score": 97.1,
+      "verdict": "TOP RECOMMENDATION FOR CLIMATE RESILIENCE & FOOD SECURITY",
+      "core_strategy": "Drought-Tolerant Maize + Relay Cassava (Major Season) -> Nitrogen-Fixing Cowpea (Minor Season)",
+      "why_it_wins": [
+        "Increases net farm profit by +237.9% over baseline (GHS 23652.0 vs GHS 7000.0).",
+        "Cuts synthetic fertilizer expenditure by GHS 780.0/ha by leveraging cowpea biological nitrogen fixation (+15.0 kg N/ha net budget).",
+        "Extends living soil cover from 4.5 months to 10.0 months, suppressing weeds and shielding topsoil from torrential storm runoff.",
+        "Dramatically enhances household protein yield (+345.3 kg protein/ha) via high-protein cowpea pulses."
+      ],
+      "nasa_decision_triggers": {
+        "planting_trigger": "Wait for NASA GPM 3-day rainfall >= 20mm after March 20 AND SMAP root-zone moisture anomaly Z > 0.0 before sowing maize/cassava.",
+        "dry_spell_mitigation": "Cassava roots penetrate 0-100cm, tapping subsoil water reserves identified by SMAP during mid-season dry spells.",
+        "minor_season_trigger": "Sow short-duration Cowpea (65 days) by September 10 to mature before November Harmattan cessation."
+      },
+      "trade_offs_and_management": [
+        "Cassava harvesting requires distributed family or hired labor over an extended window.",
+        "Requires access to certified pest-resistant cassava cuttings (Bankyehemaa) and early cowpea seed."
+      ],
+      "financial_return": {
+        "net_profit_ghs": 23652.0,
+        "net_profit_usd": 1576.8,
+        "roi": 5.49
+      }
+    },
+    {
+      "scenario_id": "SCENARIO_2_COMMERCIAL_PROFIT",
+      "title": "Scenario 2: Commercial Agro-Economic Diversification",
+      "composite_rank": 2,
+      "composite_score": 89.1,
+      "verdict": "HIGH PROFIT OPTION FOR CAPITALIZED COMMERCIAL GROWERS",
+      "core_strategy": "White Yam (Pona) + Border Maize (Major Season) -> Commercial Soybean (Minor Season)",
+      "why_it_wins": [
+        "Generates maximum net economic return (GHS 35730.0 / $2382.0), nearly tripling baseline revenue.",
+        "Soybean commands robust guaranteed cash markets in Ghana for poultry feed and cooking oil processing.",
+        "Soybean nodulation fixes +45 kg N/ha, replenishing soil nutrients after heavy yam feeding."
+      ],
+      "nasa_decision_triggers": {
+        "soil_workability_trigger": "Plant yam mounds only when SMAP surface moisture reaches 0.40 - 0.60 fraction (prevents clodding).",
+        "tuber_bulking_alert": "Monitor SMAP root-zone moisture in July/August during yam tuber expansion."
+      },
+      "trade_offs_and_management": [
+        "High upfront capital requirement: Yam seed setts require substantial initial investment (GHS 3,200/ha).",
+        "Mounding, staking, and yam vine maintenance require intensive labor.",
+        "Higher vulnerability to severe mid-season droughts than cassava."
+      ],
+      "financial_return": {
+        "net_profit_ghs": 35730.0,
+        "net_profit_usd": 2382.0,
+        "roi": 4.9
+      }
+    }
+  ],
+  "scenario_scores": [
+    {
+      "scenario_key": "Baseline",
+      "scenario_name": "Conventional Maize Monoculture (Baseline)",
+      "tagline": "Traditional practice: High fertilizer dependency & climate vulnerability",
+      "crops_sequence": "Conventional Maize (Obatanpa)",
+      "composite_score": 51.2,
+      "climate_resilience_subscore": 49.2,
+      "soil_health_subscore": 20.0,
+      "economic_profit_subscore": 51.9,
+      "nutritional_diversity_subscore": 92.2,
+      "gross_revenue_ghs": 10800.0,
+      "total_production_cost_ghs": 3800.0,
+      "net_profit_ghs": 7000.0,
+      "net_profit_usd": 466.67,
+      "return_on_investment_roi": 1.84,
+      "synthetic_fertilizer_cost_ghs": 1800.0,
+      "net_soil_nitrogen_balance_kg_ha": -75.0,
+      "soil_cover_duration_months": 4.5,
+      "total_protein_yield_kg_ha": 225.6,
+      "total_calories_mcal_ha": 8760.0
+    },
+    {
+      "scenario_key": "Scenario_1",
+      "scenario_name": "Regenerative Climate-Resilient Rotation",
+      "tagline": "Optimized for drought buffering, soil regeneration, and household food security",
+      "crops_sequence": "Drought-Tolerant Maize (Omankwa) -> Early Cowpea (Songotra) -> Improved Cassava (Bankyehemaa)",
+      "composite_score": 97.1,
+      "climate_resilience_subscore": 95.7,
+      "soil_health_subscore": 93.5,
+      "economic_profit_subscore": 100.0,
+      "nutritional_diversity_subscore": 100.0,
+      "gross_revenue_ghs": 27964.0,
+      "total_production_cost_ghs": 4312.0,
+      "net_profit_ghs": 23652.0,
+      "net_profit_usd": 1576.8,
+      "return_on_investment_roi": 5.49,
+      "synthetic_fertilizer_cost_ghs": 1020.0,
+      "net_soil_nitrogen_balance_kg_ha": 15.0,
+      "soil_cover_duration_months": 10.0,
+      "total_protein_yield_kg_ha": 570.9,
+      "total_calories_mcal_ha": 20534.0
+    },
+    {
+      "scenario_key": "Scenario_2",
+      "scenario_name": "Commercial Agro-Economic Diversification",
+      "tagline": "High-profit market linkage paired with legume nitrogen crediting",
+      "crops_sequence": "White Yam (Pona) -> Drought-Tolerant Maize (Omankwa) -> Commercial Soybean (Afayak)",
+      "composite_score": 89.1,
+      "climate_resilience_subscore": 82.3,
+      "soil_health_subscore": 77.5,
+      "economic_profit_subscore": 100.0,
+      "nutritional_diversity_subscore": 100.0,
+      "gross_revenue_ghs": 43020.0,
+      "total_production_cost_ghs": 7290.0,
+      "net_profit_ghs": 35730.0,
+      "net_profit_usd": 2382.0,
+      "return_on_investment_roi": 4.9,
+      "synthetic_fertilizer_cost_ghs": 1450.0,
+      "net_soil_nitrogen_balance_kg_ha": 0.0,
+      "soil_cover_duration_months": 9.0,
+      "total_protein_yield_kg_ha": 869.6,
+      "total_calories_mcal_ha": 20218.0
+    }
+  ],
+  "climatology_summary": {
+    "annual_rainfall_mm": 1408.86,
+    "wet_days_per_year": 215.9,
+    "dry_spells_per_season": 3.2,
+    "mean_annual_temp_c": 26.83,
+    "heat_stress_days_per_year": 34.0,
+    "warming_rate_c_decade": 0.21,
+    "mean_surface_moisture_m3m3": 0.257,
+    "mean_rootzone_moisture_m3m3": 0.254,
+    "drought_days_per_year": 55.7,
+    "peak_ndvi_major": 0.74,
+    "min_ndvi_harmattan": 0.28
+  }
+}
