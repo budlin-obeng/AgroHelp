@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space2Soil | NASA Earth Observation Agricultural Intelligence</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            nasa: {
+              blue: '#0b3d91',
+              red: '#fc3d21'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP HEADER & BRANDING -->
+  <header class="nav-glass text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo & Title -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center shadow-lg">
+            <i data-lucide="sprout" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl font-black tracking-tight text-white">Space<span class="text-emerald-400">2</span>Soil</span>
+              <span class="text-xs bg-nasa-blue text-white font-bold px-2 py-0.5 rounded border border-blue-400 uppercase tracking-wider">NASA Space Apps</span>
+            </div>
+            <p class="text-xs text-slate-300 font-medium">Field Shift: Adapting Farms with NASA Earth Observation Data</p>
+          </div>
+        </div>
+
+        <!-- Pilot Location & Sensor Status -->
+        <div class="hidden md:flex items-center space-x-4">
+          <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i>
+            <span class="text-xs font-semibold text-slate-200">Ejura, Ashanti Region, Ghana (7.3856° N, -1.3562° W)</span>
+          </div>
+          <div class="flex items-center space-x-2 bg-emerald-950/70 border border-emerald-600/50 px-3 py-1.5 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-xs font-semibold text-emerald-300">Decadal Baseline: 3,653 Days (100% Validated)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex space-x-1 sm:space-x-4 border-t border-slate-700/60 overflow-x-auto py-2 text-sm font-medium text-slate-300 scrollbar-none">
+        <button onclick="switchTab('telemetry')" id="tab-telemetry" class="tab-btn px-3 py-1.5 rounded-md text-white bg-slate-800 flex items-center space-x-2 border border-slate-600">
+          <i data-lucide="gauge" class="w-4 h-4 text-emerald-400"></i>
+          <span>NASA Telemetry</span>
+        </button>
+        <button onclick="switchTab('map-explorer')" id="tab-map-explorer" class="tab-btn px-3 py-1.5 rounded-md hover:text-white hover:bg-slate-800/60 flex items-center space-x-2">
+          <i data-lucide="map" class="w-4 h-4 text-sky-400"></i>
+          <span>Geospatial Explorer</span>
+        </button>
+        <button onclick="switchTab('decision-engine')" id="tab-decision-engine" class="tab-btn px-3 py-1.5 rounded-md hover:text-white hover:bg-slate-800/60 flex items-center space-x-2">
+          <i data-lucide="cpu" class="w-4 h-4 text-amber-400"></i>
+          <span>Recommendation Engine</span>
+        </button>
+        <button onclick="switchTab('farmer-cards')" id="tab-farmer-cards" class="tab-btn px-3 py-1.5 rounded-md hover:text-white hover:bg-slate-800/60 flex items-center space-x-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-violet-400"></i>
+          <span>XAI Farmer Advisory</span>
+        </button>
+        <button onclick="switchTab('provenance')" id="tab-provenance" class="tab-btn px-3 py-1.5 rounded-md hover:text-white hover:bg-slate-800/60 flex items-center space-x-2">
+          <i data-lucide="database" class="w-4 h-4 text-rose-400"></i>
+          <span>NASA Science & Scale Matrix</span>
+        </button>
+        <button onclick="window.print()" class="tab-btn px-3 py-1.5 rounded-md text-amber-300 hover:bg-amber-950/60 flex items-center space-x-2 ml-auto">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Print Advisory</span>
+        </button>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: NASA TELEMETRY & DECADAL DASHBOARD  -->
+    <!-- ========================================== -->
+    <div id="view-telemetry" class="tab-view space-y-6">
+      
+      <!-- Banner Introduction -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-lg border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 class="text-2xl font-black text-white flex items-center gap-2">
+            <span>NASA Multi-Mission Agroclimatology Cockpit</span>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Ejura Breadbasket Hub</span>
+          </h1>
+          <p class="text-sm text-slate-300 mt-1 max-w-2xl">
+            Ten years of daily observations (2016–2025) synthesized across NASA POWER (MERRA-2), GPM IMERG, SMAP, and Landsat 8/9 to establish the empirical baseline for Ghana's transitional agricultural zone.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 bg-slate-800/80 px-4 py-2.5 rounded-xl border border-slate-700">
+          <i data-lucide="calendar" class="w-5 h-5 text-emerald-400"></i>
+          <div>
+            <div class="text-xs text-slate-400 font-medium">Mean Growing Period (LGP)</div>
+            <div class="text-sm font-bold text-white">224 Days / Year</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Core Sensor KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- NASA GPM IMERG -->
+        <div class="metric-card p-5 border-l-4 border-l-sky-500">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-700">NASA GPM IMERG</span>
+            <i data-lucide="cloud-rain" class="w-5 h-5 text-sky-500"></i>
+          </div>
+          <div class="text-2xl font-black text-slate-900">1,408.9 <span class="text-sm font-semibold text-slate-500">mm/yr</span></div>
+          <div class="text-xs text-slate-600 mt-1 flex items-center justify-between">
+            <span>Wet Days: 215.9 days/yr</span>
+            <span class="text-sky-700 font-semibold">10 km grid</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Decadal Dry Spells (≥5d):</span>
+            <span class="font-bold text-slate-800">32 events</span>
+          </div>
+        </div>
+
+        <!-- NASA POWER Thermal -->
+        <div class="metric-card p-5 border-l-4 border-l-amber-500">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700">NASA POWER (MERRA-2)</span>
+            <i data-lucide="thermometer" class="w-5 h-5 text-amber-500"></i>
+          </div>
+          <div class="text-2xl font-black text-slate-900">26.83 <span class="text-sm font-semibold text-slate-500">°C</span></div>
+          <div class="text-xs text-slate-600 mt-1 flex items-center justify-between">
+            <span>Warming Trend: +0.21°C/dec</span>
+            <span class="text-amber-700 font-semibold">~50 km</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Heat Stress Days (≥35°C):</span>
+            <span class="font-bold text-red-600">34 days/yr</span>
+          </div>
+        </div>
+
+        <!-- NASA SMAP Soil Moisture -->
+        <div class="metric-card p-5 border-l-4 border-l-emerald-500">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">NASA SMAP Profile</span>
+            <i data-lucide="waves" class="w-5 h-5 text-emerald-500"></i>
+          </div>
+          <div class="text-2xl font-black text-slate-900">0.254 <span class="text-sm font-semibold text-slate-500">m³/m³</span></div>
+          <div class="text-xs text-slate-600 mt-1 flex items-center justify-between">
+            <span>Root-Zone (0–100 cm)</span>
+            <span class="text-emerald-700 font-semibold">9 km grid</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Annual Drought Stress:</span>
+            <span class="font-bold text-amber-600">55.7 days/yr</span>
+          </div>
+        </div>
+
+        <!-- USGS/NASA Landsat 8 & 9 -->
+        <div class="metric-card p-5 border-l-4 border-l-green-600">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-green-700">Landsat 8/9 SR</span>
+            <i data-lucide="trees" class="w-5 h-5 text-green-600"></i>
+          </div>
+          <div class="text-2xl font-black text-slate-900">0.74 <span class="text-sm font-semibold text-slate-500">Peak NDVI</span></div>
+          <div class="text-xs text-slate-600 mt-1 flex items-center justify-between">
+            <span>Major Season (June)</span>
+            <span class="text-green-700 font-semibold">30 meters</span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Harmattan Minimum:</span>
+            <span class="font-bold text-slate-800">0.28 NDVI</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Decadal Climatology Interactive Chart -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="bar-chart-3" class="w-5 h-5 text-brand-600"></i>
+              <span>Decadal Climatology Envelope: Bimodal Rainfall vs. Root-Zone Water Retention</span>
+            </h2>
+            <p class="text-xs text-slate-500">10-Year (2016–2025) monthly average precipitation (mm) paired with SMAP root-zone soil moisture ($m^3/m^3$) and Landsat NDVI</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded bg-sky-100 text-sky-800">Major: Mar–Jul</span>
+            <span class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded bg-amber-100 text-amber-800">Mid-Dry: Aug</span>
+            <span class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded bg-emerald-100 text-emerald-800">Minor: Sep–Nov</span>
+          </div>
+        </div>
+        <div class="relative h-80 w-full">
+          <canvas id="climatologyChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Critical Phenological Milestones Table -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="bg-white rounded-xl p-5 border border-slate-200">
+          <div class="flex items-center gap-2 text-brand-700 font-bold text-sm mb-2">
+            <i data-lucide="arrow-right-circle" class="w-4 h-4"></i>
+            <span>Major Season Onset</span>
+          </div>
+          <div class="text-xl font-black text-slate-900">March 22 – April 8</div>
+          <p class="text-xs text-slate-500 mt-2">
+            Triggered by the northward migration of the ITCZ. Sowing must be held until GPM records 3-day rainfall accumulation &ge; 20 mm to prevent seedling mortality.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-slate-200">
+          <div class="flex items-center gap-2 text-amber-700 font-bold text-sm mb-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+            <span>August Mid-Season Hiatus</span>
+          </div>
+          <div class="text-xl font-black text-slate-900">July 28 – August 20</div>
+          <p class="text-xs text-slate-500 mt-2">
+            Bimodal rainfall depression. Topsoil dries to 0.15 $m^3/m^3$, but SMAP subsoil root-zone (0–100 cm) maintains 0.22 $m^3/m^3$, sustaining deep-rooted cassava.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-slate-200">
+          <div class="flex items-center gap-2 text-rose-700 font-bold text-sm mb-2">
+            <i data-lucide="snowflake" class="w-4 h-4"></i>
+            <span>Minor Season Cessation</span>
+          </div>
+          <div class="text-xl font-black text-slate-900">November 12 – 25</div>
+          <p class="text-xs text-slate-500 mt-2">
+            Abrupt termination followed by dry northeasterly Harmattan winds. Minor season crops must possess short maturity cycles (&le; 65 days like cowpea).
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: GEOSPATIAL FIELD EXPLORER (LEAFLET) -->
+    <!-- ========================================== -->
+    <div id="view-map-explorer" class="tab-view hidden space-y-6">
+      
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="satellite" class="w-5 h-5 text-sky-600"></i>
+              <span>Multi-Scale Geospatial Explorer: 30-Meter Landsat & Sensor Footprints</span>
+            </h2>
+            <p class="text-xs text-slate-500">
+              Interactive map displaying the Ejura Pilot Farm, true 30 m Landsat NDVI GeoTIFF overlays across seasons, and satellite sensor resolution footprints.
+            </p>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Basemap Selector -->
+            <select id="basemapSelect" class="bg-slate-50 border border-slate-300 rounded-lg text-xs font-semibold px-3 py-1.5 text-slate-700">
+              <option value="satellite">Esri World Imagery (Satellite)</option>
+              <option value="osm">OpenStreetMap Standard</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Relative Map Container with Floating Controls -->
+        <div class="relative w-full">
+          <div id="map"></div>
+
+          <!-- Floating Layer & Raster Selector Panel -->
+          <div class="map-overlay-panel">
+            <div class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <i data-lucide="layers" class="w-4 h-4 text-brand-600"></i>
+              <span>Landsat 30m NDVI Overlay</span>
+            </div>
+            
+            <div class="space-y-1.5 text-xs">
+              <label class="flex items-center gap-2 cursor-pointer hover:text-brand-700">
+                <input type="radio" name="ndviLayer" value="major" checked class="text-brand-600 focus:ring-brand-500">
+                <span class="font-medium text-slate-800">Major Rainy Peak (NDVI ~0.74)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-brand-700">
+                <input type="radio" name="ndviLayer" value="minor" class="text-brand-600 focus:ring-brand-500">
+                <span class="font-medium text-slate-800">Minor Rainy Peak (NDVI ~0.66)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-brand-700">
+                <input type="radio" name="ndviLayer" value="dry" class="text-brand-600 focus:ring-brand-500">
+                <span class="font-medium text-slate-800">Harmattan Dry Season (NDVI ~0.28)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-brand-700">
+                <input type="radio" name="ndviLayer" value="none" class="text-brand-600 focus:ring-brand-500">
+                <span class="text-slate-500">Hide NDVI Raster</span>
+              </label>
+            </div>
+
+            <hr class="my-2.5 border-slate-200">
+
+            <div class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <i data-lucide="grid" class="w-4 h-4 text-sky-600"></i>
+              <span>Sensor Footprint Grid</span>
+            </div>
+            <div class="space-y-1 text-xs">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="togglePowerGrid" class="text-amber-500 focus:ring-amber-400">
+                <span>NASA POWER (~50 km cell)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="toggleGpmGrid" class="text-sky-500 focus:ring-sky-400">
+                <span>NASA GPM (10 km cell)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="toggleSmapGrid" class="text-emerald-500 focus:ring-emerald-400">
+                <span>NASA SMAP (9 km cell)</span>
+              </label>
+            </div>
+
+            <div class="mt-3 pt-2.5 border-t border-slate-200">
+              <div class="text-[11px] font-semibold text-slate-600 mb-1">NDVI Scale:</div>
+              <div class="h-3 w-full rounded bg-gradient-to-r from-red-500 via-yellow-400 to-green-700"></div>
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-0.5">
+                <span>0.0 (Bare)</span>
+                <span>0.5 (Moderate)</span>
+                <span>1.0 (Dense)</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <div class="flex items-center gap-2">
+            <i data-lucide="info" class="w-4 h-4 text-sky-600 flex-shrink-0"></i>
+            <span><strong>Spatial Scale Integrity:</strong> Coarse satellite pixels (50 km / 10 km / 9 km) are displayed as footprint bounding boxes. Farm parcel management relies on 30-meter Landsat Level-2 observations.</span>
+          </div>
+          <button onclick="centerOnFarm()" class="px-2.5 py-1 bg-white border border-slate-300 rounded font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-1 shadow-sm">
+            <i data-lucide="crosshair" class="w-3.5 h-3.5 text-brand-600"></i> Center Farm
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: CROP ROTATION DECISION ENGINE       -->
+    <!-- ========================================== -->
+    <div id="view-decision-engine" class="tab-view hidden space-y-6">
+
+      <!-- Scenario Selector Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- Scenario 1: WINNER -->
+        <div onclick="selectScenario('Scenario_1')" id="card-Scenario_1" class="scenario-card cursor-pointer rounded-xl p-5 border-2 border-emerald-500 bg-emerald-50/40 relative shadow-sm hover:shadow-md transition">
+          <div class="absolute -top-3 right-4 bg-emerald-600 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
+            Top Recommendation ★
+          </div>
+          <div class="text-xs font-bold text-emerald-800 uppercase tracking-wider">Scenario 1 (Rank 1)</div>
+          <h3 class="text-lg font-black text-slate-900 mt-1">Regenerative Climate-Resilience</h3>
+          <p class="text-xs text-slate-600 mt-1">Drought-Tolerant Maize + Relay Cassava &rarr; Early Cowpea</p>
+          
+          <div class="mt-4 flex items-baseline justify-between">
+            <span class="text-xs text-slate-500 font-medium">Composite Score:</span>
+            <span class="text-2xl font-black text-emerald-700">97.1 <span class="text-xs font-semibold text-slate-500">/ 100</span></span>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-emerald-200/60 grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <span class="text-slate-500">Net Profit:</span>
+              <div class="font-bold text-slate-900">GHS 23,652 <span class="text-[10px] text-slate-500">($1,577)</span></div>
+            </div>
+            <div>
+              <span class="text-slate-500">N-Balance:</span>
+              <div class="font-bold text-emerald-700">+15.0 kg N/ha</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario 2: Commercial -->
+        <div onclick="selectScenario('Scenario_2')" id="card-Scenario_2" class="scenario-card cursor-pointer rounded-xl p-5 border border-slate-200 bg-white hover:border-sky-400 shadow-sm hover:shadow-md transition">
+          <div class="text-xs font-bold text-sky-800 uppercase tracking-wider">Scenario 2 (Rank 2)</div>
+          <h3 class="text-lg font-black text-slate-900 mt-1">Commercial Diversification</h3>
+          <p class="text-xs text-slate-600 mt-1">White Yam (Pona) + Maize &rarr; Commercial Soybean</p>
+          
+          <div class="mt-4 flex items-baseline justify-between">
+            <span class="text-xs text-slate-500 font-medium">Composite Score:</span>
+            <span class="text-2xl font-black text-sky-700">89.1 <span class="text-xs font-semibold text-slate-500">/ 100</span></span>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <span class="text-slate-500">Net Profit:</span>
+              <div class="font-bold text-slate-900">GHS 35,730 <span class="text-[10px] text-slate-500">($2,382)</span></div>
+            </div>
+            <div>
+              <span class="text-slate-500">N-Balance:</span>
+              <div class="font-bold text-slate-700">0.0 kg N/ha</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Baseline: Monoculture -->
+        <div onclick="selectScenario('Baseline')" id="card-Baseline" class="scenario-card cursor-pointer rounded-xl p-5 border border-slate-200 bg-white hover:border-slate-400 shadow-sm hover:shadow-md transition">
+          <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Baseline Practice (Rank 3)</div>
+          <h3 class="text-lg font-black text-slate-900 mt-1">Continuous Maize Monoculture</h3>
+          <p class="text-xs text-slate-600 mt-1">Conventional Single Maize (Obatanpa)</p>
+          
+          <div class="mt-4 flex items-baseline justify-between">
+            <span class="text-xs text-slate-500 font-medium">Composite Score:</span>
+            <span class="text-2xl font-black text-slate-600">51.2 <span class="text-xs font-semibold text-slate-500">/ 100</span></span>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <span class="text-slate-500">Net Profit:</span>
+              <div class="font-bold text-slate-900">GHS 7,000 <span class="text-[10px] text-slate-500">($467)</span></div>
+            </div>
+            <div>
+              <span class="text-slate-500">N-Balance:</span>
+              <div class="font-bold text-red-600">-75.0 kg N/ha</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comparative Analysis: Radar Chart & Financial Breakdown -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Radar Chart: Multi-Criteria Comparison -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="compass" class="w-5 h-5 text-brand-600"></i>
+              <span>Multi-Criteria Decision Pillars (AHP Weights)</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">Resilience (30%), Soil Health (25%), Profit (25%), Nutrition (20%)</p>
+          </div>
+          <div class="relative h-72 w-full flex items-center justify-center">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Financial Comparison Bar Chart -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="trending-up" class="w-5 h-5 text-emerald-600"></i>
+              <span>Financial Performance Comparison (GHS per Hectare)</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">Gross Revenue vs. Total Production Cost vs. Net Farmer Income</p>
+          </div>
+          <div class="relative h-72 w-full">
+            <canvas id="financialChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interactive Dynamic Weight Adjuster -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="sliders" class="w-5 h-5 text-indigo-600"></i>
+              <span>Dynamic Policy & Farmer Priority Simulator</span>
+            </h3>
+            <p class="text-xs text-slate-500">Adjust stakeholder weights to evaluate model sensitivity across different farm contexts</p>
+          </div>
+          <button onclick="resetWeights()" class="text-xs font-semibold px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded border border-slate-300 text-slate-700">
+            Reset to Baseline Weights
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-medium text-slate-700">
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Climate Resilience:</span>
+              <span id="weight-resilience-val" class="font-bold text-indigo-600">30%</span>
+            </div>
+            <input type="range" id="slider-resilience" min="0" max="60" value="30" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" oninput="recalculateCustomScores()">
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Soil Health Regeneration:</span>
+              <span id="weight-soil-val" class="font-bold text-emerald-600">25%</span>
+            </div>
+            <input type="range" id="slider-soil" min="0" max="60" value="25" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600" oninput="recalculateCustomScores()">
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Economic Net Profit:</span>
+              <span id="weight-profit-val" class="font-bold text-amber-600">25%</span>
+            </div>
+            <input type="range" id="slider-profit" min="0" max="60" value="25" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-600" oninput="recalculateCustomScores()">
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Household Nutrition:</span>
+              <span id="weight-nutrition-val" class="font-bold text-rose-600">20%</span>
+            </div>
+            <input type="range" id="slider-nutrition" min="0" max="60" value="20" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600" oninput="recalculateCustomScores()">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: XAI FARMER ADVISORY CARDS           -->
+    <!-- ========================================== -->
+    <div id="view-farmer-cards" class="tab-view hidden space-y-6">
+
+      <!-- Advisory Header -->
+      <div class="bg-emerald-900 text-white rounded-xl p-6 shadow-md border border-emerald-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Agricultural Extension & Farmer Advisory</span>
+          <h2 class="text-2xl font-black text-white mt-1" id="advisory-title">Scenario 1: Regenerative Climate-Resilient Rotation</h2>
+          <p class="text-xs text-emerald-100 mt-1" id="advisory-strategy">Drought-Tolerant Maize + Relay Cassava (Major Season) &rarr; Nitrogen-Fixing Cowpea (Minor Season)</p>
+        </div>
+        <button onclick="window.print()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold rounded-lg shadow flex items-center gap-2 text-sm transition">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Print Advisory Card</span>
+        </button>
+      </div>
+
+      <!-- Printable Card Section -->
+      <div id="printable-farmer-card" class="space-y-6">
+
+        <!-- Why It Wins / Core Agronomic Rationale -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+            <span>Why This Recommendation Wins (NASA Evidence-Based)</span>
+          </h3>
+          <div id="advisory-why-wins" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-700">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+
+        <!-- NASA Operational Triggers -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <i data-lucide="zap" class="w-5 h-5 text-amber-500"></i>
+            <span>Operational NASA Earth Observation Triggers</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="advisory-triggers">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+
+        <!-- 12-Month Agronomic Action Calendar -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
+          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <i data-lucide="calendar-check" class="w-5 h-5 text-sky-600"></i>
+            <span>12-Month Field Action Calendar & Operations (Ejura, Ghana)</span>
+          </h3>
+          <table class="w-full text-left text-xs border border-slate-200 rounded-lg">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
+              <tr>
+                <th class="p-3 border-b">Month</th>
+                <th class="p-3 border-b">NASA Weather Condition</th>
+                <th class="p-3 border-b">Field Management Action</th>
+                <th class="p-3 border-b">Resource / Input Guide</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr>
+                <td class="p-3 font-bold text-slate-900">Jan – Feb</td>
+                <td class="p-3">Harmattan Dry, High VPD, High Fire Risk</td>
+                <td class="p-3">Maintain crop residue mulch on field surface. Construct firebreaks. Zero pre-season burning.</td>
+                <td class="p-3">Retain previous stover on soil (shields against erosion MFI > 140).</td>
+              </tr>
+              <tr class="bg-emerald-50/40">
+                <td class="p-3 font-bold text-emerald-900">March</td>
+                <td class="p-3">Major Season Onset (March 22–31)</td>
+                <td class="p-3">Plant Drought-Tolerant Maize (Omankwa) after GPM 3-day rainfall &ge; 20 mm.</td>
+                <td class="p-3">Seed rate 20 kg/ha; certified drought-tolerant seed.</td>
+              </tr>
+              <tr class="bg-emerald-50/40">
+                <td class="p-3 font-bold text-emerald-900">April</td>
+                <td class="p-3">Rapid vegetative growth, high solar radiation</td>
+                <td class="p-3">Relay intercrop improved Cassava cuttings (Bankyehemaa) between maize rows at 4 weeks.</td>
+                <td class="p-3">Cassava stem cuttings (10,000 cuttings/ha). Basal micro-dose fertilizer.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">May – Jun</td>
+                <td class="p-3">Peak Major Season Rains (NDVI ~0.74)</td>
+                <td class="p-3">Monitor Fall Armyworm; scout cassava canopy vigor with Landsat NDVI.</td>
+                <td class="p-3">Biopesticide / Neem oil if FAW threshold &gt; 15% leaf damage.</td>
+              </tr>
+              <tr class="bg-amber-50/40">
+                <td class="p-3 font-bold text-amber-900">July – Aug</td>
+                <td class="p-3">Mid-Season Hiatus / Dry Spell Vulnerability</td>
+                <td class="p-3">Harvest maize grain at physiological maturity; leave standing stalks. Cassava roots tap subsoil (0–100 cm).</td>
+                <td class="p-3">Solar dry maize to &le; 13% moisture using NASA POWER dry-down window.</td>
+              </tr>
+              <tr class="bg-sky-50/40">
+                <td class="p-3 font-bold text-sky-900">Sep (Early)</td>
+                <td class="p-3">Minor Season Re-onset (Sep 5–12)</td>
+                <td class="p-3">Direct-drill short-duration Cowpea (Songotra) alongside standing cassava.</td>
+                <td class="p-3">Inoculate with Bradyrhizobium rhizobia biofertilizer (+15 kg N/ha credit).</td>
+              </tr>
+              <tr class="bg-sky-50/40">
+                <td class="p-3 font-bold text-sky-900">October</td>
+                <td class="p-3">Peak Minor Season Rains (NDVI ~0.66)</td>
+                <td class="p-3">Cowpea pod formation; full living canopy prevents soil erosion.</td>
+                <td class="p-3">Zero synthetic N applied; natural atmospheric N-fixation in progress.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">Nov – Dec</td>
+                <td class="p-3">Harmattan Cessation (Nov 15)</td>
+                <td class="p-3">Harvest cowpea pods. Cassava continues growing throughout the dry season with deep root tap.</td>
+                <td class="p-3">Market cowpea pulses at peak minor season market price (GHS 12/kg).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: NASA SCIENCE & SCALE MATRIX         -->
+    <!-- ========================================== -->
+    <div id="view-provenance" class="tab-view hidden space-y-6">
+
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-2">
+          <i data-lucide="database" class="w-5 h-5 text-rose-600"></i>
+          <span>NASA Earth Observation Sensor Provenance & Spatial Scale Matrix</span>
+        </h2>
+        <p class="text-xs text-slate-500 mb-6">
+          Rigorous geospatial accounting of all satellite missions and assimilation products powering Space2Soil.
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border border-slate-200 rounded-lg">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
+              <tr>
+                <th class="p-3 border-b">Mission / Source</th>
+                <th class="p-3 border-b">Instrument / Model</th>
+                <th class="p-3 border-b">Product ID</th>
+                <th class="p-3 border-b">Spatial Scale</th>
+                <th class="p-3 border-b">Temporal Resolution</th>
+                <th class="p-3 border-b">DAAC / Host Archive</th>
+                <th class="p-3 border-b">Role in Decision Engine</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr>
+                <td class="p-3 font-bold text-slate-900">NASA POWER</td>
+                <td class="p-3">MERRA-2 Reanalysis & GEOS FP-IT</td>
+                <td class="p-3 font-mono">Agroclimatology Point</td>
+                <td class="p-3 font-semibold text-amber-700">0.5° × 0.625° (~50 km)</td>
+                <td class="p-3">Daily (2016–2025)</td>
+                <td class="p-3">NASA LaRC</td>
+                <td class="p-3">Growing Degree Days (GDD), thermal heat stress threshold (≥35°C), solar radiation dry-down.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">NASA GPM</td>
+                <td class="p-3">Dual-frequency Precip Radar & GMI Constellation</td>
+                <td class="p-3 font-mono">GPM_3IMERGDF (Final)</td>
+                <td class="p-3 font-semibold text-sky-700">0.1° × 0.1° (~10 km)</td>
+                <td class="p-3">Daily (2016–2025)</td>
+                <td class="p-3">NASA GES DISC</td>
+                <td class="p-3">Bimodal onset & cessation detection, Modified Fournier Index (MFI) erosivity, dry spells (≥5d).</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">NASA SMAP</td>
+                <td class="p-3">L-band Radiometer & GMAO EnKF Assimilation</td>
+                <td class="p-3 font-mono">SPL4SMAU / SPL3SMP_E</td>
+                <td class="p-3 font-semibold text-emerald-700">9 km grid</td>
+                <td class="p-3">Daily (2016–2025)</td>
+                <td class="p-3">NASA NSIDC DAAC</td>
+                <td class="p-3">Surface (0–5 cm) vs root-zone (0–100 cm) moisture, Readily Available Water (RAW), drought Z-score anomalies.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">USGS / NASA Landsat</td>
+                <td class="p-3">OLI / OLI-2 & TIRS / TIRS-2</td>
+                <td class="p-3 font-mono">Collection 2 Level-2 SR</td>
+                <td class="p-3 font-semibold text-green-700">30 meters</td>
+                <td class="p-3">16-day (8-day combined)</td>
+                <td class="p-3">USGS EROS / Planetary Computer</td>
+                <td class="p-3">Parcel-level NDVI & EVI vegetation vigor, living canopy cover duration, senescent Harmattan monitoring.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Scientific Methodology & Equations -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-900 mb-2">1. Growing Degree Days (GDD) Formulation</h4>
+            <div class="bg-slate-900 text-emerald-400 p-3 rounded font-mono text-xs mb-2">
+              GDD = max(0, ((T_max + T_min) / 2) - T_base)
+            </div>
+            <p class="text-xs text-slate-600">
+              Calculated with Base 10°C for Maize and Cowpea (upper cutoff 30°C), and Base 15°C for Cassava and Yam to simulate thermal heat units.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-900 mb-2">2. Soil Moisture Readily Available Water (RAW)</h4>
+            <div class="bg-slate-900 text-emerald-400 p-3 rounded font-mono text-xs mb-2">
+              RAW = p * (theta_FC - theta_WP) * Z_r
+            </div>
+            <p class="text-xs text-slate-600">
+              For Chromic Luvisols in Ejura: field capacity $\theta_{\text{FC}} = 0.28\text{ m}^3/\text{m}^3$, wilting point $\theta_{\text{WP}} = 0.12\text{ m}^3/\text{m}^3$, depletion fraction $p = 0.55$.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-900 mb-2">3. Rainfall Erosivity Index (MFI)</h4>
+            <div class="bg-slate-900 text-emerald-400 p-3 rounded font-mono text-xs mb-2">
+              MFI = sum((p_i)^2) / P_annual
+            </div>
+            <p class="text-xs text-slate-600">
+              Ejura decadal MFI = 143.2 (High Erosivity Class > 120), mathematically demonstrating why bare soil monoculture causes catastrophic topsoil loss.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-900 mb-2">4. Standardized Drought Anomaly Z-Score</h4>
+            <div class="bg-slate-900 text-emerald-400 p-3 rounded font-mono text-xs mb-2">
+              Z = (theta_t - mu_doy) / sigma_doy
+            </div>
+            <p class="text-xs text-slate-600">
+              Evaluated against 10-year day-of-year climatology; $Z \le -1.0$ triggers agricultural drought stress status and in-season contingency mulching.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-2">
+        <i data-lucide="satellite" class="w-4 h-4 text-emerald-400"></i>
+        <span>Space2Soil Platform &copy; 2026 | NASA Space Apps Challenge</span>
+      </div>
+      <div class="text-slate-500">
+        Ejura Pilot Study | Code: <a href="https://github.com/budlin-obeng/AgroHelp" target="_blank" class="text-emerald-400 hover:underline">github.com/budlin-obeng/AgroHelp</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript Controller -->
+  <script src="app.js"></script>
+</body>
+</html>

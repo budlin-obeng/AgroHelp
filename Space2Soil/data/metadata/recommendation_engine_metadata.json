@@ -1,0 +1,25 @@
+{
+  "engine_name": "Space2Soil Crop Rotation Multi-Criteria Decision Engine",
+  "pilot_target": "Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)",
+  "evaluation_criteria_weights": {
+    "climate_and_drought_resilience": 0.3,
+    "soil_health_and_nitrogen_budget": 0.25,
+    "economic_net_income_and_roi": 0.25,
+    "household_nutritional_diversity": 0.2
+  },
+  "scenarios_evaluated": [
+    "Baseline: Conventional Maize Monoculture",
+    "Scenario 1: Regenerative Climate Resilience (Maize + Cassava Relay -> Cowpea)",
+    "Scenario 2: Commercial Agro-Economic Diversification (Yam + Maize -> Soybean)"
+  ],
+  "winning_recommendation": {
+    "resilience_food_security": "Scenario 1 (Regenerative Climate Resilience)",
+    "commercial_capitalized": "Scenario 2 (Commercial Diversification)"
+  },
+  "output_files": [
+    "data/processed/recommendations/rotation_scenarios_comparison.csv",
+    "data/processed/recommendations/scenario_detailed_scores.json",
+    "data/processed/recommendations/farmer_recommendation_cards.json"
+  ],
+  "execution_timestamp": "2026-11-14T17:02:38.393197Z"
+}

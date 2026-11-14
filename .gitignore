@@ -99,6 +99,4 @@ Thumbs.db
 Desktop.ini
 
 # Logs & temp files
-*.log
-logs/
 *.tmp

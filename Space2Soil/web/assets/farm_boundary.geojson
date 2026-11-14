@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ejura Pilot Demonstration Farm",
+        "owner": "Space2Soil Research & Demonstration Hub",
+        "area_ha": 25.0,
+        "soil_type": "Chromic Luvisol / Sandy Loam",
+        "district": "Ejura-Sekyedumase",
+        "current_rotation": "Scenario 1: Maize + Cassava -> Cowpea"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.3584500000000002,
+              7.38335
+            ],
+            [
+              -1.35395,
+              7.38335
+            ],
+            [
+              -1.35395,
+              7.38785
+            ],
+            [
+              -1.3584500000000002,
+              7.38785
+            ],
+            [
+              -1.3584500000000002,
+              7.38335
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

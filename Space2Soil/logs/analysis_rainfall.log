@@ -1,0 +1,4 @@
+2026-11-14 16:52:04,990 [INFO] Loading cleaned daily precipitation from C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\rainfall\gpm_ejura_daily_clean.csv
+2026-11-14 16:52:07,465 [INFO] Saved rainfall seasonality metrics to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\analysis\rainfall_seasonality_metrics.csv
+2026-11-14 16:52:07,867 [INFO] Saved dry spell events (32 events) to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\analysis\dry_spell_events.csv
+2026-11-14 16:52:08,696 [INFO] Saved rainfall erosivity indices to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\analysis\rainfall_erosivity_index.csv

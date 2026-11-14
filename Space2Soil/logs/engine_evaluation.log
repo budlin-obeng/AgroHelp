@@ -1,0 +1,11 @@
+2026-11-14 17:02:28,162 [INFO] Starting Phase 4 Recommendation Engine master pipeline...
+2026-11-14 17:02:28,163 [INFO] Executing Phase 4 Multi-Criteria Recommendation Engine...
+2026-11-14 17:02:28,214 [INFO] Evaluated Baseline: Composite Score = 51.2 (Profit: GHS 7000.0)
+2026-11-14 17:02:28,215 [INFO] Evaluated Scenario_1: Composite Score = 97.1 (Profit: GHS 23652.0)
+2026-11-14 17:02:28,215 [INFO] Evaluated Scenario_2: Composite Score = 89.1 (Profit: GHS 35730.0)
+2026-11-14 17:02:37,119 [INFO] Saved scenario comparison table to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\recommendations\rotation_scenarios_comparison.csv
+2026-11-14 17:02:37,122 [INFO] Saved detailed scenario scores to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\recommendations\scenario_detailed_scores.json
+2026-11-14 17:02:37,123 [INFO] Loading evaluated scenarios from C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\recommendations\rotation_scenarios_comparison.csv
+2026-11-14 17:02:38,369 [INFO] Saved farmer recommendation cards to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\recommendations\farmer_recommendation_cards.json
+2026-11-14 17:02:38,396 [INFO] Saved recommendation engine metadata to C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\recommendation_engine_metadata.json
+2026-11-14 17:02:38,397 [INFO] Phase 4 Recommendation Engine execution completed successfully.

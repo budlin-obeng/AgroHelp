@@ -1,0 +1,3 @@
+2026-11-14 16:53:33,743 [INFO] Loading Landsat vegetation time series from C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\vegetation\landsat_ejura_vegetation_timeseries.csv
+2026-11-14 16:53:34,570 [INFO] Saved decadal phenology envelope to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\analysis\vegetation_phenology_envelope.csv
+2026-11-14 16:53:34,706 [INFO] Saved annual canopy performance to C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\analysis\annual_canopy_performance.csv

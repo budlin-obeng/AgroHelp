@@ -1,0 +1,51 @@
+{
+  "analysis_phase": "Phase 3: Scientific Analysis & Agricultural Indicators",
+  "location": "Ejura, Ashanti Region, Ghana (Lat: 7.3856, Lon: -1.3562)",
+  "evaluated_crops": [
+    "Maize",
+    "Cassava",
+    "Yam",
+    "Cowpea",
+    "Soybean"
+  ],
+  "output_files": [
+    "data/processed/analysis/rainfall_seasonality_metrics.csv",
+    "data/processed/analysis/dry_spell_events.csv",
+    "data/processed/analysis/rainfall_erosivity_index.csv",
+    "data/processed/analysis/thermal_gdd_heat_stress_daily.csv",
+    "data/processed/analysis/annual_temperature_trends.csv",
+    "data/processed/analysis/soil_water_balance_analysis.csv",
+    "data/processed/analysis/annual_drought_severity.csv",
+    "data/processed/analysis/vegetation_phenology_envelope.csv",
+    "data/processed/analysis/annual_canopy_performance.csv",
+    "data/processed/analysis/crop_suitability_decadal_scores.csv",
+    "data/processed/analysis/crop_suitability_matrix.csv"
+  ],
+  "crop_rankings": [
+    {
+      "crop": "Cassava",
+      "mean_score": 92.8,
+      "overall_suitability_tier": "S1 (Highly Suitable)"
+    },
+    {
+      "crop": "Cowpea",
+      "mean_score": 89.0,
+      "overall_suitability_tier": "S1 (Highly Suitable)"
+    },
+    {
+      "crop": "Maize",
+      "mean_score": 89.0,
+      "overall_suitability_tier": "S1 (Highly Suitable)"
+    },
+    {
+      "crop": "Soybean",
+      "mean_score": 66.9,
+      "overall_suitability_tier": "S2 (Moderately Suitable)"
+    },
+    {
+      "crop": "Yam",
+      "mean_score": 75.1,
+      "overall_suitability_tier": "S2 (Moderately Suitable)"
+    }
+  ]
+}
