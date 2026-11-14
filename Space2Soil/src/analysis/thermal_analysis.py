@@ -101,3 +101,4 @@ def run_thermal_analysis(base_dir):
 if __name__ == "__main__":
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     run_thermal_analysis(base_dir)
+

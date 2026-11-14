@@ -124,3 +124,4 @@ $$S_{\text{crop}} = 0.40 \cdot S_{\text{rainfall}} + 0.35 \cdot S_{\text{soil\_m
 > 1. **Coarse Scale Grid:** Atmospheric variables ($0.5^\circ$, ~50 km) and soil moisture ($9\text{ km}$) represent landscape averages. Local lowlands (inland valley swamps) retain substantially higher soil moisture than upland slopes.
 > 2. **Cloud Gap Masking:** Landsat 30m optical passes suffer from tropical cloud cover during June–August (15.9% clear scene rate). Cloud-filtered Landsat composites must be paired with continuous GPM/POWER daily series.
 > 3. **Model Validation:** Crop suitability scores model biophysical potential. Realized farm yields also depend on fertilizer application, seed variety (e.g., drought-tolerant *Omankwa* maize), and pest control.
+

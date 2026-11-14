@@ -59,6 +59,8 @@ AgroHelp/
 │   ├── DATA_DICTIONARY.md              <- Comprehensive parameter dictionary
 │   ├── DATA_SOURCES.md                 <- NASA mission specs & spatial scale caveats
 │   ├── VALIDATION_REPORT.md            <- Complete decadal validation findings
+│   ├── SCIENTIFIC_METHODOLOGY.md       <- Phase 3 agro-meteorological models & formulas
+│   ├── RECOMMENDATION_SYSTEM.md        <- Phase 4 decision engine & scenario tradeoffs
 │   ├── data/
 │   │   ├── raw/
 │   │   │   ├── nasa_power/             <- Daily raw agroclimatology (JSON & CSV)
@@ -69,14 +71,20 @@ AgroHelp/
 │   │   │   ├── climate/                <- Clean daily & monthly climate series
 │   │   │   ├── rainfall/               <- Clean daily, monthly & extreme event series
 │   │   │   ├── soil_moisture/          <- Clean daily, monthly & drought anomaly series
-│   │   │   └── vegetation/             <- Decadal NDVI/EVI time series & 30m GeoTIFFs
+│   │   │   ├── vegetation/             <- Decadal NDVI/EVI time series & 30m GeoTIFFs
+│   │   │   ├── analysis/               <- Phase 3 analytical metrics & suitability
+│   │   │   └── recommendations/        <- Phase 4 scenario scores & advisory cards
 │   │   └── metadata/                   <- JSON schemas & pipeline validation logs
 │   ├── notebooks/
-│   │   └── space2soil_data_exploration.ipynb  <- Interactive exploratory analysis
+│   │   ├── space2soil_data_exploration.ipynb  <- Phase 2 interactive exploratory analysis
+│   │   ├── phase3_scientific_analysis.ipynb   <- Phase 3 scientific models & suitability
+│   │   └── phase4_recommendation_engine.ipynb <- Phase 4 decision engine & radar comparisons
 │   ├── src/
 │   │   ├── acquisition/                <- Production NASA data acquisition scripts
 │   │   ├── preprocessing/              <- Cleaning, aggregation & anomaly routines
-│   │   └── validation/                 <- Physical integrity & bounds validators
+│   │   ├── validation/                 <- Physical integrity & bounds validators
+│   │   ├── analysis/                   <- Phase 3 scientific analysis modules
+│   │   └── recommendation/             <- Phase 4 multi-criteria decision engine
 │   └── logs/                           <- Verification and execution run logs
 ```
 
@@ -110,7 +118,21 @@ AgroHelp/
 
 ---
 
-## 5. Quickstart & Installation
+## 5. Crop Rotation Recommendation Decision Engine (Phase 4)
+
+Algorithmically evaluates crop sequences against 4 core dimensions: Climate Resilience (30%), Soil Health & Nitrogen (25%), Economic Profitability (25%), and Nutritional Diversity (20%):
+
+| Scenario | Cropping Sequence | Composite Score | Net Profit (GHS/ha) | Net Soil Nitrogen | Ground Cover | Verdict |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **Scenario 1** | Drought Maize + Relay Cassava $\rightarrow$ Cowpea | **97.1** (Rank 1) | **GHS 23,652** ($1,577) | **+15.0 kg N/ha** | 10.0 mo | **Top Resilience Pick** |
+| **Scenario 2** | White Yam + Border Maize $\rightarrow$ Soybean | **89.1** (Rank 2) | **GHS 35,730** ($2,382) | 0.0 kg N/ha | 9.0 mo | **High Commercial Profit** |
+| **Baseline** | Conventional Maize Monoculture | **51.2** (Rank 3) | GHS 7,000 ($467) | -75.0 kg N/ha | 4.5 mo | High Climate Vulnerability |
+
+*See [`Space2Soil/RECOMMENDATION_SYSTEM.md`](Space2Soil/RECOMMENDATION_SYSTEM.md) for full agronomic documentation and explainable farmer advisory cards.*
+
+---
+
+## 6. Quickstart & Installation
 
 ### Requirements
 - Python 3.10+
@@ -119,15 +141,14 @@ AgroHelp/
   pip install -r Space2Soil/requirements.txt
   ```
 
-### Running the Exploration Notebook
-To interactively explore the 10-year decadal climatology, soil moisture drawdown, and vegetation dynamics:
-```bash
-jupyter notebook Space2Soil/notebooks/space2soil_data_exploration.ipynb
-```
+### Interactive Notebooks
+- **Phase 2 Exploration:** `Space2Soil/notebooks/space2soil_data_exploration.ipynb`
+- **Phase 3 Scientific Models:** `Space2Soil/notebooks/phase3_scientific_analysis.ipynb`
+- **Phase 4 Decision Engine:** `Space2Soil/notebooks/phase4_recommendation_engine.ipynb`
 
 ---
 
-## 6. Citation & NASA Attribution
+## 7. Citation & NASA Attribution
 - NASA POWER Project: NASA Langley Research Center (LaRC).
 - NASA GPM IMERG: Goddard Earth Sciences Data and Information Services Center (GES DISC).
 - NASA SMAP: National Snow and Ice Data Center (NSIDC) DAAC.
