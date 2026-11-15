@@ -1,0 +1,45 @@
+{
+  "twins": {
+    "0241234567": {
+      "farmer_id": "0241234567",
+      "phone_number": "0241234567",
+      "full_name": "Kofi Mensah",
+      "location": {
+        "country": "Ghana",
+        "region": "Ashanti",
+        "district": "Ejura-Sekyedumase",
+        "community": "Ejura Central"
+      },
+      "latitude": 7.3912,
+      "longitude": -1.3541,
+      "gps_recorded_on_farm": true,
+      "gps_accuracy_meters": 3.8,
+      "farm_size_hectares": 2.0,
+      "soil_type": "Sandy Loam",
+      "cultivated_crops": [
+        "Maize",
+        "Cassava",
+        "Cowpea",
+        "Watermelon"
+      ],
+      "custom_crops": [
+        "Plantain",
+        "Pepper",
+        "Watermelon"
+      ],
+      "farm_usage": {
+        "monocropping_seasons": 2,
+        "fertilizer_used": "Chemical NPK",
+        "armyworm_attacks": true,
+        "water_source": "Rainfed"
+      },
+      "crop_in_mind": "Cowpea",
+      "target_season": "Major Rainy Season",
+      "created_at": "2026-11-15T06:57:39.141901+00:00",
+      "updated_at": "2026-11-15T07:00:51.983595+00:00"
+    }
+  },
+  "pins": {
+    "0241234567": "1234"
+  }
+}

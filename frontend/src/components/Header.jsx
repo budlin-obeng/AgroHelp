@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2, PhoneCall } from 'lucide-react';
+import { Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2, User, Sparkles } from 'lucide-react';
 
-export default function Header({ onRefresh, isRefreshing = false }) {
+export default function Header({ onRefresh, isRefreshing = false, farmer, onOpenAuthModal }) {
   const [showHelpModal, setShowHelpModal] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ export default function Header({ onRefresh, isRefreshing = false }) {
               <img
                 src="/logo.png"
                 alt="AgroHelp - Smarter Farming. Better Harvest."
-                className="h-9 sm:h-11 w-auto max-w-[190px] sm:max-w-[260px] object-contain"
+                className="h-8 sm:h-10 w-auto max-w-[180px] sm:max-w-[240px] object-contain"
               />
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="text-[11px] sm:text-xs text-emerald-800 font-bold tracking-wide">
@@ -31,23 +31,48 @@ export default function Header({ onRefresh, isRefreshing = false }) {
             </div>
           </div>
 
-          {/* Right Toolbar: Help & Refresh */}
+          {/* Right Toolbar: Digital Twin Pill & Help */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Friendly Location Badge */}
-            <div className="hidden md:flex items-center gap-1.5 bg-emerald-50 px-3.5 py-1.5 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200">
-              <MapPin className="w-3.5 h-3.5 text-amber-500" />
-              <span>Ejura, Ashanti Region</span>
-            </div>
+            {/* Farmer Digital Twin Badge */}
+            {farmer ? (
+              <button
+                type="button"
+                onClick={onOpenAuthModal}
+                className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 rounded-2xl text-left transition"
+                title="View / Edit your Farm Digital Twin"
+              >
+                <div className="w-7 h-7 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-black text-xs shrink-0">
+                  {farmer.full_name?.charAt(0) || 'K'}
+                </div>
+                <div className="hidden sm:block">
+                  <span className="text-xs font-black text-emerald-950 block leading-tight">
+                    {farmer.full_name || 'Kofi Mensah'}
+                  </span>
+                  <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" /> Farm Twin Synced
+                  </span>
+                </div>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={onOpenAuthModal}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition"
+              >
+                <User className="w-3.5 h-3.5" />
+                <span>Create Farm Twin</span>
+              </button>
+            )}
 
             {/* How It Works / Help Button */}
             <button
               type="button"
               onClick={() => setShowHelpModal(!showHelpModal)}
-              className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-xs sm:text-sm transition shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-xs sm:text-sm transition shadow-xs"
               title="Click for simple farming tips"
             >
               <HelpCircle className="w-4 h-4 text-emerald-950" />
-              <span>How To Use</span>
+              <span className="hidden sm:inline">How To Use</span>
             </button>
 
             {/* Refresh / Update Button */}
@@ -56,7 +81,7 @@ export default function Header({ onRefresh, isRefreshing = false }) {
                 type="button"
                 onClick={onRefresh}
                 disabled={isRefreshing}
-                className="p-2.5 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-slate-200 transition disabled:opacity-50"
+                className="p-2 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-slate-200 transition disabled:opacity-50"
                 title="Update Advice"
                 aria-label="Update Advice"
               >

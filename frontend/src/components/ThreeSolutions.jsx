@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { 
   CheckCircle2, AlertTriangle, Sparkles, DollarSign, 
   Droplets, ShieldCheck, Clock, ChevronDown, ChevronUp, 
-  Printer, Share2, HelpCircle 
+  Printer, Share2, HelpCircle, Check, XCircle, AlertCircle, ArrowRight
 } from 'lucide-react';
 import { CropImage } from './CropVisuals';
 
-/**
- * Localized knowledge dictionary with farmer-centric advantages, trade-offs, and planting tips.
- */
 const CROP_GUIDE = {
   cowpea: {
     localName: 'Adua / Ase',
@@ -94,19 +91,19 @@ const CROP_GUIDE = {
     ],
     plantingTip: 'Make large mounds 1 meter high, spaced 1 meter apart. Stake with strong poles to support vine growth.',
   },
-  sorghum: {
-    localName: 'Aburo Koko / Sorghum',
-    daysToHarvest: '100 – 115 days (Drought cereal)',
+  maize: {
+    localName: 'Aburo',
+    daysToHarvest: '100 – 120 days (Field grain staple)',
     advantages: [
-      'Thrives in extreme heat and low rainfall when maize withers',
-      'Naturally suppresses stubborn Striga witchweed in your field',
-      'Strong local market for brewing and morning porridge',
+      'Guaranteed high household consumption and market demand across Ghana',
+      'Familiar agronomy for almost all Ejura farmers',
+      'Rapid sale to local aggregators and poultry millers',
     ],
     tradeoffs: [
-      'Requires bird scaring as grain heads ripen before harvest',
-      'Market price per bag is usually lower than white maize',
+      'Continuous planting exhausts soil nitrogen and invites Armyworms',
+      'High chemical fertilizer requirement if planted without legumes',
     ],
-    plantingTip: 'Sow 3 to 4 seeds per hill at 75 cm by 25 cm spacing. Thin to 2 plants per stand after 2 weeks.',
+    plantingTip: 'Plant 2 seeds per hole at 75 cm by 40 cm. Rotate with cowpea or soybean to maintain yield.',
   },
   rice: {
     localName: 'Emo',
@@ -124,24 +121,26 @@ const CROP_GUIDE = {
   },
 };
 
-/**
- * Normalizes crop names to guide dictionary keys
- */
 function getCropInfo(rawName = '') {
   const lower = rawName.toLowerCase();
-  if (lower.includes('cowpea') || lower.includes('vigna')) return { key: 'cowpea', data: CROP_GUIDE.cowpea };
+  if (lower.includes('cowpea') || lower.includes('vigna') || lower.includes('adua')) return { key: 'cowpea', data: CROP_GUIDE.cowpea };
   if (lower.includes('soybean') || lower.includes('glycine')) return { key: 'soybean', data: CROP_GUIDE.soybean };
-  if (lower.includes('cassava') || lower.includes('manihot')) return { key: 'cassava', data: CROP_GUIDE.cassava };
-  if (lower.includes('groundnut') || lower.includes('peanut') || lower.includes('arachis')) return { key: 'groundnut', data: CROP_GUIDE.groundnut };
+  if (lower.includes('cassava') || lower.includes('bankye')) return { key: 'cassava', data: CROP_GUIDE.cassava };
+  if (lower.includes('groundnut') || lower.includes('peanut') || lower.includes('nkate')) return { key: 'groundnut', data: CROP_GUIDE.groundnut };
   if (lower.includes('pigeon') || lower.includes('cajanus')) return { key: 'pigeonpea', data: CROP_GUIDE.pigeonpea };
-  if (lower.includes('yam') || lower.includes('dioscorea')) return { key: 'yam', data: CROP_GUIDE.yam };
-  if (lower.includes('sorghum')) return { key: 'sorghum', data: CROP_GUIDE.sorghum };
-  if (lower.includes('rice') || lower.includes('oryza')) return { key: 'rice', data: CROP_GUIDE.rice };
+  if (lower.includes('yam') || lower.includes('bayere') || lower.includes('bayer')) return { key: 'yam', data: CROP_GUIDE.yam };
+  if (lower.includes('rice') || lower.includes('emo')) return { key: 'rice', data: CROP_GUIDE.rice };
+  if (lower.includes('maize') || lower.includes('aburo')) return { key: 'maize', data: CROP_GUIDE.maize };
   return { key: 'cowpea', data: CROP_GUIDE.cowpea };
 }
 
-export default function ThreeSolutions({ predictions, isLoading, farmSizeHa = 2.0, currentCrop = 'Maize' }) {
-  const [expandedIndex, setExpandedIndex] = useState(null); // which card has guide drawer open
+export default function ThreeSolutions({
+  feasibilityResult,
+  isLoading,
+  farmSizeHa = 2.0,
+  currentCrop = 'Maize',
+}) {
+  const [expandedIndex, setExpandedIndex] = useState(null);
 
   const farmSizeAcres = Math.round(farmSizeHa * 2.471);
 
@@ -153,280 +152,256 @@ export default function ThreeSolutions({ predictions, isLoading, farmSizeHa = 2.
           <span className="text-2xl absolute">🌱</span>
         </div>
         <h3 className="text-xl font-extrabold text-slate-900">
-          Finding the best 3 solutions for your farm...
+          Running ML Engine & NASA Weather Calibration...
         </h3>
         <p className="text-sm text-slate-500 max-w-md mt-2">
-          Comparing local weather patterns, soil conditions, and pest prevention for Ejura-Sekyedumase...
+          Evaluating soil texture, Fall Armyworm pest cycles, and decadal satellite observations for your farm in Ejura...
         </p>
       </div>
     );
   }
 
-  const rawRecs = predictions?.recommendations || [];
-
-  if (rawRecs.length === 0) {
-    return (
-      <div className="bg-white rounded-3xl p-8 border-2 border-slate-200 text-center">
-        <p className="text-base text-slate-600 font-bold">
-          No crop options found. Tap one of the questions above to refresh.
-        </p>
-      </div>
-    );
-  }
-
-  // =========================================================================
-  // EXTRACT EXACTLY THREE DISTINCT SOLUTIONS
-  // Solution 1: Best Overall (ranked #1 by suitability)
-  // Solution 2: Commercial Income (highest gross margin among remaining)
-  // Solution 3: Drought Shield (highest drought resilience among remaining)
-  // =========================================================================
-  const sol1 = rawRecs[0];
-
-  const poolAfter1 = rawRecs.filter((r) => r.crop_name !== sol1.crop_name);
-  
-  // Sort pool by expected gross margin descending
-  const incomeSorted = [...poolAfter1].sort(
-    (a, b) => (b.expected_gross_margin_ghs_ha || 0) - (a.expected_gross_margin_ghs_ha || 0)
-  );
-  const sol2 = incomeSorted[0] || rawRecs[1] || sol1;
-
-  const poolAfter2 = poolAfter1.filter((r) => r.crop_name !== sol2.crop_name);
-  
-  // Sort remaining by drought resilience descending
-  const droughtSorted = [...poolAfter2].sort(
-    (a, b) => (b.drought_resilience_score || 0) - (a.drought_resilience_score || 0)
-  );
-  const sol3 = droughtSorted[0] || poolAfter1[1] || rawRecs[2] || sol2;
-
-  const solutions = [
-    {
-      slotTitle: 'Solution 1: Best Overall',
-      slotBadge: 'Recommended Choice',
-      badgeClass: 'bg-emerald-600 text-white',
-      accentBorder: 'border-emerald-500 ring-4 ring-emerald-100',
-      headerBg: 'bg-emerald-800 text-white',
-      subCaption: 'Best balance to heal your soil, stop armyworms, and give a healthy harvest',
-      rec: sol1,
-    },
-    {
-      slotTitle: 'Solution 2: Commercial Income',
-      slotBadge: 'Highest Market Cash',
-      badgeClass: 'bg-amber-500 text-slate-950',
-      accentBorder: 'border-amber-400 ring-4 ring-amber-100',
-      headerBg: 'bg-amber-600 text-white',
-      subCaption: 'Top commercial earnings for wholesale market buyers and grain traders',
-      rec: sol2,
-    },
-    {
-      slotTitle: 'Solution 3: Drought Shield',
-      slotBadge: 'Toughest in Dry Weather',
-      badgeClass: 'bg-sky-600 text-white',
-      accentBorder: 'border-sky-400 ring-4 ring-sky-100',
-      headerBg: 'bg-sky-800 text-white',
-      subCaption: 'Withstands irregular rains, mid-season dry spells, and hot sunshine',
-      rec: sol3,
-    },
-  ];
+  const hasCropInMind = feasibilityResult?.has_crop_in_mind;
+  const verdict = feasibilityResult?.verdict;
+  const recommendations = feasibilityResult?.recommendations || [];
 
   return (
-    <div className="space-y-6">
-      {/* Friendly Section Header */}
-      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🌟</span>
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
-              Your 3 Best Crop Rotation Solutions
-            </h2>
-          </div>
-          <p className="text-xs sm:text-sm text-emerald-100 mt-1 max-w-2xl leading-relaxed">
-            Based on your field in Ejura, rotating after <strong className="text-amber-300">{currentCrop}</strong> on{' '}
-            <strong className="text-amber-300">{predictions?.soil_type || 'Sandy Loam'}</strong> soil.
-            Pick the one that fits your household best:
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 bg-emerald-950/60 border border-emerald-700/60 px-4 py-2 rounded-2xl text-xs font-bold text-emerald-200 self-start md:self-auto">
-          <span>Plot Size:</span>
-          <span className="text-amber-300 font-extrabold">{farmSizeAcres} Acres (~{farmSizeHa} Ha)</span>
-        </div>
-      </div>
-
-      {/* Exactly Three Solution Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-        {solutions.map((item, idx) => {
-          const rec = item.rec;
-          const { key, data } = getCropInfo(rec.crop_name);
-          const isDrawerOpen = expandedIndex === idx;
-
-          // Estimated total gross money for the farmer's plot
-          const estimatedMargin = Math.round(rec.expected_gross_margin_ghs_ha * farmSizeHa);
-          const formattedMoney = estimatedMargin.toLocaleString('en-US');
-
-          // Clean simple crop title
-          const cleanCropName = rec.crop_name.split('(')[0].trim();
-
-          return (
-            <div
-              key={item.slotTitle}
-              className={`bg-white rounded-3xl border-2 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 ${item.accentBorder}`}
-            >
-              {/* Card Banner */}
-              <div>
-                <div className={`${item.headerBg} px-5 py-3.5 flex items-center justify-between`}>
-                  <div className="flex items-center gap-2">
-                    <span className="text-base font-black tracking-wide">
-                      {item.slotTitle}
-                    </span>
-                  </div>
-                  <span className={`text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${item.badgeClass}`}>
-                    {item.slotBadge}
-                  </span>
-                </div>
-
-                <div className="p-5 sm:p-6 space-y-5">
-                  {/* Top: Crop Illustration & Name */}
-                  <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-slate-50 rounded-2xl p-2 border border-slate-200 shrink-0 flex items-center justify-center shadow-inner">
-                      <CropImage
-                        name={key}
-                        className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-sm"
-                        alt={cleanCropName}
-                      />
-                    </div>
-
-                    <div>
-                      <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-tight">
-                        {cleanCropName}
-                      </h3>
-                      <span className="inline-block text-xs font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md mt-1 border border-emerald-200">
-                        Local: {data.localName}
-                      </span>
-                      <p className="text-[11px] text-slate-500 mt-1 leading-snug">
-                        {item.subCaption}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Financial & Time Metrics (Farmer Friendly) */}
-                  <div className="grid grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 text-center">
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                        Estimated Harvest Sales
-                      </span>
-                      <span className="text-base sm:text-lg font-black text-emerald-700 block mt-0.5">
-                        ~GH₵ {formattedMoney}
-                      </span>
-                      <span className="text-[10px] text-slate-500 block">
-                        for your {farmSizeAcres} acres
-                      </span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                        Growing Period
-                      </span>
-                      <span className="text-xs sm:text-sm font-black text-slate-800 block mt-1">
-                        {data.daysToHarvest.split('(')[0]}
-                      </span>
-                      <span className="text-[10px] text-emerald-700 font-bold block">
-                        Quick rotation
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* ADVANTAGES LIST (Large, Clean Checkmarks) */}
-                  <div>
-                    <h4 className="text-xs font-black uppercase tracking-wider text-emerald-800 flex items-center gap-1.5 mb-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      Key Advantages for You
-                    </h4>
-                    <ul className="space-y-2">
-                      {data.advantages.map((adv, aIdx) => (
-                        <li key={aIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800">
-                          <span className="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 shrink-0 mt-0.5 font-bold text-[10px]">
-                            ✓
-                          </span>
-                          <span className="leading-snug">{adv}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* TRADE-OFFS / THINGS TO KNOW */}
-                  <div className="bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200">
-                    <h4 className="text-xs font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5 mb-2">
-                      <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-                      Things to Know / Trade-offs
-                    </h4>
-                    <ul className="space-y-1.5">
-                      {data.tradeoffs.map((t, tIdx) => (
-                        <li key={tIdx} className="flex items-start gap-2 text-xs text-amber-950">
-                          <span className="text-amber-600 font-black shrink-0 mt-0.5">&bull;</span>
-                          <span className="leading-snug">{t}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Planting Guide Toggle Drawer */}
-                  {isDrawerOpen && (
-                    <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-xs text-emerald-950 space-y-2 animate-fadeIn">
-                      <h5 className="font-extrabold text-emerald-900 flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4 text-emerald-700" />
-                        Practical Planting & Spacing Tip
-                      </h5>
-                      <p className="leading-relaxed">
-                        {data.plantingTip}
-                      </p>
-                      <div className="pt-2 border-t border-emerald-200 text-[11px] text-emerald-800 font-medium">
-                        Advisor Note: {rec.agronomic_guidance}
-                      </div>
-                    </div>
-                  )}
-                </div>
+    <div className="space-y-8">
+      {/* ========================================================
+          FEASIBILITY VERDICT (When Farmer Has Crop In Mind)
+          ======================================================== */}
+      {hasCropInMind && verdict && (
+        <div
+          className={`rounded-3xl p-6 sm:p-8 border-2 shadow-md transition-all ${
+            verdict.is_approved
+              ? 'bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 text-white border-emerald-500'
+              : 'bg-gradient-to-br from-amber-950 via-slate-900 to-rose-950 text-white border-amber-500'
+          }`}
+        >
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/20">
+            <div className="flex items-start gap-4 sm:gap-5">
+              {/* Crop Photographic Badge */}
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/10 p-1.5 border border-white/30 shadow-md shrink-0 flex items-center justify-center">
+                <CropImage
+                  name={verdict.crop_name}
+                  className="w-full h-full object-cover rounded-xl"
+                  alt={verdict.crop_name}
+                />
               </div>
 
-              {/* Bottom Card Footer Actions */}
-              <div className="p-4 sm:p-5 pt-0">
-                <button
-                  type="button"
-                  onClick={() => setExpandedIndex(isDrawerOpen ? null : idx)}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-300 hover:border-emerald-500 bg-slate-50 hover:bg-emerald-50/50 text-slate-800 hover:text-emerald-900 font-bold text-xs sm:text-sm transition"
+              <div>
+                <span
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-2 shadow-xs ${
+                    verdict.is_approved
+                      ? 'bg-emerald-400 text-emerald-950'
+                      : 'bg-amber-400 text-amber-950'
+                  }`}
                 >
-                  <span>{isDrawerOpen ? 'Hide Planting Tips' : 'Show Planting Tips'}</span>
-                  {isDrawerOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </button>
+                  {verdict.is_approved ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-950" />
+                  ) : (
+                    <AlertTriangle className="w-4 h-4 text-amber-950" />
+                  )}
+                  <span>{verdict.verdict_badge}</span>
+                </span>
+
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  {verdict.verdict_headline}
+                </h2>
+                <p className="text-xs sm:text-sm text-emerald-100 max-w-2xl mt-1 leading-relaxed">
+                  {verdict.explanation}
+                </p>
               </div>
             </div>
-          );
-        })}
-      </div>
 
-      {/* Helpful Companion Footer Banner */}
-      <div className="bg-white rounded-3xl p-5 sm:p-6 border-2 border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <div className="p-2.5 bg-emerald-100 text-emerald-800 rounded-2xl shrink-0 mt-0.5">
-            <CheckCircle2 className="w-5 h-5 text-emerald-700" />
+            <div className="flex items-center gap-2 bg-black/30 border border-white/15 px-4 py-2.5 rounded-2xl text-xs font-bold text-emerald-200 shrink-0">
+              <span>Your Plot:</span>
+              <span className="text-amber-300 font-extrabold">{farmSizeAcres} Acres (~{farmSizeHa} Ha)</span>
+            </div>
           </div>
-          <div>
-            <h4 className="text-sm sm:text-base font-extrabold text-slate-900">
-              Need to share this with your local Extension Officer or farming group?
+
+          {/* 3 Agronomic Reasons */}
+          <div className="pt-6">
+            <h4 className="text-xs font-black uppercase tracking-wider text-amber-300 mb-3">
+              {verdict.is_approved ? 'Why This Crop Matches Your Farm:' : 'Agronomic Concerns on This Field:'}
             </h4>
-            <p className="text-xs text-slate-500 mt-0.5">
-              You can print or save this advice sheet to take to the Ministry of Food and Agriculture (MoFA) office in Ejura.
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {verdict.reasons.map((reason, idx) => (
+                <div
+                  key={idx}
+                  className={`p-4 rounded-2xl border text-xs leading-relaxed flex items-start gap-2.5 ${
+                    verdict.is_approved
+                      ? 'bg-white/10 border-white/15 text-emerald-50'
+                      : 'bg-white/10 border-white/15 text-amber-100'
+                  }`}
+                >
+                  {verdict.is_approved ? (
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  )}
+                  <span>{reason}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Agronomic Guidance Pill */}
+            <div className="mt-4 p-3.5 rounded-2xl bg-black/25 border border-white/15 text-xs text-white/90 flex items-center gap-2">
+              <span className="font-black text-amber-300 shrink-0">Agronomist Tip:</span>
+              <span>{verdict.agronomic_guidance}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          DYNAMIC RECOMMENDATION CARDS (MAXIMUM OF 3)
+          ======================================================== */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+              <span>🌾</span>
+              <span>
+                {hasCropInMind && verdict?.is_approved
+                  ? 'Complementary & Companion Crop Options'
+                  : hasCropInMind && !verdict?.is_approved
+                  ? 'Recommended Alternative Crops for This Plot (Max 3)'
+                  : 'Your Top Crop Rotation Solutions (Max 3)'}
+              </span>
+            </h3>
+            <p className="text-xs text-slate-500">
+              {hasCropInMind && verdict?.is_approved
+                ? 'These companion crops pair well with your planned crop or offer secondary rotation options.'
+                : hasCropInMind && !verdict?.is_approved
+                ? 'These crops heal your soil, break the armyworm cycle, and protect your family income.'
+                : 'Selected by the ML engine using decadal NASA weather and soil health indices.'}
             </p>
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm transition shadow-sm shrink-0 self-start sm:self-auto cursor-pointer"
-        >
-          <Printer className="w-4 h-4 text-emerald-200" />
-          <span>Print / Save Advice</span>
-        </button>
+        {recommendations.length === 0 ? (
+          <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 text-center text-slate-600 font-bold">
+            No alternative crops required. Your planned crop is suitable!
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {recommendations.slice(0, 3).map((rec, idx) => {
+              const { key, data } = getCropInfo(rec.crop_name);
+              const cleanCropName = rec.crop_name.split('(')[0].trim();
+              const isDrawerOpen = expandedIndex === idx;
+
+              const estimatedMargin = Math.round(rec.expected_gross_margin_ghs_ha * farmSizeHa);
+              const formattedMoney = estimatedMargin.toLocaleString('en-US');
+
+              const isTop = idx === 0;
+
+              return (
+                <div
+                  key={rec.crop_name}
+                  className={`bg-white rounded-3xl border-2 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 ${
+                    isTop ? 'border-emerald-500 ring-4 ring-emerald-100' : 'border-slate-200'
+                  }`}
+                >
+                  <div>
+                    {/* Header Banner */}
+                    <div
+                      className={`px-5 py-3.5 flex items-center justify-between ${
+                        isTop ? 'bg-emerald-800 text-white' : 'bg-slate-800 text-white'
+                      }`}
+                    >
+                      <span className="text-sm font-black tracking-wide">
+                        Option {idx + 1}: {isTop ? 'Top Recommendation' : 'Strong Alternative'}
+                      </span>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-400 text-emerald-950">
+                        {rec.suitability_score}% Match
+                      </span>
+                    </div>
+
+                    <div className="p-5 sm:p-6 space-y-4">
+                      {/* Crop Photo & Title */}
+                      <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
+                        <div className="w-20 h-20 bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shrink-0 shadow-inner flex items-center justify-center">
+                          <CropImage
+                            name={key}
+                            className="w-full h-full object-cover"
+                            alt={cleanCropName}
+                          />
+                        </div>
+
+                        <div>
+                          <h4 className="text-lg font-black text-slate-900 leading-tight">
+                            {cleanCropName}
+                          </h4>
+                          <span className="inline-block text-xs font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md mt-1 border border-emerald-200">
+                            Local: {data.localName}
+                          </span>
+                          <span className="text-[11px] text-slate-400 block mt-1">
+                            Harvest in {data.daysToHarvest.split('(')[0]}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Financial Projection */}
+                      <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200/80 text-center">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                          Estimated Harvest Sales
+                        </span>
+                        <span className="text-lg font-black text-emerald-700 block mt-0.5">
+                          ~GH₵ {formattedMoney}
+                        </span>
+                        <span className="text-[10px] text-slate-500 block">
+                          for your {farmSizeAcres} acres
+                        </span>
+                      </div>
+
+                      {/* Main Advantages */}
+                      <div className="space-y-1.5 pt-1">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">
+                          Key Benefits for Soil & Pocket
+                        </span>
+                        {data.advantages.slice(0, 2).map((adv, aIdx) => (
+                          <div key={aIdx} className="flex items-start gap-2 text-xs text-slate-700">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                            <span>{adv}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Trade-off / Watch Out */}
+                      <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
+                        <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                        <span><strong>Thing to Know:</strong> {data.tradeoffs[0]}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Expandable Planting Tip */}
+                  <div className="border-t border-slate-100 p-4 bg-slate-50/50">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedIndex(isDrawerOpen ? null : idx)}
+                      className="w-full flex items-center justify-between text-xs font-bold text-emerald-800 hover:text-emerald-950 transition"
+                    >
+                      <span>{isDrawerOpen ? 'Hide Planting Tip' : 'Show Planting Advice'}</span>
+                      {isDrawerOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </button>
+
+                    {isDrawerOpen && (
+                      <div className="mt-3 pt-3 border-t border-slate-200 text-xs text-slate-700 leading-relaxed bg-white p-3 rounded-xl border border-emerald-100">
+                        <span className="font-bold text-emerald-900 block mb-1">
+                          Agronomic Spacing & Care:
+                        </span>
+                        <p>{data.plantingTip}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

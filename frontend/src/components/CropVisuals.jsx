@@ -1,19 +1,23 @@
 import React from 'react';
+import { Sprout } from 'lucide-react';
 
 /**
- * Image path mapping for high-contrast SVGs in /crops/
+ * Authentic photographic crop imagery for Ejura-Sekyedumase agricultural belt
  */
-export const CROP_IMAGES = {
-  maize: '/crops/maize.svg',
-  cowpea: '/crops/cowpea.svg',
-  groundnut: '/crops/groundnut.svg',
-  soybean: '/crops/soybean.svg',
-  cassava: '/crops/cassava.svg',
-  yam: '/crops/yam.svg',
-  rice: '/crops/rice.svg',
-  pigeonpea: '/crops/cowpea.svg', // Legume pod representation
-  'pigeon pea': '/crops/cowpea.svg',
-  sorghum: '/crops/maize.svg', // Grain stalk representation
+export const CROP_REAL_PHOTOS = {
+  maize: '/crops/maize.jpg',
+  cowpea: '/crops/cowpea.jpg',
+  groundnut: '/crops/groundnut.jpg',
+  soybean: '/crops/soybean.jpg',
+  cassava: '/crops/cassava.jpg',
+  yam: '/crops/yam.jpg',
+  rice: '/crops/rice.jpg',
+  plantain: '/crops/plantain.jpg',
+  pepper: '/crops/pepper.jpg',
+  tomato: '/crops/tomato.jpg',
+  pigeonpea: '/crops/cowpea.jpg',
+  'pigeon pea': '/crops/cowpea.jpg',
+  sorghum: '/crops/maize.jpg',
 };
 
 export const SOIL_IMAGES = {
@@ -37,35 +41,49 @@ export const GOAL_IMAGES = {
  */
 export function normalizeCropKey(name = '') {
   const lower = name.toLowerCase();
-  if (lower.includes('cowpea') || lower.includes('vigna')) return 'cowpea';
+  if (lower.includes('cowpea') || lower.includes('vigna') || lower.includes('beans') || lower.includes('adua')) return 'cowpea';
   if (lower.includes('soybean') || lower.includes('glycine')) return 'soybean';
-  if (lower.includes('groundnut') || lower.includes('peanut') || lower.includes('arachis')) return 'groundnut';
-  if (lower.includes('cassava') || lower.includes('manihot')) return 'cassava';
-  if (lower.includes('yam') || lower.includes('dioscorea')) return 'yam';
-  if (lower.includes('rice') || lower.includes('oryza')) return 'rice';
+  if (lower.includes('groundnut') || lower.includes('peanut') || lower.includes('arachis') || lower.includes('nkate')) return 'groundnut';
+  if (lower.includes('cassava') || lower.includes('manihot') || lower.includes('bankye')) return 'cassava';
+  if (lower.includes('yam') || lower.includes('dioscorea') || lower.includes('bayer')) return 'yam';
+  if (lower.includes('rice') || lower.includes('oryza') || lower.includes('emo')) return 'rice';
+  if (lower.includes('plantain') || lower.includes('borode') || lower.includes('musa')) return 'plantain';
+  if (lower.includes('pepper') || lower.includes('chili') || lower.includes('mako')) return 'pepper';
+  if (lower.includes('tomato') || lower.includes('ntosi')) return 'tomato';
   if (lower.includes('pigeon') || lower.includes('cajanus')) return 'pigeonpea';
   if (lower.includes('sorghum')) return 'sorghum';
-  if (lower.includes('maize') || lower.includes('corn') || lower.includes('zea')) return 'maize';
-  return 'maize';
+  if (lower.includes('maize') || lower.includes('corn') || lower.includes('zea') || lower.includes('aburo')) return 'maize';
+  return lower.trim();
 }
 
 /**
- * Crop Image Component with graceful fallback
+ * Real Photographic Crop Image Component with graceful fallback
  */
-export function CropImage({ name, className = 'w-16 h-16', alt = '' }) {
+export function CropImage({ name, className = 'w-20 h-20', alt = '' }) {
   const key = normalizeCropKey(name);
-  const src = CROP_IMAGES[key] || '/crops/maize.svg';
+  const photoSrc = CROP_REAL_PHOTOS[key];
+
+  if (!photoSrc) {
+    // Custom added crop without pre-bundled photo: display branded badge
+    return (
+      <div className={`rounded-2xl bg-emerald-100 border border-emerald-300 flex flex-col items-center justify-center p-2 text-emerald-900 shadow-xs ${className}`}>
+        <Sprout className="w-8 h-8 text-emerald-600 mb-1" />
+        <span className="text-[10px] font-black uppercase text-center truncate max-w-full">
+          {name || 'Crop'}
+        </span>
+      </div>
+    );
+  }
 
   return (
     <img
-      src={src}
+      src={photoSrc}
       alt={alt || name}
-      className={`object-contain transition-transform duration-200 ${className}`}
-      loading="eager"
+      className={`rounded-2xl object-cover shadow-xs border border-emerald-100 transition-transform duration-200 group-hover:scale-105 ${className}`}
+      loading="lazy"
       onError={(e) => {
-        // Fallback placeholder if missing
         e.currentTarget.onerror = null;
-        e.currentTarget.src = '/crops/maize.svg';
+        e.currentTarget.src = `/crops/${key}.svg`;
       }}
     />
   );
@@ -117,15 +135,3 @@ export const SoilVisual = ({ type, size = 64, className = '' }) => (
 export const GoalVisual = ({ goal, size = 64, className = '' }) => (
   <GoalImage goal={goal} className={`w-[${size}px] h-[${size}px] ${className}`} />
 );
-
-export const CROP_METADATA = {
-  maize: { name: 'Maize / Corn', localName: 'Aburo', family: 'Cereal Grain' },
-  cowpea: { name: 'Cowpea / Beans', localName: 'Adua (Ase)', family: 'Legume' },
-  groundnut: { name: 'Groundnut / Peanuts', localName: 'Nkate (Nkatie)', family: 'Legume' },
-  soybean: { name: 'Soybean', localName: 'Soybean', family: 'Legume' },
-  cassava: { name: 'Cassava', localName: 'Bankye', family: 'Root & Tuber' },
-  yam: { name: 'Yam', localName: 'Bayer (Bayere)', family: 'Tuber' },
-  rice: { name: 'Rice', localName: 'Emo', family: 'Cereal Grain' },
-};
-
-export default CropImage;

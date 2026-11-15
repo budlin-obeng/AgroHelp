@@ -10,10 +10,11 @@ Endpoints:
 
 import logging
 from typing import Optional, List
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, status
 
 from app.config import settings
 from app.core.data_loader import data_loader
+from app.core.digital_twin_store import digital_twin_store
 from app.ml.engine import ml_engine
 from app.schemas.models import (
     CropRotationRequest,
@@ -23,6 +24,16 @@ from app.schemas.models import (
     EnvironmentalProfileResponse,
     PilotDataResponse,
     HealthResponse,
+)
+from app.schemas.farmer import (
+    FarmerRegisterRequest,
+    FarmerLoginRequest,
+    DigitalTwinProfile,
+    DigitalTwinUpdateRequest,
+    AddCustomCropRequest,
+    RecordGPSRequest,
+    CropFeasibilityRequest,
+    CropFeasibilityResponse,
 )
 
 logger = logging.getLogger(__name__)
@@ -214,3 +225,92 @@ def get_pilot_data():
             "Dry Harmattan Season": "December to March (Northeasterly dry winds; post-harvest fallow or drought-hardy pigeon pea)",
         }
     )
+
+
+# ========================================================
+# FARMER AUTH & DIGITAL TWIN ENDPOINTS
+# ========================================================
+
+@router.post("/auth/register", response_model=DigitalTwinProfile, summary="Register Farmer & Create Digital Twin")
+def register_farmer(req: FarmerRegisterRequest):
+    """Creates a new farmer profile and initializes their field Digital Twin."""
+    try:
+        return digital_twin_store.register_farmer(req)
+    except Exception as e:
+        logger.exception("Error registering farmer")
+        raise HTTPException(status_code=500, detail=f"Registration failed: {str(e)}")
+
+@router.post("/auth/login", response_model=DigitalTwinProfile, summary="Login Farmer with Phone & PIN")
+def login_farmer(req: FarmerLoginRequest):
+    """Authenticates farmer using their phone number and 4-digit PIN."""
+    profile = digital_twin_store.login_farmer(req.phone_number, req.pin)
+    if not profile:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid phone number or PIN. For demo access, use phone 0241234567 and PIN 1234."
+        )
+    return profile
+
+@router.get("/farmers/{phone}/digital-twin", response_model=DigitalTwinProfile, summary="Get Farmer Digital Twin")
+def get_farmer_digital_twin(phone: str):
+    """Retrieves farmer digital twin by phone number."""
+    profile = digital_twin_store.get_profile(phone)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Farmer profile not found.")
+    return profile
+
+@router.put("/farmers/{phone}/digital-twin", response_model=DigitalTwinProfile, summary="Update Digital Twin Profile")
+def update_farmer_digital_twin(phone: str, req: DigitalTwinUpdateRequest):
+    """Updates farmer field variables, soil type, crops, or land usage."""
+    profile = digital_twin_store.update_profile(phone, req)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Farmer profile not found.")
+    return profile
+
+@router.post("/farmers/{phone}/custom-crops", response_model=DigitalTwinProfile, summary="Add Custom Farmer Crop")
+def add_custom_crop(phone: str, req: AddCustomCropRequest):
+    """Adds a newly specified crop to the farmer's Digital Twin cultivated crops inventory."""
+    profile = digital_twin_store.add_custom_crop(phone, req.crop_name)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Farmer profile not found.")
+    return profile
+
+@router.post("/farmers/{phone}/record-gps", response_model=DigitalTwinProfile, summary="Record Exact On-Farm GPS")
+def record_on_farm_gps(phone: str, req: RecordGPSRequest):
+    """Updates farmer coordinates with exact live GPS location taken on the farm."""
+    profile = digital_twin_store.record_gps(phone, req.latitude, req.longitude, req.accuracy_meters, req.recorded_on_farm)
+    if not profile:
+        raise HTTPException(status_code=404, detail="Farmer profile not found.")
+    return profile
+
+# ========================================================
+# CROP FEASIBILITY & ADVISORY EVALUATION
+# ========================================================
+
+@router.post("/feasibility/evaluate", response_model=CropFeasibilityResponse, summary="Evaluate Crop Feasibility & Recommendations")
+def evaluate_crop_feasibility(req: CropFeasibilityRequest):
+    """
+    Evaluates whether the farmer's proposed crop matches their field history,
+    soil type, and decadal NASA weather. Returns approval verdict and up to 3 recommendations (max 3).
+    Automatically syncs changes to the farmer's Digital Twin if phone number is provided.
+    """
+    try:
+        res = ml_engine.evaluate_crop_feasibility(req)
+        
+        # If phone provided, auto-sync to Digital Twin
+        if req.phone_number:
+            sync_update = DigitalTwinUpdateRequest(
+                soil_type=req.soil_type,
+                latitude=req.latitude,
+                longitude=req.longitude,
+                gps_recorded_on_farm=req.gps_recorded_on_farm,
+                farm_size_hectares=req.farm_size_hectares,
+                crop_in_mind=req.crop_in_mind,
+                target_season=req.target_season,
+            )
+            digital_twin_store.update_profile(req.phone_number, sync_update)
+
+        return res
+    except Exception as e:
+        logger.exception("Error evaluating crop feasibility")
+        raise HTTPException(status_code=500, detail=f"Feasibility evaluation failed: {str(e)}")
