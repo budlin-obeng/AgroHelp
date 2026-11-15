@@ -152,6 +152,40 @@ class TestSpace2SoilSystem(unittest.TestCase):
         self.assertTrue(os.path.exists(css_path), "styles.css missing.")
         self.assertTrue(os.path.exists(app_py_path), "app.py missing.")
 
+    # ========================================================
+    # PHASE 5+: SOILGRIDS, ECOSTRESS & WHAT-IF SIMULATOR
+    # ========================================================
+    def test_11_soilgrids_data(self):
+        profile_csv = os.path.join(DATA_DIR, 'processed', 'soil_properties', 'soilgrids_ejura_profile.csv')
+        meta_json = os.path.join(DATA_DIR, 'metadata', 'soilgrids_validation_report.json')
+        self.assertTrue(os.path.exists(profile_csv), "SoilGrids profile CSV missing.")
+        self.assertTrue(os.path.exists(meta_json), "SoilGrids metadata JSON missing.")
+        df = pd.read_csv(profile_csv)
+        self.assertEqual(len(df), 40, "SoilGrids should contain 40 rows (8 properties x 5 depths).")
+        self.assertFalse(df['mean_value'].isnull().any(), "SoilGrids contains null values.")
+        with open(meta_json, 'r') as f:
+            meta = json.load(f)
+        self.assertEqual(meta['completeness_pct'], 100.0, "SoilGrids completeness must be 100%.")
+
+    def test_12_ecostress_evapotranspiration(self):
+        daily_csv = os.path.join(DATA_DIR, 'processed', 'evapotranspiration', 'ecostress_ejura_et_daily.csv')
+        seasonal_csv = os.path.join(DATA_DIR, 'processed', 'evapotranspiration', 'ecostress_ejura_seasonal_summary.csv')
+        self.assertTrue(os.path.exists(daily_csv), "ECOSTRESS daily ET CSV missing.")
+        self.assertTrue(os.path.exists(seasonal_csv), "ECOSTRESS seasonal summary CSV missing.")
+        df = pd.read_csv(daily_csv)
+        self.assertEqual(len(df), 3653, "ECOSTRESS daily ET should cover 3,653 days.")
+        self.assertGreater(df['et_mm_day'].mean(), 1.5, "Daily ET should be realistic (> 1.5 mm/day).")
+
+    def test_13_whatif_simulator(self):
+        html_path = os.path.join(WEB_DIR, 'index.html')
+        js_path = os.path.join(WEB_DIR, 'app.js')
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+        with open(js_path, 'r', encoding='utf-8') as f:
+            js = f.read()
+        self.assertIn('view-whatif', html, "What-If simulator tab view missing in index.html.")
+        self.assertIn('runWhatIfSimulation', js, "runWhatIfSimulation function missing in app.js.")
+
 def run_tests():
     suite = unittest.TestLoader().loadTestsFromTestCase(TestSpace2SoilSystem)
     runner = unittest.TextTestRunner(verbosity=2)

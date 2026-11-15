@@ -1,0 +1,37 @@
+{
+  "site": "Ejura, Ghana",
+  "latitude": 7.3856,
+  "longitude": -1.3562,
+  "run_datetime": "2026-11-15T03:58:23.313439Z",
+  "appeears_attempted": false,
+  "appeears_result": null,
+  "auth_status": "no_credentials",
+  "data_source_used": "NASA_POWER_PT_MODEL_ESTIMATE",
+  "statistics": {
+    "mean_annual_et_mm_year": 1025.2,
+    "severe_stress_days_per_year": 0.0,
+    "water_balance": {
+      "annual_rainfall_mm": 1408.7,
+      "annual_et_mm": 1025.2,
+      "annual_water_balance_mm": 383.5,
+      "note": "Positive = water surplus; Negative = water deficit"
+    },
+    "crop_water_requirements": {
+      "maize_requirement_mm_season": 500,
+      "maize_et_major_rainy_mm": 505.6,
+      "maize_adequacy_pct": 101.1,
+      "cassava_requirement_mm_year": 600,
+      "cassava_annual_et_mm": 1025.2,
+      "cassava_adequacy_pct": 170.9,
+      "cowpea_requirement_mm_season": 300,
+      "cowpea_et_minor_rainy_mm": 84.3,
+      "cowpea_adequacy_pct": 28.1
+    }
+  },
+  "output_files": {
+    "daily_et_csv": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\data\\processed\\evapotranspiration\\ecostress_ejura_et_daily.csv",
+    "monthly_et_csv": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\data\\processed\\evapotranspiration\\ecostress_ejura_et_monthly.csv",
+    "seasonal_csv": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\data\\processed\\evapotranspiration\\ecostress_ejura_seasonal_summary.csv",
+    "log_file": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\logs\\acquisition_ecostress.log"
+  }
+}

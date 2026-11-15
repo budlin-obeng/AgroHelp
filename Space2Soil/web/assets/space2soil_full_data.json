@@ -165,5 +165,381 @@
     "drought_days_per_year": 55.7,
     "peak_ndvi_major": 0.74,
     "min_ndvi_harmattan": 0.28
+  },
+  "soilgrid_profile": [
+    {
+      "property": "bdod",
+      "depth_cm": "0-5",
+      "mean_value": 1.44,
+      "uncertainty": 0.05,
+      "unit": "g/cm3",
+      "description": "Bulk Density of fine earth"
+    },
+    {
+      "property": "bdod",
+      "depth_cm": "5-15",
+      "mean_value": 1.48,
+      "uncertainty": 0.05,
+      "unit": "g/cm3",
+      "description": "Bulk Density of fine earth"
+    },
+    {
+      "property": "bdod",
+      "depth_cm": "15-30",
+      "mean_value": 1.52,
+      "uncertainty": 0.04,
+      "unit": "g/cm3",
+      "description": "Bulk Density of fine earth"
+    },
+    {
+      "property": "bdod",
+      "depth_cm": "30-60",
+      "mean_value": 1.56,
+      "uncertainty": 0.05,
+      "unit": "g/cm3",
+      "description": "Bulk Density of fine earth"
+    },
+    {
+      "property": "bdod",
+      "depth_cm": "60-100",
+      "mean_value": 1.55,
+      "uncertainty": 0.04,
+      "unit": "g/cm3",
+      "description": "Bulk Density of fine earth"
+    },
+    {
+      "property": "cec",
+      "depth_cm": "0-5",
+      "mean_value": 29.7,
+      "uncertainty": 1.7,
+      "unit": "mmol(c)/kg",
+      "description": "Cation Exchange Capacity (clay)"
+    },
+    {
+      "property": "cec",
+      "depth_cm": "5-15",
+      "mean_value": 29.2,
+      "uncertainty": 1.8,
+      "unit": "mmol(c)/kg",
+      "description": "Cation Exchange Capacity (clay)"
+    },
+    {
+      "property": "cec",
+      "depth_cm": "15-30",
+      "mean_value": 29.3,
+      "uncertainty": 1.7,
+      "unit": "mmol(c)/kg",
+      "description": "Cation Exchange Capacity (clay)"
+    },
+    {
+      "property": "cec",
+      "depth_cm": "30-60",
+      "mean_value": 28.4,
+      "uncertainty": 1.6,
+      "unit": "mmol(c)/kg",
+      "description": "Cation Exchange Capacity (clay)"
+    },
+    {
+      "property": "cec",
+      "depth_cm": "60-100",
+      "mean_value": 28.8,
+      "uncertainty": 1.6,
+      "unit": "mmol(c)/kg",
+      "description": "Cation Exchange Capacity (clay)"
+    },
+    {
+      "property": "clay",
+      "depth_cm": "0-5",
+      "mean_value": 17.3,
+      "uncertainty": 4.2,
+      "unit": "g/kg",
+      "description": "Clay content"
+    },
+    {
+      "property": "clay",
+      "depth_cm": "5-15",
+      "mean_value": 16.8,
+      "uncertainty": 4.3,
+      "unit": "g/kg",
+      "description": "Clay content"
+    },
+    {
+      "property": "clay",
+      "depth_cm": "15-30",
+      "mean_value": 18.5,
+      "uncertainty": 4.7,
+      "unit": "g/kg",
+      "description": "Clay content"
+    },
+    {
+      "property": "clay",
+      "depth_cm": "30-60",
+      "mean_value": 26.2,
+      "uncertainty": 2.5,
+      "unit": "g/kg",
+      "description": "Clay content"
+    },
+    {
+      "property": "clay",
+      "depth_cm": "60-100",
+      "mean_value": 38.1,
+      "uncertainty": 1.9,
+      "unit": "g/kg",
+      "description": "Clay content"
+    },
+    {
+      "property": "nitrogen",
+      "depth_cm": "0-5",
+      "mean_value": 4.46,
+      "uncertainty": 0.8,
+      "unit": "cg/kg",
+      "description": "Total nitrogen (Kjeldahl)"
+    },
+    {
+      "property": "nitrogen",
+      "depth_cm": "5-15",
+      "mean_value": 5.33,
+      "uncertainty": 0.88,
+      "unit": "cg/kg",
+      "description": "Total nitrogen (Kjeldahl)"
+    },
+    {
+      "property": "nitrogen",
+      "depth_cm": "15-30",
+      "mean_value": 5.04,
+      "uncertainty": 2.16,
+      "unit": "cg/kg",
+      "description": "Total nitrogen (Kjeldahl)"
+    },
+    {
+      "property": "nitrogen",
+      "depth_cm": "30-60",
+      "mean_value": 5.36,
+      "uncertainty": 2.69,
+      "unit": "cg/kg",
+      "description": "Total nitrogen (Kjeldahl)"
+    },
+    {
+      "property": "nitrogen",
+      "depth_cm": "60-100",
+      "mean_value": 5.21,
+      "uncertainty": 2.15,
+      "unit": "cg/kg",
+      "description": "Total nitrogen (Kjeldahl)"
+    },
+    {
+      "property": "phh2o",
+      "depth_cm": "0-5",
+      "mean_value": 6.6,
+      "uncertainty": 0.5,
+      "unit": "pH",
+      "description": "Soil pH in water (H2O)"
+    },
+    {
+      "property": "phh2o",
+      "depth_cm": "5-15",
+      "mean_value": 6.6,
+      "uncertainty": 0.5,
+      "unit": "pH",
+      "description": "Soil pH in water (H2O)"
+    },
+    {
+      "property": "phh2o",
+      "depth_cm": "15-30",
+      "mean_value": 6.5,
+      "uncertainty": 0.5,
+      "unit": "pH",
+      "description": "Soil pH in water (H2O)"
+    },
+    {
+      "property": "phh2o",
+      "depth_cm": "30-60",
+      "mean_value": 6.5,
+      "uncertainty": 0.5,
+      "unit": "pH",
+      "description": "Soil pH in water (H2O)"
+    },
+    {
+      "property": "phh2o",
+      "depth_cm": "60-100",
+      "mean_value": 6.4,
+      "uncertainty": 0.5,
+      "unit": "pH",
+      "description": "Soil pH in water (H2O)"
+    },
+    {
+      "property": "sand",
+      "depth_cm": "0-5",
+      "mean_value": 68.6,
+      "uncertainty": 1.0,
+      "unit": "g/kg",
+      "description": "Sand content"
+    },
+    {
+      "property": "sand",
+      "depth_cm": "5-15",
+      "mean_value": 69.5,
+      "uncertainty": 0.7,
+      "unit": "g/kg",
+      "description": "Sand content"
+    },
+    {
+      "property": "sand",
+      "depth_cm": "15-30",
+      "mean_value": 67.7,
+      "uncertainty": 0.7,
+      "unit": "g/kg",
+      "description": "Sand content"
+    },
+    {
+      "property": "sand",
+      "depth_cm": "30-60",
+      "mean_value": 61.0,
+      "uncertainty": 0.9,
+      "unit": "g/kg",
+      "description": "Sand content"
+    },
+    {
+      "property": "sand",
+      "depth_cm": "60-100",
+      "mean_value": 49.5,
+      "uncertainty": 1.2,
+      "unit": "g/kg",
+      "description": "Sand content"
+    },
+    {
+      "property": "silt",
+      "depth_cm": "0-5",
+      "mean_value": 14.1,
+      "uncertainty": 4.5,
+      "unit": "g/kg",
+      "description": "Silt content"
+    },
+    {
+      "property": "silt",
+      "depth_cm": "5-15",
+      "mean_value": 13.7,
+      "uncertainty": 3.7,
+      "unit": "g/kg",
+      "description": "Silt content"
+    },
+    {
+      "property": "silt",
+      "depth_cm": "15-30",
+      "mean_value": 13.7,
+      "uncertainty": 4.1,
+      "unit": "g/kg",
+      "description": "Silt content"
+    },
+    {
+      "property": "silt",
+      "depth_cm": "30-60",
+      "mean_value": 12.8,
+      "uncertainty": 3.7,
+      "unit": "g/kg",
+      "description": "Silt content"
+    },
+    {
+      "property": "silt",
+      "depth_cm": "60-100",
+      "mean_value": 12.4,
+      "uncertainty": 3.8,
+      "unit": "g/kg",
+      "description": "Silt content"
+    },
+    {
+      "property": "soc",
+      "depth_cm": "0-5",
+      "mean_value": 39.3,
+      "uncertainty": 8.2,
+      "unit": "g/kg",
+      "description": "Soil Organic Carbon"
+    },
+    {
+      "property": "soc",
+      "depth_cm": "5-15",
+      "mean_value": 15.1,
+      "uncertainty": 3.1,
+      "unit": "g/kg",
+      "description": "Soil Organic Carbon"
+    },
+    {
+      "property": "soc",
+      "depth_cm": "15-30",
+      "mean_value": 18.2,
+      "uncertainty": 17.6,
+      "unit": "g/kg",
+      "description": "Soil Organic Carbon"
+    },
+    {
+      "property": "soc",
+      "depth_cm": "30-60",
+      "mean_value": 15.7,
+      "uncertainty": 19.7,
+      "unit": "g/kg",
+      "description": "Soil Organic Carbon"
+    },
+    {
+      "property": "soc",
+      "depth_cm": "60-100",
+      "mean_value": 15.9,
+      "uncertainty": 23.1,
+      "unit": "g/kg",
+      "description": "Soil Organic Carbon"
+    }
+  ],
+  "ecostress_summary": {
+    "data_source": "NASA_POWER_PT_MODEL_ESTIMATE",
+    "model": "Priestley-Taylor (alpha=1.26)",
+    "site": "Ejura, Ghana (7.3856N, 1.3562W)",
+    "mean_annual_et_mm": 1025.2,
+    "severe_stress_days_per_year": 0.0,
+    "seasonal_et": [
+      {
+        "season": "Harmattan",
+        "mean_et_mm_day": 2.777,
+        "mean_pet_mm_day": 2.812,
+        "mean_esi": 0.9813,
+        "total_et_mm": 4202.0,
+        "n_days": 1513,
+        "stress_days_esi_lt04": 0
+      },
+      {
+        "season": "Major_Rainy",
+        "mean_et_mm_day": 2.862,
+        "mean_pet_mm_day": 3.05,
+        "mean_esi": 0.9359,
+        "total_et_mm": 5237.5,
+        "n_days": 1830,
+        "stress_days_esi_lt04": 0
+      },
+      {
+        "season": "Minor_Rainy",
+        "mean_et_mm_day": 2.624,
+        "mean_pet_mm_day": 2.853,
+        "mean_esi": 0.9198,
+        "total_et_mm": 813.4,
+        "n_days": 310,
+        "stress_days_esi_lt04": 0
+      }
+    ],
+    "water_balance": {
+      "annual_rainfall_mm": 1408.7,
+      "annual_et_mm": 1025.2,
+      "annual_water_balance_mm": 383.5,
+      "note": "Positive = water surplus; Negative = water deficit"
+    },
+    "crop_water_requirements": {
+      "maize_requirement_mm_season": 500,
+      "maize_et_major_rainy_mm": 505.6,
+      "maize_adequacy_pct": 101.1,
+      "cassava_requirement_mm_year": 600,
+      "cassava_annual_et_mm": 1025.2,
+      "cassava_adequacy_pct": 170.9,
+      "cowpea_requirement_mm_season": 300,
+      "cowpea_et_minor_rainy_mm": 84.3,
+      "cowpea_adequacy_pct": 28.1
+    },
+    "last_updated": "2026-11-15T03:58:28.384417Z"
   }
 }

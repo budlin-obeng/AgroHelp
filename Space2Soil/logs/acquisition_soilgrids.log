@@ -1,0 +1,24 @@
+[2026-11-15T03:52:02Z] === SoilGrids Acquisition Start ===
+[2026-11-15T03:52:02Z] Fetching: https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-1.3562&lat=7.3856&property=phh2o&property=clay&property=sand&property=silt&property=soc&property=bdod&property=cec&property=nitrogen&depth=0-5cm&depth=5-15cm&depth=15-30cm&depth=30-60cm&depth=60-100cm&value=mean&value=uncertainty
+[2026-11-15T03:52:44Z] API call succeeded.
+[2026-11-15T03:52:44Z] Raw JSON saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\soilgrids\soilgrids_ejura_raw.json
+[2026-11-15T03:52:44Z] Parsed 40 data rows from 8 properties × 5 depths
+[2026-11-15T03:52:44Z] CSV profile saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\soil_properties\soilgrids_ejura_profile.csv
+[2026-11-15T03:52:44Z] Texture class (0-5cm): Unknown
+[2026-11-15T03:52:44Z] pH at 0-5cm: None → Unknown
+[2026-11-15T03:52:44Z] SOC at 0-5cm: None g/kg → Unknown
+[2026-11-15T03:52:44Z] Metadata saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\soilgrids_validation_report.json
+[2026-11-15T03:52:45Z] Web payload updated: C:\Users\RICH\Downloads\nasa\Space2Soil\web\assets\space2soil_full_data.json
+[2026-11-15T03:52:45Z] === SoilGrids Acquisition Complete ===
+[2026-11-15T03:56:22Z] === SoilGrids Acquisition Start ===
+[2026-11-15T03:56:22Z] Fetching from ISRIC SoilGrids REST API for (7.3956, -1.3462)...
+[2026-11-15T03:57:03Z] API call succeeded with 200 OK.
+[2026-11-15T03:57:03Z] Raw JSON saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\soilgrids\soilgrids_ejura_raw.json
+[2026-11-15T03:57:03Z] Parsed 40 data rows from 8 properties × 5 depths
+[2026-11-15T03:57:03Z] CSV profile saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\soil_properties\soilgrids_ejura_profile.csv
+[2026-11-15T03:57:03Z] Texture class (0-5cm): Loam
+[2026-11-15T03:57:03Z] pH at 0-5cm: 6.6 → Neutral
+[2026-11-15T03:57:03Z] SOC at 0-5cm: 39.3 g/kg → Very high
+[2026-11-15T03:57:03Z] Metadata saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\metadata\soilgrids_validation_report.json
+[2026-11-15T03:57:03Z] Web payload updated: C:\Users\RICH\Downloads\nasa\Space2Soil\web\assets\space2soil_full_data.json
+[2026-11-15T03:57:03Z] === SoilGrids Acquisition Complete ===

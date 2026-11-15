@@ -570,3 +570,191 @@ function resetWeights() {
   document.getElementById('slider-nutrition').value = 20;
   recalculateCustomScores();
 }
+
+// ============================================================
+// 10. What-If Climate Scenario Simulator
+// ============================================================
+
+const baselineMonthlyRainfall = [12.4, 38.6, 118.2, 142.5, 178.4, 212.8, 115.6, 92.4, 226.5, 194.2, 62.8, 14.5];
+
+const CROP_PARAMS = {
+  Maize:   { tempThreshold: 25, tempSensitivity: -8,  droughtSensitivity: -6  },
+  Cassava: { tempThreshold: 30, tempSensitivity: -3,  droughtSensitivity: -2  },
+  Cowpea:  { tempThreshold: 28, tempSensitivity: -5,  droughtSensitivity: -4  },
+  Yam:     { tempThreshold: 28, tempSensitivity: -6,  droughtSensitivity: -5  },
+  Soybean: { tempThreshold: 27, tempSensitivity: -7,  droughtSensitivity: -5  }
+};
+
+// Baseline current temperature at Ejura
+const BASE_TEMP_C = 26.83;
+
+let whatifChartInstance = null;
+
+function runWhatIfSimulation() {
+  const tempChange     = parseFloat(document.getElementById('wi-temp').value);
+  const rainfallPct    = parseFloat(document.getElementById('wi-rain').value);
+  const co2Effect      = parseFloat(document.getElementById('wi-co2').value);
+  const cropName       = document.getElementById('wi-crop').value;
+
+  // --- Derived climate metrics ---
+  const newRainfall    = +(1408.9 * (1 + rainfallPct / 100)).toFixed(1);
+  const newHeatDays    = Math.max(0, Math.round(34 + tempChange * 8.5));
+  const newGDD         = Math.round(2847 + tempChange * 180);
+
+  // --- Monthly scenario rainfall ---
+  const scaleFactor = 1 + rainfallPct / 100;
+  const scenarioMonthly = baselineMonthlyRainfall.map(v => +(v * scaleFactor).toFixed(1));
+
+  // --- Crop yield change ---
+  const crop = CROP_PARAMS[cropName];
+  const newTemp = BASE_TEMP_C + tempChange;
+  const excessTemp = Math.max(0, newTemp - crop.tempThreshold);
+  const tempImpact = excessTemp * crop.tempSensitivity;           // % change from heat
+  const rainfallDropUnits = Math.min(0, rainfallPct) / 10;        // only negative rainfall matters for drought
+  const droughtImpact = rainfallDropUnits * crop.droughtSensitivity; // % change from drought
+  const totalYieldChange = +(tempImpact + droughtImpact + co2Effect).toFixed(1);
+
+  // --- Score impact on rotation scenarios ---
+  // Climate resilience sub-score drops proportionally with stress
+  const climateStressFactor = Math.max(0, 1 - (Math.abs(tempChange) * 0.04 + Math.abs(rainfallPct) * 0.004));
+  const baselineScores = { Scenario_1: 97.1, Scenario_2: 89.1, Baseline: 51.2 };
+  const climateWeightFactor = 0.30; // 30% of score is climate resilience
+  const simScores = {};
+  for (const [key, score] of Object.entries(baselineScores)) {
+    // Only the climate resilience portion is penalised
+    const climatePortion = score * climateWeightFactor;
+    const otherPortion   = score * (1 - climateWeightFactor);
+    simScores[key] = +(climatePortion * climateStressFactor + otherPortion).toFixed(1);
+  }
+
+  // --- Update KPI cards ---
+  _wiSetKPI('wi-kpi-rain', newRainfall.toLocaleString(), newRainfall - 1408.9, 'mm', 'wi-kpi-rain-delta');
+  _wiSetKPI('wi-kpi-heat', newHeatDays, newHeatDays - 34, 'days', 'wi-kpi-heat-delta', true);
+  _wiSetKPI('wi-kpi-gdd', newGDD.toLocaleString(), newGDD - 2847, 'GDD', 'wi-kpi-gdd-delta');
+
+  const yieldEl = document.getElementById('wi-kpi-yield');
+  const yieldLabel = document.getElementById('wi-kpi-yield-label');
+  if (yieldEl) yieldEl.textContent = (totalYieldChange >= 0 ? '+' : '') + totalYieldChange;
+  if (yieldLabel) {
+    yieldLabel.textContent = cropName;
+    yieldLabel.className = 'mt-1 text-xs font-semibold ' + (totalYieldChange >= 0 ? 'text-emerald-600' : 'text-red-600');
+  }
+
+  // --- Update monthly rainfall chart ---
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const ctx = document.getElementById('whatifRainfallChart');
+  if (ctx) {
+    if (whatifChartInstance) {
+      whatifChartInstance.destroy();
+    }
+    whatifChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Baseline Rainfall (mm)',
+            data: baselineMonthlyRainfall,
+            backgroundColor: 'rgba(56, 189, 248, 0.45)',
+            borderColor: '#0284c7',
+            borderWidth: 1.5,
+            borderRadius: 3
+          },
+          {
+            label: `Scenario Rainfall (mm) [${rainfallPct >= 0 ? '+' : ''}${rainfallPct}%]`,
+            data: scenarioMonthly,
+            backgroundColor: rainfallPct >= 0 ? 'rgba(167,139,250,0.55)' : 'rgba(251,113,133,0.55)',
+            borderColor: rainfallPct >= 0 ? '#7c3aed' : '#e11d48',
+            borderWidth: 1.5,
+            borderRadius: 3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', labels: { font: { size: 11 } } },
+          tooltip: { padding: 10 }
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: {
+            title: { display: true, text: 'Rainfall (mm)', font: { size: 11 } },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  // --- Impact assessment table ---
+  const tableBody = document.getElementById('wi-impact-table');
+  if (tableBody) {
+    const rows = [
+      { label: 'Scenario 1 — Regenerative Resilience', key: 'Scenario_1', color: 'emerald' },
+      { label: 'Scenario 2 — Commercial Diversification', key: 'Scenario_2', color: 'sky' },
+      { label: 'Baseline — Maize Monoculture', key: 'Baseline', color: 'slate' }
+    ];
+    tableBody.innerHTML = rows.map(r => {
+      const orig = baselineScores[r.key];
+      const sim  = simScores[r.key];
+      const delta = +(sim - orig).toFixed(1);
+      const deltaStr = (delta >= 0 ? '+' : '') + delta;
+      const deltaColor = delta >= 0 ? 'text-emerald-600' : 'text-red-600';
+      const sensitivity = Math.abs(delta) < 1 ? 'Low' : Math.abs(delta) < 3 ? 'Moderate' : Math.abs(delta) < 6 ? 'High' : 'Very High';
+      const sensColor = Math.abs(delta) < 1 ? 'text-emerald-700 bg-emerald-50' : Math.abs(delta) < 3 ? 'text-amber-700 bg-amber-50' : 'text-red-700 bg-red-50';
+      return `<tr>
+        <td class="p-3 font-semibold text-slate-800">${r.label}</td>
+        <td class="p-3 text-slate-600">${orig}</td>
+        <td class="p-3 font-bold text-slate-900">${sim}</td>
+        <td class="p-3 font-bold ${deltaColor}">${deltaStr}</td>
+        <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${sensColor}">${sensitivity}</span></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // --- Interpretation narrative ---
+  const interpEl = document.getElementById('wi-interpretation');
+  if (interpEl) {
+    const tempDir   = tempChange >= 0 ? `warming of +${tempChange.toFixed(1)}°C` : `cooling of ${tempChange.toFixed(1)}°C`;
+    const rainDir   = rainfallPct > 0 ? `${rainfallPct}% wetter` : rainfallPct < 0 ? `${Math.abs(rainfallPct)}% drier` : 'unchanged';
+    const yieldVerb = totalYieldChange >= 0 ? 'improve' : 'decline';
+    const yieldAbs  = Math.abs(totalYieldChange);
+    const co2Text   = co2Effect > 0 ? ` CO₂ fertilization provides a partial +${co2Effect}% yield buffer.` : '';
+    const heatNote  = newHeatDays > 50 ? ` Heat stress is severe at ${newHeatDays} days/year — critically threatening maize pollination and soybean pod fill.` : newHeatDays > 34 ? ` Heat stress rises to ${newHeatDays} days/year, increasing crop thermal load.` : newHeatDays < 34 ? ` Reduced heat stress (${newHeatDays} days/year) lowers thermal load.` : ` Heat stress remains at baseline (34 days/year).`;
+    const rec = totalYieldChange < -15
+      ? 'Immediate adaptation is recommended: shift to deep-rooted Cassava and drought-tolerant Cowpea rotations, increase mulching, and adopt micro-dosing fertilizer strategies.'
+      : totalYieldChange < 0
+      ? 'Moderate adaptation is advisable: prioritize Scenario 1 (Regenerative Resilience) over monoculture, and continue monitoring NASA GPM and SMAP triggers for early-warning dry-spell response.'
+      : 'The simulated climate is relatively benign for Ejura. Continue current Scenario 1 rotation practices and maintain NASA observation monitoring for interannual variability.';
+
+    interpEl.innerHTML = `Under a scenario of <strong>${tempDir}</strong> and rainfall <strong>${rainDir}</strong> (projected annual rainfall: <strong>${newRainfall.toLocaleString()} mm</strong>), 
+      NASA POWER-derived Growing Degree Days reach <strong>${newGDD.toLocaleString()} GDD</strong>.${heatNote} 
+      For <strong>${cropName}</strong>, yield is projected to <strong>${yieldVerb} by ${yieldAbs}%</strong> relative to the decadal 2016–2025 baseline from NASA GPM IMERG and NASA POWER MERRA-2 data.${co2Text} 
+      The climate stress factor reduces the composite rotation scores by up to <strong>${(100 - climateStressFactor * 100).toFixed(1)}%</strong> on the resilience dimension. 
+      <strong>Recommendation:</strong> ${rec}`;
+  }
+
+  // Show results panel
+  const resultsEl = document.getElementById('wi-results');
+  if (resultsEl) resultsEl.classList.remove('hidden');
+
+  if (window.lucide) lucide.createIcons();
+}
+
+function _wiSetKPI(valId, val, delta, unit, deltaId, higherIsBad = false) {
+  const el = document.getElementById(valId);
+  const dEl = document.getElementById(deltaId);
+  if (el) el.textContent = typeof val === 'number' ? val.toLocaleString() : val;
+  if (dEl) {
+    const isPositive = delta > 0;
+    const isGood = higherIsBad ? !isPositive : isPositive;
+    const color = delta === 0 ? 'text-slate-500' : isGood ? 'text-emerald-600' : 'text-red-600';
+    const prefix = isPositive ? '+' : '';
+    dEl.textContent = delta !== 0 ? `${prefix}${typeof delta === 'number' ? delta.toFixed(1) : delta} ${unit} vs baseline` : 'No change from baseline';
+    dEl.className = `mt-1 text-xs font-semibold ${color}`;
+  }
+}
+

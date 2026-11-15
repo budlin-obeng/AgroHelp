@@ -5,7 +5,7 @@
 **Pilot Study Region:** Ejura, Ashanti Region, Ghana (`7.3856° N, -1.3562° W`)  
 **Historical Climatological Baseline:** 2016 – 2025 (10-Year Decadal Dataset, 3,653 Days)  
 **Target Repository:** [github.com/budlin-obeng/AgroHelp](https://github.com/budlin-obeng/AgroHelp)  
-**Test Suite Status:** **10/10 Automated Tests Passing (100% Verified)**
+**Test Suite Status:** **13/13 Automated Tests Passing (100% Verified)**
 
 ---
 
@@ -64,8 +64,8 @@ flowchart TD
 | **Phase 2** | **Data Acquisition & Preprocessing** | 10-Year Decadal NASA records (POWER, GPM, SMAP, Landsat), 30 m GeoTIFFs, validation reports. | **Completed** |
 | **Phase 3** | **Scientific Analysis & Indicators** | Bimodal onset/cessation, GDD, RAW soil balance, MFI erosivity ($143.2$), crop suitability matrix. | **Completed** |
 | **Phase 4** | **Recommendation Engine & Models** | AHP multi-criteria scoring, 3 rotation scenarios, XAI advisory cards, nitrogen & carbon budget. | **Completed** |
-| **Phase 5** | **Application Development** | Interactive web dashboard (`web/index.html`), Leaflet map explorer, Chart.js radar, zero-dependency REST server (`app.py`). | **Completed** |
-| **Phase 6** | **Testing & Competition Pitch** | 10/10 automated tests passing (`test_end_to_end.py`), comprehensive validation report, 3-minute video pitch script (`PRESENTATION.md`). | **Completed** |
+| **Phase 5** | **Application Development** | Interactive web dashboard (`web/index.html`), Leaflet map explorer, Chart.js radar, zero-dependency REST server (`app.py`), and **What-If Climate Simulator** (±temp, ±precip, crop yield projections). | **Completed** |
+| **Phase 6** | **Testing & Competition Pitch** | 13/13 automated tests passing (`test_end_to_end.py`), full QA report, NASA ECOSTRESS ET, ISRIC SoilGrids v2.0 profiles, and 3-minute video pitch script (`PRESENTATION.md`). | **Completed** |
 
 ---
 
@@ -139,7 +139,7 @@ Simply open `Space2Soil/web/index.html` in any modern web browser (Chrome, Firef
 
 ## 7. Running the Automated Test Suite (Phase 6)
 
-To execute the end-to-end automated test suite across all 10 unit and integration checks:
+To execute the end-to-end automated test suite across all 13 unit and integration checks:
 
 ```bash
 cd Space2Soil
@@ -158,9 +158,12 @@ test_07_rotation_scenarios_comparison ... ok
 test_08_xai_farmer_cards ... ok
 test_09_web_assets ... ok
 test_10_app_entrypoint_and_html ... ok
+test_11_soilgrids_data ... ok
+test_12_ecostress_evapotranspiration ... ok
+test_13_whatif_simulator ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 0.209s
+Ran 13 tests in 1.544s
 
 OK
 ```
@@ -172,3 +175,5 @@ OK
 - **NASA GPM IMERG:** Goddard Earth Sciences Data and Information Services Center (GES DISC).
 - **NASA SMAP:** National Snow and Ice Data Center (NSIDC) DAAC.
 - **USGS / NASA Landsat:** USGS EROS Center / Microsoft Planetary Computer STAC.
+- **NASA ECOSTRESS:** NASA LP DAAC (Land Processes Distributed Active Archive Center).
+- **ISRIC SoilGrids:** World Soil Information (ISRIC v2.0 Global Digital Soil Mapping).
