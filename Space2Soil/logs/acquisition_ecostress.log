@@ -1,0 +1,28 @@
+2026-11-15 03:58:23,280 [INFO] ============================================================
+2026-11-15 03:58:23,280 [INFO] ECOSTRESS Acquisition Script — Space2Soil / Ejura
+2026-11-15 03:58:23,284 [INFO] ============================================================
+2026-11-15 03:58:23,313 [INFO] EARTHDATA credentials not set.
+To acquire real ECOSTRESS data via AppEEARS:
+  1. Register free at: https://urs.earthdata.nasa.gov/
+  2. Set env vars: EARTHDATA_USER=<user> EARTHDATA_PASS=<pass>
+  3. Re-run this script
+Proceeding with Priestley-Taylor model (ECOSTRESS-equivalent) …
+2026-11-15 03:58:23,314 [INFO] Generating ET dataset via Priestley-Taylor model …
+2026-11-15 03:58:23,314 [INFO] Loading NASA POWER climate data: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\climate\nasa_power_ejura_daily_clean.csv
+2026-11-15 03:58:26,619 [INFO] PT-model ET computed for 3653 days
+2026-11-15 03:58:26,887 [INFO] Daily ET saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\evapotranspiration\ecostress_ejura_et_daily.csv  (3653 rows)
+2026-11-15 03:58:27,660 [INFO] Monthly ET saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\evapotranspiration\ecostress_ejura_et_monthly.csv
+2026-11-15 03:58:27,772 [INFO] Seasonal summary saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\evapotranspiration\ecostress_ejura_seasonal_summary.csv
+2026-11-15 03:58:27,775 [INFO] Loading GPM rainfall: C:\Users\RICH\Downloads\nasa\Space2Soil\data\processed\rainfall\gpm_ejura_daily_clean.csv
+2026-11-15 03:58:27,953 [INFO] Mean annual ET: 1025.2 mm/year
+2026-11-15 03:58:27,954 [INFO] Severe stress days (ESI<0.4): 0.0 days/year
+2026-11-15 03:58:27,954 [INFO] Annual water balance: {'annual_rainfall_mm': np.float64(1408.7), 'annual_et_mm': np.float64(1025.2), 'annual_water_balance_mm': np.float64(383.5), 'note': 'Positive = water surplus; Negative = water deficit'}
+2026-11-15 03:58:27,955 [INFO] Acquisition log saved: C:\Users\RICH\Downloads\nasa\Space2Soil\data\raw\ecostress\ecostress_ejura_acquisition_log.json
+2026-11-15 03:58:28,387 [INFO] Web payload updated: C:\Users\RICH\Downloads\nasa\Space2Soil\web\assets\space2soil_full_data.json
+2026-11-15 03:58:28,387 [INFO] ============================================================
+2026-11-15 03:58:28,387 [INFO] ECOSTRESS acquisition complete.
+2026-11-15 03:58:28,387 [INFO]   Data source:            NASA_POWER_PT_MODEL_ESTIMATE
+2026-11-15 03:58:28,387 [INFO]   Mean annual ET:         1025.2 mm/year
+2026-11-15 03:58:28,388 [INFO]   Stress days/year:       0.0 (ESI < 0.4)
+2026-11-15 03:58:28,388 [INFO]   Annual water balance:   383.5 mm/year
+2026-11-15 03:58:28,388 [INFO] ============================================================

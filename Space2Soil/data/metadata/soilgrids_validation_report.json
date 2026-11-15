@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-11-15T03:57:03.394094Z",
+  "source": "ISRIC SoilGrids v2.0 REST API",
+  "location": "Ejura Agricultural Farm Parcel, Ashanti Region, Ghana",
+  "coordinates": {
+    "lat": 7.3956,
+    "lon": -1.3462
+  },
+  "properties_fetched": [
+    "phh2o",
+    "clay",
+    "sand",
+    "silt",
+    "soc",
+    "bdod",
+    "cec",
+    "nitrogen"
+  ],
+  "depths_fetched": [
+    "0-5cm",
+    "5-15cm",
+    "15-30cm",
+    "30-60cm",
+    "60-100cm"
+  ],
+  "total_data_points": 40,
+  "non_null_points": 40,
+  "completeness_pct": 100.0,
+  "file_sizes": {
+    "raw_json_bytes": 14233,
+    "profile_csv_bytes": 1970
+  },
+  "agronomic_findings": {
+    "texture_class": "Loam",
+    "clay_g_per_kg_0_5cm": 17.3,
+    "sand_g_per_kg_0_5cm": 68.6,
+    "silt_g_per_kg_0_5cm": 14.1,
+    "pH_at_0_5cm": 6.6,
+    "pH_class": "Neutral",
+    "SOC_g_per_kg_0_5cm": 39.3,
+    "SOC_class": "Very high"
+  },
+  "files": {
+    "raw_json": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\data\\raw\\soilgrids\\soilgrids_ejura_raw.json",
+    "profile_csv": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\data\\processed\\soil_properties\\soilgrids_ejura_profile.csv",
+    "metadata_json": "C:\\Users\\RICH\\Downloads\\nasa\\Space2Soil\\data\\metadata\\soilgrids_validation_report.json"
+  }
+}

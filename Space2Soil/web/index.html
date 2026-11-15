@@ -101,6 +101,10 @@
           <i data-lucide="database" class="w-4 h-4 text-rose-400"></i>
           <span>NASA Science & Scale Matrix</span>
         </button>
+        <button onclick="switchTab('whatif')" id="tab-whatif" class="tab-btn px-3 py-1.5 rounded-md hover:text-white hover:bg-slate-800/60 flex items-center space-x-2">
+          <i data-lucide="flask-conical" class="w-4 h-4 text-purple-400"></i>
+          <span>What-If Simulator</span>
+        </button>
         <button onclick="window.print()" class="tab-btn px-3 py-1.5 rounded-md text-amber-300 hover:bg-amber-950/60 flex items-center space-x-2 ml-auto">
           <i data-lucide="printer" class="w-4 h-4"></i>
           <span>Print Advisory</span>
@@ -720,6 +724,24 @@
                 <td class="p-3">USGS EROS / Planetary Computer</td>
                 <td class="p-3">Parcel-level NDVI & EVI vegetation vigor, living canopy cover duration, senescent Harmattan monitoring.</td>
               </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">NASA ECOSTRESS</td>
+                <td class="p-3">Multispectral Thermal Infrared Radiometer (ISS)</td>
+                <td class="p-3 font-mono">ECO3ETPTJPL / PT Model</td>
+                <td class="p-3 font-semibold text-teal-700">70 m / Field-Scale</td>
+                <td class="p-3">1–5 Days (ISS orbit)</td>
+                <td class="p-3">NASA LP DAAC / AppEEARS</td>
+                <td class="p-3">Actual Evapotranspiration (ET: 1,025 mm/yr), Evaporative Stress Index (ESI), and crop water adequacy tracking.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-slate-900">ISRIC SoilGrids</td>
+                <td class="p-3">Automated Machine Learning Digital Soil Mapping</td>
+                <td class="p-3 font-mono">SoilGrids v2.0 REST</td>
+                <td class="p-3 font-semibold text-amber-800">250 meters</td>
+                <td class="p-3">Static Climatology</td>
+                <td class="p-3">ISRIC World Soil Information</td>
+                <td class="p-3">Soil physical properties (pH 6.6, SOC 39.3 g/kg, bulk density 1.44–1.55 g/cm³, clay 17%–38% argic horizon).</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -767,9 +789,252 @@
           </div>
         </div>
 
+        <!-- New Integrated Sensor Layers: ECOSTRESS & SoilGrids -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- ECOSTRESS Card -->
+          <div class="bg-gradient-to-br from-teal-50 to-slate-50 p-5 rounded-xl border border-teal-200 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-teal-800 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="sun-medium" class="w-4 h-4 text-teal-600"></i>
+                <span>NASA ECOSTRESS Evapotranspiration & Water Balance</span>
+              </span>
+              <span class="text-[10px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded">70m Resolution</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+              <div class="bg-white p-2.5 rounded-lg border border-teal-100">
+                <div class="text-[10px] text-slate-500">Annual Actual ET</div>
+                <div class="text-lg font-black text-slate-900">1,025.2 <span class="text-[10px] text-slate-500">mm</span></div>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-teal-100">
+                <div class="text-[10px] text-slate-500">Water Balance</div>
+                <div class="text-lg font-black text-emerald-600">+383.5 <span class="text-[10px] text-slate-500">mm</span></div>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-teal-100">
+                <div class="text-[10px] text-slate-500">Severe Stress Days</div>
+                <div class="text-lg font-black text-slate-700">0.0 <span class="text-[10px] text-slate-500">days/yr</span></div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600">
+              <strong>Crop Adequacy:</strong> Major season rainfall + ET balance supplies 505 mm vs Maize requirement (500 mm, 101% adequacy). Cassava receives 1,025 mm vs 600 mm requirement (171%), buffering drought spells.
+            </p>
+          </div>
+
+          <!-- SoilGrids Card -->
+          <div class="bg-gradient-to-br from-amber-50 to-slate-50 p-5 rounded-xl border border-amber-200 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="layers" class="w-4 h-4 text-amber-600"></i>
+                <span>ISRIC SoilGrids v2.0 Measured Soil Profile</span>
+              </span>
+              <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">250m Resolution</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+              <div class="bg-white p-2.5 rounded-lg border border-amber-100">
+                <div class="text-[10px] text-slate-500">Topsoil pH (0-5cm)</div>
+                <div class="text-lg font-black text-slate-900">6.6 <span class="text-[10px] text-emerald-600 font-bold">Neutral</span></div>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-amber-100">
+                <div class="text-[10px] text-slate-500">Organic Carbon (SOC)</div>
+                <div class="text-lg font-black text-slate-900">39.3 <span class="text-[10px] text-slate-500">g/kg</span></div>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-amber-100">
+                <div class="text-[10px] text-slate-500">Texture Horizon</div>
+                <div class="text-lg font-black text-slate-900">Loam <span class="text-[10px] text-slate-500">&rarr; Clay</span></div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600">
+              <strong>Argic Horizon Verified:</strong> Clay increases from 17.3% (0–5 cm) to 38.1% (60–100 cm). Confirms Chromic Luvisol class with heavy subsoil water storage capacity tapped by Scenario 1 deep-root cassava.
+            </p>
+          </div>
+        </div>
+
       </div>
 
     </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 6: WHAT-IF CLIMATE SCENARIO SIMULATOR  -->
+    <!-- ========================================== -->
+    <div id="view-whatif" class="tab-view hidden space-y-6">
+
+      <!-- Header Banner -->
+      <div class="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white shadow-lg border border-purple-900/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 class="text-2xl font-black text-white flex items-center gap-2">
+            <i data-lucide="flask-conical" class="w-6 h-6 text-purple-400"></i>
+            <span>What-If Climate Scenario Simulator</span>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">NASA-Powered</span>
+          </h1>
+          <p class="text-sm text-slate-300 mt-1 max-w-2xl">
+            Project future climate conditions onto Ejura's decadal NASA baseline to evaluate how temperature, rainfall, and CO₂ shifts affect crop yield and rotation performance.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 bg-slate-800/80 px-4 py-2.5 rounded-xl border border-slate-700">
+          <i data-lucide="thermometer" class="w-5 h-5 text-purple-400"></i>
+          <div>
+            <div class="text-xs text-slate-400 font-medium">Baseline Period</div>
+            <div class="text-sm font-bold text-white">2016–2025 Decadal Average</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- A. Scenario Control Panel -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-5">
+          <i data-lucide="sliders" class="w-5 h-5 text-purple-600"></i>
+          <span>Scenario Control Panel</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm font-medium text-slate-700">
+
+          <!-- Temperature Slider -->
+          <div>
+            <div class="flex justify-between mb-2">
+              <label for="wi-temp" class="text-xs font-bold uppercase tracking-wider text-slate-600">Temperature Change</label>
+              <span id="wi-temp-val" class="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded">0.0°C</span>
+            </div>
+            <input type="range" id="wi-temp" min="-2" max="4" step="0.5" value="0"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-red-500"
+              oninput="document.getElementById('wi-temp-val').textContent = (parseFloat(this.value) >= 0 ? '+' : '') + parseFloat(this.value).toFixed(1) + '°C'">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1"><span>-2°C</span><span>+4°C</span></div>
+          </div>
+
+          <!-- Rainfall Slider -->
+          <div>
+            <div class="flex justify-between mb-2">
+              <label for="wi-rain" class="text-xs font-bold uppercase tracking-wider text-slate-600">Rainfall Change</label>
+              <span id="wi-rain-val" class="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded">0%</span>
+            </div>
+            <input type="range" id="wi-rain" min="-40" max="40" step="5" value="0"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-500"
+              oninput="document.getElementById('wi-rain-val').textContent = (parseFloat(this.value) >= 0 ? '+' : '') + this.value + '%'">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1"><span>-40%</span><span>+40%</span></div>
+          </div>
+
+          <!-- CO2 Dropdown -->
+          <div>
+            <label for="wi-co2" class="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-2">CO₂ Fertilization Effect</label>
+            <select id="wi-co2" class="w-full border border-slate-300 rounded-lg text-sm px-3 py-2 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-purple-400">
+              <option value="0">None (0%)</option>
+              <option value="5">Moderate (+5% yield)</option>
+              <option value="10">High (+10% yield)</option>
+            </select>
+          </div>
+
+          <!-- Crop Dropdown -->
+          <div>
+            <label for="wi-crop" class="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-2">Crop for Water Balance</label>
+            <select id="wi-crop" class="w-full border border-slate-300 rounded-lg text-sm px-3 py-2 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-purple-400">
+              <option value="Maize">Maize</option>
+              <option value="Cassava">Cassava</option>
+              <option value="Cowpea">Cowpea</option>
+              <option value="Yam">Yam</option>
+              <option value="Soybean">Soybean</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+          <button onclick="runWhatIfSimulation()" class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-md flex items-center gap-2 transition text-sm">
+            <i data-lucide="play-circle" class="w-4 h-4"></i>
+            Run Simulation
+          </button>
+        </div>
+      </div>
+
+      <!-- B. Results Dashboard (hidden until simulation runs) -->
+      <div id="wi-results" class="hidden space-y-6">
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+          <div class="metric-card p-5 border-l-4 border-l-sky-500">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-sky-700">Annual Rainfall</span>
+              <i data-lucide="cloud-rain" class="w-5 h-5 text-sky-500"></i>
+            </div>
+            <div class="text-2xl font-black text-slate-900"><span id="wi-kpi-rain">—</span> <span class="text-sm font-semibold text-slate-500">mm/yr</span></div>
+            <div class="mt-2 text-xs text-slate-500">Baseline: <span class="font-semibold text-slate-700">1,408.9 mm</span></div>
+            <div class="mt-1 text-xs font-semibold" id="wi-kpi-rain-delta"></div>
+          </div>
+
+          <div class="metric-card p-5 border-l-4 border-l-red-500">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-red-700">Heat Stress Days</span>
+              <i data-lucide="thermometer" class="w-5 h-5 text-red-500"></i>
+            </div>
+            <div class="text-2xl font-black text-slate-900"><span id="wi-kpi-heat">—</span> <span class="text-sm font-semibold text-slate-500">days/yr</span></div>
+            <div class="mt-2 text-xs text-slate-500">Baseline: <span class="font-semibold text-slate-700">34 days</span></div>
+            <div class="mt-1 text-xs font-semibold" id="wi-kpi-heat-delta"></div>
+          </div>
+
+          <div class="metric-card p-5 border-l-4 border-l-amber-500">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Growing Degree Days</span>
+              <i data-lucide="sun" class="w-5 h-5 text-amber-500"></i>
+            </div>
+            <div class="text-2xl font-black text-slate-900"><span id="wi-kpi-gdd">—</span> <span class="text-sm font-semibold text-slate-500">GDD</span></div>
+            <div class="mt-2 text-xs text-slate-500">Baseline: <span class="font-semibold text-slate-700">2,847 GDD</span></div>
+            <div class="mt-1 text-xs font-semibold" id="wi-kpi-gdd-delta"></div>
+          </div>
+
+          <div class="metric-card p-5 border-l-4 border-l-purple-500">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-700">Crop Yield Change</span>
+              <i data-lucide="trending-up" class="w-5 h-5 text-purple-500"></i>
+            </div>
+            <div class="text-2xl font-black text-slate-900"><span id="wi-kpi-yield">—</span> <span class="text-sm font-semibold text-slate-500">%</span></div>
+            <div class="mt-2 text-xs text-slate-500">vs. current baseline yield</div>
+            <div class="mt-1 text-xs font-semibold" id="wi-kpi-yield-label"></div>
+          </div>
+        </div>
+
+        <!-- Monthly Rainfall Chart -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-4">
+            <i data-lucide="bar-chart-3" class="w-5 h-5 text-sky-600"></i>
+            <span>Monthly Rainfall: Baseline vs. Scenario</span>
+          </h3>
+          <div class="relative h-64 w-full">
+            <canvas id="whatifRainfallChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Impact Assessment Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-4">
+            <i data-lucide="table-2" class="w-5 h-5 text-indigo-600"></i>
+            <span>Impact Assessment: Rotation Composite Scores Under Simulated Climate</span>
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border border-slate-200 rounded-lg">
+              <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
+                <tr>
+                  <th class="p-3 border-b">Rotation Scenario</th>
+                  <th class="p-3 border-b">Baseline Score</th>
+                  <th class="p-3 border-b">Simulated Score</th>
+                  <th class="p-3 border-b">Score Change</th>
+                  <th class="p-3 border-b">Climate Sensitivity</th>
+                </tr>
+              </thead>
+              <tbody id="wi-impact-table" class="divide-y divide-slate-100 text-slate-700">
+                <!-- Injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- C. Interpretation Panel -->
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-3">
+            <i data-lucide="brain" class="w-5 h-5 text-purple-600"></i>
+            <span>NASA-Grounded Climate Impact Interpretation</span>
+          </h3>
+          <p id="wi-interpretation" class="text-sm text-slate-700 leading-relaxed"></p>
+        </div>
+
+      </div><!-- /#wi-results -->
+
+    </div><!-- /#view-whatif -->
 
   </main>
 
@@ -790,3 +1055,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+

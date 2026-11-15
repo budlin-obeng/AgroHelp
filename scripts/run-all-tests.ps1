@@ -1,4 +1,4 @@
-# AgroHelp Master Test Runner
+﻿# AgroHelp Master Test Runner
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "Running AgroHelp & Space2Soil Consolidated Test Suites" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
@@ -6,8 +6,8 @@ Write-Host "==========================================================" -Foregro
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RootDir = Join-Path $ScriptDir ".."
 
-# 1. Run Space2Soil End-to-End Test Suite (10 Tests)
-Write-Host "`n[1/2] Executing Space2Soil End-to-End System Tests (10 Tests)..." -ForegroundColor Yellow
+# 1. Run Space2Soil End-to-End Test Suite (13 Tests, including ECOSTRESS & SoilGrids)
+Write-Host "`n[1/2] Executing Space2Soil End-to-End System Tests (13 Tests)..." -ForegroundColor Yellow
 $Space2SoilDir = Join-Path $RootDir "Space2Soil"
 Push-Location $Space2SoilDir
 python src/validation/test_end_to_end.py
@@ -25,8 +25,8 @@ Pop-Location
 # Consolidated Summary
 Write-Host "`n==========================================================" -ForegroundColor Cyan
 if ($Space2SoilExit -eq 0 -and $BackendExit -eq 0) {
-    Write-Host "ALL 27 TESTS PASSED SUCCESSFULLY! (100% Pass Rate)" -ForegroundColor Green
-    Write-Host "• Space2Soil End-to-End Tests: PASS (10/10)" -ForegroundColor Green
+    Write-Host "ALL 30 TESTS PASSED SUCCESSFULLY! (100% Pass Rate)" -ForegroundColor Green
+    Write-Host "• Space2Soil End-to-End Tests: PASS (13/13)" -ForegroundColor Green
     Write-Host "• AgroHelp Backend ML Tests:  PASS (17/17)" -ForegroundColor Green
 } else {
     Write-Host "SOME TESTS FAILED! Check the logs above." -ForegroundColor Red

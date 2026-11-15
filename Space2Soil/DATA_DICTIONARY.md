@@ -75,3 +75,29 @@ This data dictionary defines all raw, cleaned, and derived variables across the 
 | `EVI` | Float32 | Index \([-1.0, 1.0]\) | 30 m | \(2.5 \cdot \frac{\text{NIR} - \text{Red}}{\text{NIR} + 6.0 \cdot \text{Red} - 7.5 \cdot \text{Blue} + 1.0}\). Enhanced vegetation index, reduces soil background and atmospheric saturation in dense canopies. |
 | `cloud_mask_valid` | Boolean | True / False | 30 m | Pixel quality QA mask indicating clear sky land surface (free of cloud, cloud shadow, cirrus, or saturation). |
 
+---
+
+## 5. Evapotranspiration & Plant Water Stress (NASA ECOSTRESS / PT Model)
+
+| Variable Name | Data Type | Units | Sensor / Model | Physical Bounds | Description & Agricultural Value |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `et_mm_day` | Float64 | \(mm \cdot day^{-1}\) | ECOSTRESS / Priestley-Taylor | \(0.0\) to \(15.0\) | Daily actual crop evapotranspiration. Quantifies water consumption of crops and soil evaporation. |
+| `pet_mm_day` | Float64 | \(mm \cdot day^{-1}\) | Penman-Monteith Reference | \(0.0\) to \(20.0\) | Daily potential evapotranspiration under well-watered reference conditions. |
+| `evaporative_stress_index` | Float64 | Ratio \([0.0, 1.0]\) | \(ET / PET\) | \(0.0\) to \(1.0\) | Evaporative Stress Index (ESI). Values \(< 0.4\) indicate severe moisture limitation and stomatal closure. |
+| `annual_water_balance_mm` | Float64 | \(mm \cdot year^{-1}\) | GPM Rainfall \(-\) ET | \(-500\) to \(+1500\) | Net hydrological balance. Positive indicates recharge surplus; negative indicates drought deficit. |
+
+---
+
+## 6. Soil Physical & Chemical Properties (ISRIC SoilGrids v2.0)
+
+| Variable Name | Data Type | Units | Sampling Depths | Resolution | Description & Agricultural Value |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `phh2o` | Float64 | pH units | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Soil pH measured in water. Determines nutrient availability and crop acidity tolerance. (Ejura = 6.6 neutral). |
+| `clay` | Float64 | \(g \cdot kg^{-1}\) (%) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Clay mineral content (<0.002 mm). Drives cation retention and subsoil water holding capacity (17.3% topsoil &rarr; 38.1% subsoil). |
+| `sand` | Float64 | \(g \cdot kg^{-1}\) (%) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Sand fraction (0.05–2.0 mm). Governs topsoil drainage and aeration (68.6% topsoil). |
+| `silt` | Float64 | \(g \cdot kg^{-1}\) (%) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Silt mineral fraction (0.002–0.05 mm). Affects soil cohesion and crusting susceptibility (14.1% topsoil). |
+| `soc` | Float64 | \(g \cdot kg^{-1}\) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Soil Organic Carbon. Drives microbial fertility and moisture retention (39.3 g/kg topsoil). |
+| `bdod` | Float64 | \(g \cdot cm^{-3}\) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Bulk density of dry fine earth. Informs root penetration resistance and compaction (1.44–1.55 g/cm³). |
+| `cec` | Float64 | \(mmol(c) \cdot kg^{-1}\) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Cation Exchange Capacity. Indicates nutrient reservoir capacity (29.7 mmol/kg). |
+| `nitrogen` | Float64 | \(g \cdot kg^{-1}\) | 0–5, 5–15, 15–30, 30–60, 60–100 cm | 250 m | Total Kjeldahl nitrogen content. Baseline organic nitrogen before fertilization or legume crediting (4.46 g/kg). |
+
