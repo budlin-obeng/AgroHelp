@@ -15,7 +15,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
             className="mb-6 flex items-center space-x-2 border border-emerald-600 text-emerald-800 text-xs font-semibold rounded-full px-4 pr-1.5 py-1.5 bg-emerald-50/90 hover:bg-emerald-100 transition shadow-2xs group"
           >
             <span>
-              NASA Earth Observations & Soil Intelligence for Ejura
+              NASA space data and soil advice for Ejura farmers
             </span>
             <span className="flex items-center justify-center size-6 p-1 rounded-full bg-emerald-700 group-hover:bg-emerald-600 transition text-white">
               <svg width="14" height="11" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,15 +26,16 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
 
           {/* Main Headline */}
           <h1 className="text-slate-900 font-bold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.15]">
-            Smarter crop rotations for{' '}
+            Pick the right crop next season for{' '}
             <span className="text-emerald-700">
-              better soil & harvest
+              strong soil and a big harvest
             </span>
           </h1>
 
           {/* Subtitle / Description */}
           <p className="mt-4 text-slate-600 max-w-lg text-sm sm:text-base leading-relaxed">
-            Break the Fall Armyworm pest cycle, cut expensive chemical fertilizer bills, and discover the exact crops that thrive on your soil in Ejura-Sekyedumase.
+            Are armyworms spoiling your maize? Is fertilizer too expensive? See which crops will grow well
+            on your land in Ejura-Sekyedumase, and how to keep the worms away and save money.
           </p>
 
           {/* CTA Buttons */}
@@ -44,7 +45,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
               className="w-full sm:w-auto bg-emerald-700 text-white px-6 pr-3.5 py-3 rounded-full text-sm font-bold flex items-center justify-center space-x-2 hover:bg-emerald-600 transition shadow-md active:scale-95"
               type="button"
             >
-              <span>Get Rotation Advice</span>
+              <span>What Should I Plant?</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4.821 11.999h13.43m0 0-6.714-6.715m6.715 6.715-6.715 6.715" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -55,14 +56,14 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
               className="w-full sm:w-auto text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-6 py-3 rounded-full text-sm font-bold hover:bg-emerald-200 transition text-center active:scale-95"
               type="button"
             >
-              {farmer ? 'View My Farm Twin' : 'Create Farm Account'}
+              {farmer ? 'Open My Farm Record' : 'Create Free Account'}
             </button>
           </div>
 
           {/* Localized trust note */}
           <div className="mt-6 flex items-center gap-2 text-xs text-slate-500 font-medium">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            <span>Calibrated with decadal rainfall & local agricultural extension in Ashanti</span>
+            <span>Checked with 10 years of rain and weather records from NASA satellites</span>
           </div>
         </div>
 
@@ -79,7 +80,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
               <span className="text-[11px] font-bold text-white bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded-md">
-                Fertile Loam Soil
+                Rich fertile soil
               </span>
             </div>
           </div>
@@ -94,7 +95,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
               <span className="text-[11px] font-bold text-white bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded-md">
-                Maize in Field Soil
+                Maize growing on farm land
               </span>
             </div>
           </div>
@@ -109,7 +110,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
               <span className="text-[11px] font-bold text-white bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded-md">
-                Harvested Tubers
+                Cassava dug from the soil
               </span>
             </div>
           </div>
@@ -124,7 +125,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
               <span className="text-[11px] font-bold text-white bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded-md">
-                Sandy Loam Soil
+                Sandy soil
               </span>
             </div>
           </div>

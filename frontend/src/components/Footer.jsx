@@ -19,7 +19,7 @@ export default function Footer() {
               className="h-8 w-auto object-contain mx-auto md:mx-0"
             />
             <p className="text-[11px] text-slate-500 mt-0.5">
-              Supporting smallholder farmers in Ejura-Sekyedumase with healthy soils and better harvests.
+              Helping small farmers in Ejura-Sekyedumase get strong soil and a big harvest.
             </p>
           </div>
         </div>
@@ -31,7 +31,7 @@ export default function Footer() {
             <span>Ejura-Sekyedumase District, Ashanti Region, Ghana</span>
           </div>
           <p className="text-[10px] text-slate-400 mt-1">
-            Built with local extension advice &bull; Akwaaba &bull; Free for all farmers
+            Made with advice from local farm officers &bull; Akwaaba &bull; Free for every farmer
           </p>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2,
-  User, Sparkles, LogOut, Layers, ExternalLink, HelpCircle as QuestionIcon
+  User, Sparkles, LogOut, Layers, ExternalLink, Satellite,
+  CloudRain, Droplets, Sun, Activity
 } from 'lucide-react';
 
 export default function Header({
@@ -15,16 +16,13 @@ export default function Header({
   const [showHelpModal, setShowHelpModal] = useState(false);
   const menuRef = useRef(null);
 
-  // Close dropdown when clicking outside (as in template)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -32,18 +30,14 @@ export default function Header({
 
   const handleLogout = () => {
     setOpen(false);
-    if (onLogout) {
-      onLogout();
-    }
+    if (onLogout) onLogout();
   };
 
   const handleAuth = (type) => {
-    if (onOpenAuthModal) {
-      onOpenAuthModal(type);
-    }
+    if (onOpenAuthModal) onOpenAuthModal(type);
   };
 
-  const navLink = (href, label, onClick = null) => {
+  const navLink = (href, label, icon = null, onClick = null) => {
     return (
       <a
         href={href}
@@ -53,49 +47,63 @@ export default function Header({
             onClick();
           }
         }}
-        className="px-3 py-2 text-sm text-zinc-600 hover:text-emerald-800 font-medium transition-colors"
+        className="px-2.5 py-1.5 text-xs lg:text-sm text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg font-semibold transition-colors flex items-center gap-1.5"
       >
-        {label}
+        {icon}
+        <span>{label}</span>
       </a>
     );
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white border-b border-zinc-200 shadow-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
-
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-xs">
+      {/* MAIN NAV BAR */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
         {/* Logo & Brand Identity */}
-        <a
-          href="/"
-          className="flex items-center py-1"
-          aria-label="AgroHelp Home"
-        >
-          <img
-            src="/logo.png"
-            alt="AgroHelp - Smarter Farming. Better Harvest."
-            className="h-10 sm:h-12 w-auto max-w-[220px] sm:max-w-[280px] object-contain"
-          />
-        </a>
+        <div className="flex items-center gap-3">
+          <a
+            href="/"
+            className="flex items-center py-1"
+            aria-label="AgroHelp Home"
+          >
+            <img
+              src="/logo.png"
+              alt="AgroHelp - Smarter Farming. Better Harvest."
+              className="h-10 sm:h-12 w-auto max-w-[190px] sm:max-w-[240px] object-contain"
+            />
+          </a>
 
-        {/* Center Navigation Links (visible when signed in or desktop) */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLink('#questions-section', 'Farm Questions')}
-          {navLink('#solutions-section', 'Solutions')}
-          {navLink('#help', 'How To Use', () => setShowHelpModal(!showHelpModal))}
+          {/* NASA Partnership Badge */}
+          <div className="hidden sm:flex flex-col border-l border-slate-200 pl-3">
+            <span className="text-[10px] font-black uppercase tracking-wider text-[#0B3D91] flex items-center gap-1">
+              <Satellite className="w-3 h-3 text-[#0B3D91]" />
+              NASA Space Satellites
+            </span>
+            <span className="text-[9px] text-slate-500 font-medium">10 Years of Ejura Rain &amp; Sun Records</span>
+          </div>
+        </div>
+
+        {/* Center Navigation Links in Friendly Ghanaian English */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {navLink('#questions-section', 'My Farm', <Sprout className="w-3.5 h-3.5 text-emerald-600" />)}
+          {navLink('#nasa-telemetry', 'NASA Rain & Sun Records', <Satellite className="w-3.5 h-3.5 text-[#0B3D91]" />)}
+          {navLink('#satellite-map', 'See Farm from Space', <MapPin className="w-3.5 h-3.5 text-sky-600" />)}
+          {navLink('#solutions-section', 'What to Plant Next', <Sparkles className="w-3.5 h-3.5 text-amber-600" />)}
+          {navLink('#tradeoff-section', 'Money & Soil Gains', <Activity className="w-3.5 h-3.5 text-purple-600" />)}
+          {navLink('#help', 'How It Works', <HelpCircle className="w-3.5 h-3.5 text-slate-500" />, () => setShowHelpModal(!showHelpModal))}
         </nav>
 
         {/* Right Side */}
         <div className="flex items-center gap-2 sm:gap-3">
-
           {/* Refresh / Update Button */}
           {onRefresh && (
             <button
               type="button"
               onClick={onRefresh}
               disabled={isRefreshing}
-              className="p-2 text-zinc-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-zinc-200 transition-colors disabled:opacity-50"
-              title="Update Advice"
-              aria-label="Update Advice"
+              className="p-2 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-slate-200 transition-colors disabled:opacity-50"
+              title="Check farm advice again"
+              aria-label="Check farm advice again"
             >
               <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-600' : ''}`} />
             </button>
@@ -116,92 +124,56 @@ export default function Header({
 
               {/* Dropdown Menu */}
               {open && (
-                <div className="absolute right-0 top-12 sm:top-13 w-64 bg-white border border-zinc-200 rounded-2xl shadow-xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-
+                <div className="absolute right-0 top-12 sm:top-13 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   {/* User Information */}
-                  <div className="px-4 py-3 border-b border-zinc-100 bg-emerald-50/40">
-                    <p className="text-sm font-bold text-zinc-900 truncate">
+                  <div className="px-4 py-3 border-b border-slate-100 bg-emerald-50/40">
+                    <p className="text-sm font-bold text-slate-900 truncate">
                       {farmer.full_name || 'Kofi Mensah'}
                     </p>
-
-                    <p className="text-xs text-zinc-500 truncate mt-0.5">
+                    <p className="text-xs text-slate-500 truncate mt-0.5">
                       {farmer.phone_number} &bull; {farmer.location?.district || 'Ejura'}
                     </p>
-
                     <div className="mt-1.5 flex items-center gap-1 text-[10px] font-bold text-emerald-700">
                       <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                      <span>Farm Digital Twin Active</span>
+                      <span>Your farm record is saved</span>
                     </div>
                   </div>
 
                   {/* Menu Items */}
                   <div className="p-1.5">
-
-                    {/* My Farm Twin Profile */}
                     <button
                       type="button"
-                      onClick={() => { setOpen(false); handleAuth('profile'); }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors text-left"
+                      onClick={() => {
+                        setOpen(false);
+                        const el = document.getElementById('questions-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors text-left"
                     >
                       <User className="w-4 h-4 text-emerald-600" />
-                      <span>My Farm Twin Profile</span>
+                      <span>My Farm Setup</span>
                     </button>
 
-                    {/* Field Questions */}
-                    <a
-                      href="#questions-section"
-                      onClick={() => setOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
-                    >
-                      <Layers className="w-4 h-4 text-emerald-600" />
-                      <span>Field Crops & Soil</span>
-                    </a>
-
-                    {/* Solutions */}
-                    <a
-                      href="#solutions-section"
-                      onClick={() => setOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
-                    >
-                      <Sprout className="w-4 h-4 text-emerald-600" />
-                      <span>Rotation Solutions</span>
-                    </a>
-
-                    {/* Space2Soil NASA Intelligence */}
-                    <a
-                      href="/Space2Soil/web/index.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setOpen(false)}
-                      className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Sparkles className="w-4 h-4 text-emerald-600" />
-                        <span>NASA Space2Soil Portal</span>
-                      </div>
-                      <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
-                    </a>
-
-                    {/* How To Use Guide */}
                     <button
                       type="button"
-                      onClick={() => { setOpen(false); setShowHelpModal(true); }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors text-left"
+                      onClick={() => {
+                        setOpen(false);
+                        const el = document.getElementById('nasa-telemetry');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors text-left"
                     >
-                      <HelpCircle className="w-4 h-4 text-emerald-600" />
-                      <span>How To Use Guide</span>
+                      <Satellite className="w-4 h-4 text-[#0B3D91]" />
+                      <span>NASA Rain &amp; Weather Records</span>
                     </button>
-                  </div>
 
-                  {/* Sign Out */}
-                  <div className="p-1.5 border-t border-zinc-100">
                     <button
                       type="button"
                       onClick={handleLogout}
                       className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-rose-600 hover:bg-rose-50 transition-colors text-left"
                     >
                       <LogOut className="w-4 h-4 text-rose-500" />
-                      <span>Sign Out</span>
+                      <span>Log Out</span>
                     </button>
                   </div>
                 </div>
@@ -209,71 +181,68 @@ export default function Header({
             </div>
           ) : (
             <>
-              {/* Sign In */}
               <button
                 type="button"
                 onClick={() => handleAuth('login')}
-                className="px-3 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+                className="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors"
               >
-                Sign In
+                Log In
               </button>
-
-              {/* Get Started */}
               <button
                 type="button"
                 onClick={() => handleAuth('register')}
-                className="px-4 py-2 rounded-xl bg-emerald-800 text-white text-sm font-medium hover:bg-emerald-700 transition-colors shadow-xs"
+                className="px-4 py-2 rounded-xl bg-emerald-800 text-white text-sm font-bold hover:bg-emerald-700 transition-colors shadow-xs"
               >
-                Get Started
+                Start Free
               </button>
             </>
           )}
         </div>
       </div>
 
-      {/* Helpful Guide Drawer / Modal */}
+      {/* Helpful Guide Drawer / Modal in Simple Ghanaian English */}
       {showHelpModal && (
-        <div className="bg-emerald-950 text-white border-t border-emerald-800 px-4 py-5 sm:px-8">
+        <div className="bg-slate-900 text-white border-t border-slate-800 px-4 py-5 sm:px-8">
           <div className="max-w-4xl mx-auto space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-emerald-800">
-              <h3 className="text-base sm:text-lg font-bold text-emerald-200 flex items-center gap-2">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+              <h3 className="text-base sm:text-lg font-bold text-emerald-300 flex items-center gap-2">
                 <Sprout className="w-5 h-5 text-emerald-400" />
-                Welcome to AgroHelp &bull; Akwaaba!
+                Akwaaba! How AgroHelp and NASA Help Your Farm
               </h3>
               <button
                 type="button"
                 onClick={() => setShowHelpModal(false)}
-                className="text-emerald-300 hover:text-white text-xs font-bold px-3 py-1 rounded bg-emerald-900 border border-emerald-700"
+                className="text-slate-300 hover:text-white text-xs font-bold px-3 py-1 rounded bg-slate-800 border border-slate-700"
               >
                 Close &times;
               </button>
             </div>
 
-            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
-              When we plant maize year after year on the same field, the soil loses its strength, fertilizer becomes very expensive, and Fall Armyworms keep coming back to destroy our harvest.
-              <strong> AgroHelp shows you the best crops to plant next to heal your soil, save money, and harvest more food and cash.</strong>
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+              When you plant maize on the same farm year after year, the soil gets tired and hungry. Fertilizer becomes too expensive, and armyworms keep coming back to chew your young plants.
+              <strong> AgroHelp looks at 10 years of rain, sun, and soil water records from NASA satellites to tell you which crops will do well next, so you stop the worms, feed your soil for free, and make more money.</strong>
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
-              <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-emerald-300 block mb-1">Step 1: Your Current Crop</span>
-                <p className="text-emerald-100">Tap the crop you currently have on your farm (like Maize, Cassava, or Yam).</p>
+              <div className="bg-slate-800/90 p-3.5 rounded-2xl border border-slate-700">
+                <span className="font-bold text-sky-300 block mb-1">1. Rain &amp; Soil Water from NASA</span>
+                <p className="text-slate-300">NASA satellites in the sky track when the rain starts and when dry spells come in Ejura, so you plant at the right time.</p>
               </div>
 
-              <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-emerald-300 block mb-1">Step 2: Have a Crop in Mind?</span>
-                <p className="text-emerald-100">Tell us what you plan to plant or let our ML engine recommend the top crops based on NASA satellite data.</p>
+              <div className="bg-slate-800/90 p-3.5 rounded-2xl border border-slate-700">
+                <span className="font-bold text-amber-300 block mb-1">2. Sun &amp; Harmattan Heat</span>
+                <p className="text-slate-300">Satellites track the hot dry Harmattan wind so you don't waste seeds when the ground is too hot for tender plants.</p>
               </div>
 
-              <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-emerald-300 block mb-1">Step 3: Clear Solutions</span>
-                <p className="text-emerald-100">Get honest advice on whether your plan is safe or risky, with up to 3 practical alternatives.</p>
+              <div className="bg-slate-800/90 p-3.5 rounded-2xl border border-slate-700">
+                <span className="font-bold text-teal-300 block mb-1">3. Clear Farm Advice</span>
+                <p className="text-slate-300">We advise you on 3 good crops to rotate—like cowpea (adua), soyabean, or cassava—to kill worms naturally and make profit.</p>
               </div>
             </div>
 
-            <div className="pt-2 flex items-center justify-between text-xs text-emerald-300 border-t border-emerald-800/80">
-              <span className="flex items-center gap-1.5"><Sprout className="w-3.5 h-3.5 text-emerald-400" /> Calibrated with local farming knowledge and weather observations in Ejura.</span>
-              <span className="font-bold text-emerald-300">Free companion for all farmers</span>
+            <div className="pt-2 flex items-center justify-between text-xs text-emerald-300 border-t border-slate-800">
+              <span className="flex items-center gap-1.5"><Sprout className="w-3.5 h-3.5 text-emerald-400" /> Made for farmers in Ejura-Sekyedumase with agricultural officers.</span>
+              <span className="font-bold text-emerald-300">Free for every farmer</span>
             </div>
           </div>
         </div>

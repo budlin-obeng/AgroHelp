@@ -100,3 +100,12 @@ Desktop.ini
 
 # Logs & temp files
 *.tmp
+
+# Scratch & download helper scripts
+download_*.py
+search_*.py
+scratch_*.py
+process_images.py
+candidate_search.json
+scratch/
+

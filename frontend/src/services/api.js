@@ -95,7 +95,7 @@ function simulateDynamicPredictions(request) {
       agronomic_guidance: 'Inoculate with Bradyrhizobium if field has no recent cowpea history. Acts as non-host crop for Spodoptera frugiperda (Fall Armyworm), cutting pest pressure for subsequent maize. Incorporate haulms post-harvest to enrich topsoil nitrogen.',
     },
     {
-      crop_name: 'Soybean (Glycine max)',
+      crop_name: 'Soyabean (Glycine max)',
       scientific_name: 'Glycine max (L.) Merr.',
       crop_family: 'Fabaceae (Legume)',
       base_yield_tons: 2.2,
@@ -385,11 +385,11 @@ export async function getTradeoffs(params = {}) {
   } catch (err) {
     console.warn('[AgroHelp API] Backend /tradeoffs unavailable, generating fallback tradeoff matrix.');
     return {
-      pareto_candidates: ['Cowpea (Vigna unguiculata)', 'Soybean (Glycine max)', 'Pigeonpea (Cajanus cajan)'],
+      pareto_candidates: ['Cowpea (Vigna unguiculata)', 'Soyabean (Glycine max)', 'Pigeonpea (Cajanus cajan)'],
       tradeoff_matrix: [
         { crop: 'Maize (Monoculture Baseline)', net_margin: 6200, fert_savings: 0, faw_break: 10, drought_resilience: 55, soil_om: 20 },
         { crop: 'Cowpea (Rotation)', net_margin: 6800, fert_savings: 44, faw_break: 94, drought_resilience: 88, soil_om: 82 },
-        { crop: 'Soybean (Rotation)', net_margin: 8400, fert_savings: 40, faw_break: 91, drought_resilience: 78, soil_om: 85 },
+        { crop: 'Soyabean (Rotation)', net_margin: 8400, fert_savings: 40, faw_break: 91, drought_resilience: 78, soil_om: 85 },
         { crop: 'Pigeonpea (Semi-perennial)', net_margin: 5900, fert_savings: 52, faw_break: 96, drought_resilience: 95, soil_om: 94 },
         { crop: 'Cassava (Tuber Break)', net_margin: 9200, fert_savings: 22, faw_break: 98, drought_resilience: 92, soil_om: 60 },
         { crop: 'Sorghum (Grain Hedge)', net_margin: 6200, fert_savings: 28, faw_break: 65, drought_resilience: 96, soil_om: 70 },
@@ -403,7 +403,7 @@ export async function getTradeoffs(params = {}) {
         {
           name: 'Input Cost Minimization',
           description: 'Maximizes biological nitrogen fixation (BNF) to eliminate up to 50% of synthetic NPK purchases amid high fertilizer prices.',
-          recommended_crops: ['Pigeonpea', 'Cowpea', 'Soybean'],
+          recommended_crops: ['Pigeonpea', 'Cowpea', 'Soyabean'],
         },
         {
           name: 'Drought Defense & Moisture Conservation',
@@ -519,7 +519,7 @@ export async function loginFarmer(credentials) {
     localStorage.setItem('agrohelp_farmer', JSON.stringify(demo));
     return demo;
   }
-  throw new Error('Invalid phone number or PIN');
+  throw new Error('Your phone number or PIN is not correct.');
 }
 
 export async function registerFarmer(data) {
@@ -658,15 +658,15 @@ export async function evaluateCropFeasibility(params) {
           crop_name: cropInMind,
           is_approved: false,
           status_code: 'RISKY_MONOCULTURE',
-          verdict_badge: 'High Risk • Armyworm & Soil Warning',
-          verdict_headline: 'Planting Maize Again on This Field Is Not Recommended',
-          explanation: `You have grown Maize continuously for ${params.monocropping_seasons} seasons. Repeating maize allows Fall Armyworms to multiply and depletes nitrogen.`,
+          verdict_badge: 'Warning • Worms and weak soil',
+          verdict_headline: 'Do not plant maize on this land again',
+          explanation: `You have planted maize on this land for ${params.monocropping_seasons} seasons, and armyworms came. If you plant maize again, the worms will come in plenty and the soil will get poor.`,
           reasons: [
-            'Fall Armyworm Danger: Armyworm moths survive in maize stubble and attack seedlings immediately.',
-            'Expensive Fertilizer: Consecutive maize seasons require 40% to 60% more chemical NPK.',
-            'Harvest Penalty: Continuous maize harvests decline by up to 35% in Ejura.',
+            'The worms hide in the old maize stalks and in the soil. If you plant maize again, they get food straight away.',
+            'Two maize crops one after the other take all the food out of the soil. You will buy 40% to 60% more fertilizer.',
+            'Farm records in Ejura show that maize harvests keep going down, by as much as 35%, when maize stays on the same land.',
           ],
-          agronomic_guidance: 'Rotate with Cowpea, Soybean, or Cassava to naturally starve armyworms and restore nitrogen.',
+          agronomic_guidance: 'Plant cowpea, soyabean, groundnut or cassava instead. These crops do not feed the worms, and beans leave free food in the soil for your maize next year.',
           confidence_score: 0.94,
         },
         recommendations: baseData.recommendations.filter((r) => r.crop_name.toLowerCase() !== 'maize').slice(0, 3),
@@ -683,15 +683,15 @@ export async function evaluateCropFeasibility(params) {
         crop_name: cropInMind,
         is_approved: true,
         status_code: 'APPROVED',
-        verdict_badge: 'Approved • Good Match for Your Field',
-        verdict_headline: `Great Choice! ${cropInMind} Is Well-Suited for Your Land`,
-        explanation: `NASA Earth Observations and SoilGrids data confirm ${cropInMind} matches your ${params.soil_type} and rainfall pattern.`,
+        verdict_badge: 'Good • This crop fits your land',
+        verdict_headline: `Good choice! ${cropInMind} should do well on your land`,
+        explanation: `NASA records of rain and soil show that ${cropInMind} fits your ${params.soil_type} soil and the rain expected this season.`,
         reasons: [
-          `Favorable Rainfall: NASA GPM records indicate strong moisture support in Ejura.`,
-          `Soil Harmony: Your ${params.soil_type} allows healthy root formation and good drainage.`,
-          `Nutritional Balance: Planting ${cropInMind} promotes sustainable soil fertility.`,
+          `The rain and sun in Ejura are good for ${cropInMind}.`,
+          `Your ${params.soil_type} soil lets the roots grow well and lets water pass.`,
+          `Planting ${cropInMind} after your last crop keeps the soil healthy.`,
         ],
-        agronomic_guidance: 'Plant at recommended row spacing and weed within the first 3 to 4 weeks.',
+        agronomic_guidance: 'Plant with the right spacing and pull weeds in the first 3 to 4 weeks.',
         confidence_score: 0.92,
       },
       recommendations: baseData.recommendations.filter((r) => r.crop_name.toLowerCase() !== cropInMind.toLowerCase()).slice(0, 2),

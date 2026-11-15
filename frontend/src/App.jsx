@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
+import NasaIndicatorsDashboard from './components/NasaIndicatorsDashboard';
 import GuidedFarmQuestions from './components/GuidedFarmQuestions';
+import FarmMap from './components/FarmMap';
 import ThreeSolutions from './components/ThreeSolutions';
+import TradeoffExplorer from './components/TradeoffExplorer';
 import Footer from './components/Footer';
 import FarmerAuthModal from './components/FarmerAuthModal';
 import {
@@ -15,6 +18,13 @@ import {
   evaluateCropFeasibility
 } from './services/api';
 import { Sprout, CheckCircle2, ShieldCheck, MapPin, Compass, Navigation } from 'lucide-react';
+
+// Friendly names farmers recognise for each soil type
+const SOIL_LABELS = {
+  'Sandy Loam': 'Sandy Loam',
+  'Clay Loam': 'Red Clay',
+  'Loam': 'Black Loam',
+};
 
 export default function App() {
   // 1. Farmer Digital Twin Account
@@ -99,10 +109,10 @@ export default function App() {
     let result;
     if (isRegister) {
       result = await registerFarmer(authData);
-      showNotification(`Welcome to AgroHelp, ${result.full_name}! Digital Twin created.`);
+      showNotification(`Akwaaba, ${result.full_name}! Your farm record is ready.`);
     } else {
       result = await loginFarmer(authData);
-      showNotification(`Akwaaba, ${result.full_name}! Farm Twin loaded.`);
+      showNotification(`Welcome back, ${result.full_name}! Your farm record has loaded.`);
     }
 
     setFarmer(result);
@@ -134,7 +144,17 @@ export default function App() {
       const updated = await recordFarmGPS(farmer.phone_number, gpsData);
       setFarmer(updated);
     }
-    showNotification(`Live Farm GPS locked: ${gpsData.latitude}° N, ${gpsData.longitude}° W`);
+    showNotification(`Farm location saved: ${gpsData.latitude}° N, ${gpsData.longitude}° W`);
+  };
+
+  // Location change from Map
+  const handleLocationChange = (lat, lng) => {
+    setProfile((prev) => ({
+      ...prev,
+      latitude: parseFloat(lat.toFixed(4)),
+      longitude: parseFloat(lng.toFixed(4)),
+    }));
+    showNotification(`Farm coordinates updated: ${lat.toFixed(4)}° N, ${lng.toFixed(4)}° W`);
   };
 
   // Add custom crop to Digital Twin
@@ -145,19 +165,19 @@ export default function App() {
       setFarmer(updatedFarmer);
     }
     setProfile((prev) => ({ ...prev, current_crop: cropName }));
-    showNotification(`Added ${cropName} to your Digital Twin crop inventory!`);
+    showNotification(`${cropName} has been added to your crops.`);
   };
 
   // Current crop selection
   const handleCropSelect = (cropId) => {
     setProfile((prev) => ({ ...prev, current_crop: cropId }));
-    showNotification(`Selected ${cropId} as current standing crop`);
+    showNotification(`${cropId} is now the crop on your farm.`);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('agrohelp_farmer');
     setFarmer(null);
-    showNotification('Signed out of Farm Digital Twin.');
+    showNotification('You have logged out.');
   };
 
   const handleOpenAuth = (mode = 'login') => {
@@ -168,7 +188,7 @@ export default function App() {
   // Soil type selection
   const handleSoilSelect = (soilId) => {
     setProfile((prev) => ({ ...prev, soil_type: soilId }));
-    showNotification(`Soil updated to ${soilId}`);
+    showNotification(`Your soil is now set to ${SOIL_LABELS[soilId] || soilId}.`);
   };
 
   // Farm size change
@@ -179,7 +199,7 @@ export default function App() {
   // Farm usage & pest history changes
   const handleFarmUsageChange = (updates) => {
     setProfile((prev) => ({ ...prev, ...updates }));
-    showNotification('Field history updated');
+    showNotification('Your farm history is updated.');
   };
 
   const showNotification = (msg) => {
@@ -191,7 +211,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-900">
-      {/* High-Contrast Responsive Header */}
+      {/* High-Contrast Responsive Header with Live NASA Telemetry Ticker */}
       <Header
         onRefresh={() => runEvaluation(profile, cropInMind, farmer)}
         isRefreshing={isLoading}
@@ -200,7 +220,7 @@ export default function App() {
         onLogout={handleLogout}
       />
 
-      {/* Hero Section based on template */}
+      {/* Hero Section Prioritizing NASA Datasets & Multi-Sensor Missions */}
       <HeroSection
         onGetStarted={() => handleOpenAuth('register')}
         onExploreSolutions={() => {
@@ -211,9 +231,19 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-        {/* Guided Farm Questions & History Flow */}
+        {/* 1. NASA Earth Observation Matrix & Decadal Indicators Dashboard */}
+        <NasaIndicatorsDashboard />
+
+        {/* 2. Interactive Farm Pin Locator & 30m Landsat NDVI Geospatial Map */}
+        <FarmMap
+          latitude={profile.latitude}
+          longitude={profile.longitude}
+          onLocationChange={handleLocationChange}
+        />
+
+        {/* 3. Guided Farm Questions & Farmer History Flow */}
         <div id="questions-section">
           <GuidedFarmQuestions
             profile={profile}
@@ -230,7 +260,7 @@ export default function App() {
           />
         </div>
 
-        {/* Feasibility Verdict & Dynamic Solutions (Max 3) */}
+        {/* 4. Feasibility Verdict & Dynamic Solutions with NASA Satellite Telemetry Proof */}
         <section id="solutions-section">
           <ThreeSolutions
             feasibilityResult={feasibilityResult}
@@ -239,6 +269,10 @@ export default function App() {
             currentCrop={profile.current_crop}
           />
         </section>
+
+        {/* 5. Agronomic Trade-off & Pareto Frontier Explorer */}
+        <TradeoffExplorer recommendations={feasibilityResult?.recommendations || []} />
+
       </main>
 
       {/* Farmer Account & Location Cascading Modal */}

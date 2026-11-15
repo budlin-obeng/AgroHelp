@@ -15,9 +15,9 @@ export const CROP_REAL_PHOTOS = {
   plantain: '/crops/plantain.jpg',
   pepper: '/crops/pepper.jpg',
   tomato: '/crops/tomato.jpg',
-  pigeonpea: '/crops/cowpea.jpg',
-  'pigeon pea': '/crops/cowpea.jpg',
-  sorghum: '/crops/maize.jpg',
+  pigeonpea: '/crops/pigeonpea.jpg',
+  'pigeon pea': '/crops/pigeonpea.jpg',
+  sorghum: '/crops/sorghum.jpg',
 };
 
 export const SOIL_IMAGES = {
@@ -42,10 +42,10 @@ export const GOAL_IMAGES = {
 export function normalizeCropKey(name = '') {
   const lower = name.toLowerCase();
   if (lower.includes('cowpea') || lower.includes('vigna') || lower.includes('beans') || lower.includes('adua')) return 'cowpea';
-  if (lower.includes('soybean') || lower.includes('glycine')) return 'soybean';
+  if (lower.includes('soybean') || lower.includes('soyabean') || lower.includes('soya') || lower.includes('glycine')) return 'soybean';
   if (lower.includes('groundnut') || lower.includes('peanut') || lower.includes('arachis') || lower.includes('nkate')) return 'groundnut';
   if (lower.includes('cassava') || lower.includes('manihot') || lower.includes('bankye')) return 'cassava';
-  if (lower.includes('yam') || lower.includes('dioscorea') || lower.includes('bayer')) return 'yam';
+  if (lower.includes('yam') || lower.includes('dioscorea') || lower.includes('bayere') || lower.includes('bayer')) return 'yam';
   if (lower.includes('rice') || lower.includes('oryza') || lower.includes('emo')) return 'rice';
   if (lower.includes('plantain') || lower.includes('borode') || lower.includes('musa')) return 'plantain';
   if (lower.includes('pepper') || lower.includes('chili') || lower.includes('mako')) return 'pepper';
@@ -78,7 +78,7 @@ export function CropImage({ name, className = 'w-20 h-20', alt = '' }) {
   return (
     <img
       src={photoSrc}
-      alt={alt || name}
+      alt={alt || `${name} crop`}
       className={`rounded-2xl object-cover shadow-xs border border-emerald-100 transition-transform duration-200 group-hover:scale-105 ${className}`}
       loading="lazy"
       onError={(e) => {

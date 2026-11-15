@@ -7,28 +7,30 @@ import {
 import { CropImage, SoilImage, GoalImage } from './CropVisuals';
 
 const BASE_CROPS = [
-  { id: 'Maize', name: 'Maize / Corn', localName: 'Aburo', desc: 'Most common field crop in Ejura belt', imageKey: 'maize' },
-  { id: 'Cassava', name: 'Cassava', localName: 'Bankye', desc: 'Deep roots, hardy against dry weather', imageKey: 'cassava' },
-  { id: 'Yam', name: 'Yam', localName: 'Bayer', desc: 'Climbing vines and mounded tubers', imageKey: 'yam' },
-  { id: 'Cowpea', name: 'Cowpea / Beans', localName: 'Adua', desc: 'Fast-growing legume pods', imageKey: 'cowpea' },
-  { id: 'Soybean', name: 'Soybean', localName: 'Soybean', desc: 'High cash market for poultry feed', imageKey: 'soybean' },
-  { id: 'Groundnut', name: 'Groundnut / Peanuts', localName: 'Nkate', desc: 'Underground pods & lush ground cover', imageKey: 'groundnut' },
-  { id: 'Rice', name: 'Rice', localName: 'Emo', desc: 'Paddy grain in moist valley soils', imageKey: 'rice' },
-  { id: 'Plantain', name: 'Plantain', localName: 'Borode', desc: 'Hardy perennial staple in forest fringe', imageKey: 'plantain' },
-  { id: 'Pepper', name: 'Hot Pepper', localName: 'Mako', desc: 'High-value quick cash garden crop', imageKey: 'pepper' },
-  { id: 'Tomato', name: 'Tomato', localName: 'Ntosi', desc: 'Demands fertile loam and regular moisture', imageKey: 'tomato' },
+  { id: 'Maize', name: 'Maize / Corn', localName: 'Aburo', desc: 'Most common crop in the Ejura area', imageKey: 'maize' },
+  { id: 'Cassava', name: 'Cassava', localName: 'Bankye', desc: 'Strong crop that lives through dry weather', imageKey: 'cassava' },
+  { id: 'Yam', name: 'Yam', localName: 'Bayere', desc: 'Climbing vine with tubers under the ground', imageKey: 'yam' },
+  { id: 'Cowpea', name: 'Cowpea / Beans', localName: 'Adua', desc: 'Fast beans that feed the soil', imageKey: 'cowpea' },
+  { id: 'Soyabean', name: 'Soyabean', localName: 'Soya', desc: 'Good market for poultry feed buyers', imageKey: 'soybean' },
+  { id: 'Groundnut', name: 'Groundnut / Peanuts', localName: 'Nkate', desc: 'Pods under the ground, leaves cover the soil', imageKey: 'groundnut' },
+  { id: 'Pigeonpea', name: 'Pigeon Pea', localName: 'Adua Fufuo', desc: 'Deep roots break hard soil and feed the land', imageKey: 'pigeonpea' },
+  { id: 'Sorghum', name: 'Sorghum / Guinea Corn', localName: 'Atasii', desc: 'Drought-hardy cereal for erratic rain', imageKey: 'sorghum' },
+  { id: 'Rice', name: 'Rice', localName: 'Emo', desc: 'Grows well in low land that holds water', imageKey: 'rice' },
+  { id: 'Plantain', name: 'Plantain', localName: 'Borode', desc: 'Strong plant that gives food all year', imageKey: 'plantain' },
+  { id: 'Pepper', name: 'Hot Pepper', localName: 'Mako', desc: 'Quick money from a small garden', imageKey: 'pepper' },
+  { id: 'Tomato', name: 'Tomato', localName: 'Ntosi', desc: 'Needs good soil and water every time', imageKey: 'tomato' },
 ];
 
 const SOILS = [
-  { id: 'Sandy Loam', title: 'Sandy Loam', desc: 'Light brown soil that drains easily (Common across Ejura)', typeKey: 'sandy loam' },
-  { id: 'Clay Loam', title: 'Red Clay', desc: 'Reddish soil that holds moisture and feels sticky when wet', typeKey: 'red clay' },
-  { id: 'Loam', title: 'Black Loam', desc: 'Dark, fertile black earth found near river valleys', typeKey: 'black loam' },
+  { id: 'Sandy Loam', title: 'Sandy Loam', desc: 'Light brown soil. Water drains away fast. Most common soil in Ejura', typeKey: 'sandy loam' },
+  { id: 'Clay Loam', title: 'Red Clay', desc: 'Red soil. It holds water and feels sticky when wet', typeKey: 'red clay' },
+  { id: 'Loam', title: 'Black Loam', desc: 'Dark black soil. Very good soil, seen near river valleys', typeKey: 'black loam' },
 ];
 
 const FARM_SIZES = [
-  { label: 'Small Plot', acres: 2, ha: 0.8 },
-  { label: 'Medium Farm', acres: 5, ha: 2.0 },
-  { label: 'Large Farm', acres: 10, ha: 4.0 },
+  { label: 'Small farm', acres: 2, ha: 0.8 },
+  { label: 'Medium farm', acres: 5, ha: 2.0 },
+  { label: 'Big farm', acres: 10, ha: 4.0 },
 ];
 
 export default function GuidedFarmQuestions({
@@ -67,7 +69,7 @@ export default function GuidedFarmQuestions({
 
   const handleLiveGpsCapture = () => {
     if (!navigator.geolocation) {
-      setGpsStatus({ error: 'GPS is not supported by your browser.' });
+      setGpsStatus({ error: 'This phone or browser cannot find your place.' });
       return;
     }
 
@@ -94,7 +96,7 @@ export default function GuidedFarmQuestions({
       (err) => {
         setGpsLoading(false);
         setGpsStatus({
-          error: 'Could not access GPS. Please allow location permissions in your browser.',
+          error: 'We could not find your place. Please allow location on your phone or browser.',
         });
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -105,8 +107,8 @@ export default function GuidedFarmQuestions({
   const customList = (farmer?.custom_crops || []).map((c) => ({
     id: c,
     name: c,
-    localName: 'Farmer Added',
-    desc: 'Custom crop registered in your Digital Twin',
+    localName: 'You added this',
+    desc: 'A crop you added to your farm record',
     imageKey: c.toLowerCase(),
     isCustom: true,
   }));
@@ -128,20 +130,20 @@ export default function GuidedFarmQuestions({
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                  Are you currently standing on your farm?
+                  Are you standing on your farm now?
                 </h2>
                 {profile.gps_recorded_on_farm ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500 text-emerald-950">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Live Farm GPS Locked
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Farm location saved
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                    <MapPin className="w-3.5 h-3.5 text-emerald-700" /> Ejura District Baseline
+                    <MapPin className="w-3.5 h-3.5 text-emerald-700" /> Using Ejura town location
                   </span>
                 )}
               </div>
               <p className="text-xs text-emerald-100 mt-1.5 max-w-xl leading-relaxed">
-                If you are on your farm right now, we can capture your exact satellite coordinates to match NASA soil and rainfall data directly to your soil.
+                If you are on your farm now, tap the button below. Your phone will find your exact place, so the advice can use the rain and soil of your own land.
               </p>
             </div>
           </div>
@@ -154,7 +156,7 @@ export default function GuidedFarmQuestions({
               className="flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-xs sm:text-sm transition shadow-md disabled:opacity-50 active:scale-95 border border-emerald-200"
             >
               <Navigation className={`w-4 h-4 text-emerald-700 ${gpsLoading ? 'animate-spin' : ''}`} />
-              <span>{gpsLoading ? 'Reading Device GPS...' : 'Record Exact Farm GPS'}</span>
+              <span>{gpsLoading ? 'Finding your place...' : 'Save My Farm Location'}</span>
             </button>
           </div>
         </div>
@@ -164,7 +166,7 @@ export default function GuidedFarmQuestions({
           <div className="mt-5 p-3.5 rounded-2xl bg-emerald-800/80 border border-emerald-400 text-xs text-emerald-100 flex items-center gap-2.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
             <span>
-              <strong>GPS Connected:</strong> Latitude {gpsStatus.lat}° N, Longitude {gpsStatus.lon}° W (Accuracy ±{gpsStatus.accuracy}m). Synced with NASA POWER & GPM satellite data!
+              <strong>Location saved:</strong> {gpsStatus.lat}° N, {gpsStatus.lon}° W (correct to about ±{gpsStatus.accuracy}m). The advice now uses the rain and weather records of this exact spot.
             </span>
           </div>
         )}
@@ -172,7 +174,7 @@ export default function GuidedFarmQuestions({
         {gpsStatus?.error && (
           <div className="mt-5 p-3.5 rounded-2xl bg-rose-900/60 border border-rose-400 text-xs text-rose-100 flex items-center gap-2.5">
             <AlertCircle className="w-4 h-4 text-rose-300 shrink-0" />
-            <span>{gpsStatus.error} (Using default Ejura coordinates: 7.3856° N, 1.3562° W)</span>
+            <span>{gpsStatus.error} (We will use Ejura town instead: 7.3856° N, 1.3562° W)</span>
           </div>
         )}
       </section>
@@ -188,10 +190,10 @@ export default function GuidedFarmQuestions({
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                What crop do you currently have on this field?
+                Which crop is on your farm now?
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 font-normal">
-                Tap the standing or recently harvested crop. We show actual photos from Ejura farms.
+                Tap the crop growing on your land now, or one you just harvested.
               </p>
             </div>
           </div>
@@ -203,7 +205,7 @@ export default function GuidedFarmQuestions({
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-semibold transition self-start sm:self-auto shadow-2xs"
           >
             <PlusCircle className="w-4 h-4 text-emerald-700" />
-            <span>Add Other Crop</span>
+            <span>Add Another Crop</span>
           </button>
         </div>
 
@@ -252,10 +254,10 @@ export default function GuidedFarmQuestions({
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
             <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-sm w-full shadow-xl border border-emerald-200">
               <h3 className="font-bold text-base text-slate-900 mb-1">
-                Add Missing Crop to Farm Twin
+                Add a Crop That Is Not on the List
               </h3>
               <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-                Type the name of any other crop you grow in Ejura (e.g. Watermelon, Ginger, Garden Eggs).
+                Type the name of any other crop you grow (for example Watermelon, Ginger, or Garden Eggs).
               </p>
               <form onSubmit={handleAddCropSubmit} className="space-y-4">
                 <input
@@ -278,7 +280,7 @@ export default function GuidedFarmQuestions({
                     type="submit"
                     className="px-5 py-2 rounded-full bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-600 shadow-sm"
                   >
-                    Save & Select Crop
+                    Save This Crop
                   </button>
                 </div>
               </form>
@@ -297,10 +299,10 @@ export default function GuidedFarmQuestions({
           </span>
           <div>
             <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-              Do you already have a crop in mind for the upcoming season?
+              Do you already know what you want to plant next?
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-normal">
-              We check your idea against NASA soil & weather data to approve it or suggest safer choices.
+              We will check your plan with soil and rain records from NASA, then tell you if it is safe or if another crop is better.
             </p>
           </div>
         </div>
@@ -317,10 +319,10 @@ export default function GuidedFarmQuestions({
           >
             <span className="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2">
               <Leaf className="w-4 h-4 text-emerald-700" />
-              Yes, I have a specific crop in mind
+              Yes, I know the crop I want
             </span>
             <span className="text-xs text-slate-600 mt-1 block leading-relaxed">
-              I want to test if my planned crop matches my field and weather.
+              Check if my crop will do well on this land.
             </span>
           </button>
 
@@ -334,10 +336,10 @@ export default function GuidedFarmQuestions({
           >
             <span className="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-700" />
-              No, I am not sure — Recommend for me
+              No, please choose for me
             </span>
             <span className="text-xs text-slate-600 mt-1 block leading-relaxed">
-              Suggest the best crops to maximize income, cut fertilizer, and avoid pests.
+              Show me crops that will bring money, save fertilizer, and keep worms away.
             </span>
           </button>
         </div>
@@ -346,7 +348,7 @@ export default function GuidedFarmQuestions({
         {cropInMind !== null && (
           <div className="mt-5 p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
             <label className="block text-xs font-bold text-emerald-950 mb-2.5">
-              Select the crop you are planning to plant next:
+              Choose the crop you want to plant next:
             </label>
             <div className="flex flex-wrap gap-2">
               {combinedCrops.map((c) => {
@@ -376,16 +378,16 @@ export default function GuidedFarmQuestions({
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-slate-900 block mb-1.5 flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-emerald-700" />
-              Seasons of {profile.current_crop} on this plot
+              How many times have you planted {profile.current_crop} on this land?
             </span>
             <select
               value={profile.monocropping_seasons || 2}
               onChange={(e) => onFarmUsageChange({ monocropping_seasons: parseInt(e.target.value) })}
               className="w-full mt-1 p-2 rounded-xl border border-slate-300 bg-white font-medium text-slate-800 focus:border-emerald-500 outline-none"
             >
-              <option value={1}>1 season (First time planting here)</option>
-              <option value={2}>2 seasons in a row</option>
-              <option value={3}>3+ seasons in a row (Continuous)</option>
+              <option value={1}>Once (first time on this land)</option>
+              <option value={2}>Two times, one after the other</option>
+              <option value={3}>Three times or more, one after the other</option>
             </select>
           </div>
 
@@ -393,7 +395,7 @@ export default function GuidedFarmQuestions({
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-slate-900 block mb-1.5 flex items-center gap-1.5">
               <Bug className="w-3.5 h-3.5 text-rose-500" />
-              Fall Armyworm attacks recently?
+              Have armyworms spoilt your maize before?
             </span>
             <div className="grid grid-cols-2 gap-2 mt-1">
               <button
@@ -404,7 +406,7 @@ export default function GuidedFarmQuestions({
                   : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
                   }`}
               >
-                Yes, worms attacked
+                Yes, worms came
               </button>
               <button
                 type="button"
@@ -414,7 +416,7 @@ export default function GuidedFarmQuestions({
                   : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
                   }`}
               >
-                No worm issues
+                No, no worms
               </button>
             </div>
           </div>
@@ -423,16 +425,16 @@ export default function GuidedFarmQuestions({
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-slate-900 block mb-1.5 flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5 text-emerald-700" />
-              Fertilizer used on this field
+              What fertilizer do you use on this land?
             </span>
             <select
               value={profile.fertilizer_used || 'Chemical NPK'}
               onChange={(e) => onFarmUsageChange({ fertilizer_used: e.target.value })}
               className="w-full mt-1 p-2 rounded-xl border border-slate-300 bg-white font-medium text-slate-800 focus:border-emerald-500 outline-none"
             >
-              <option value="Chemical NPK">Chemical NPK / Urea</option>
-              <option value="Animal Manure">Animal Manure / Compost</option>
-              <option value="None">None (Unfertilized)</option>
+              <option value="Chemical NPK">Chemical fertilizer (NPK / Urea)</option>
+              <option value="Animal Manure">Animal manure or compost</option>
+              <option value="None">None at all</option>
             </select>
           </div>
         </div>
@@ -451,7 +453,7 @@ export default function GuidedFarmQuestions({
               What does your soil look like?
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-normal">
-              Pick the soil texture closest to your farm field
+              Tap the soil that looks most like your farm
             </p>
           </div>
         </div>
@@ -500,10 +502,10 @@ export default function GuidedFarmQuestions({
         <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h3 className="text-sm sm:text-base font-bold text-slate-900">
-              How big is your planting land?
+              How big is your farm?
             </h3>
             <p className="text-xs text-slate-600">
-              Used to calculate expected harvest earnings and seed requirements
+              We use this to estimate how much money you can make and how much seed you need
             </p>
           </div>
 
@@ -543,7 +545,7 @@ export default function GuidedFarmQuestions({
                   {currentAcres} {currentAcres === 1 ? 'Acre' : 'Acres'}
                 </span>
                 <span className="block text-[11px] font-semibold text-emerald-800">
-                  (~{profile.farm_size_hectares} Hectares)
+                  (about {profile.farm_size_hectares} hectares)
                 </span>
               </div>
 

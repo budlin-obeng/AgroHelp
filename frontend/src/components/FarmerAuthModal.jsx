@@ -75,7 +75,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
       await onAuthSuccess(demoData, false);
       onClose();
     } catch (err) {
-      setError(err.message || 'Demo sign-in failed');
+      setError(err.message || 'We could not open the sample farm. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -86,11 +86,11 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
     setError(null);
 
     if (!phoneNumber || phoneNumber.length < 9) {
-      setError('Please enter a valid Ghana phone number (e.g. 0241234567).');
+      setError('Please type your phone number well, like 0241234567.');
       return;
     }
     if (!pin || pin.length !== 4) {
-      setError('Please enter a 4-digit PIN.');
+      setError('Please type your 4 secret numbers (PIN).');
       return;
     }
 
@@ -98,7 +98,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
     try {
       if (isRegister) {
         if (!fullName.trim()) {
-          setError('Please provide your full name.');
+          setError('Please type your full name.');
           setLoading(false);
           return;
         }
@@ -127,7 +127,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
       }
       onClose();
     } catch (err) {
-      setError(err.message || 'Authentication error. Please try again.');
+      setError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -155,17 +155,17 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
             />
             <div>
               <h2 className="text-xl font-black tracking-tight text-white flex items-center gap-2">
-                AgroHelp Digital Twin
+                AgroHelp Farm Record
               </h2>
               <p className="text-xs text-emerald-200">
-                Your Personal Farm Profile & Soil Intelligence
+                Your own farm and soil details
               </p>
             </div>
           </div>
 
           {/* Quick Demo Button */}
           <div className="mt-4 pt-3 border-t border-emerald-700/80 flex items-center justify-between">
-            <span className="text-[11px] text-emerald-200">Testing or evaluating?</span>
+            <span className="text-[11px] text-emerald-200">Just looking around?</span>
             <button
               type="button"
               onClick={handleDemoSignIn}
@@ -173,7 +173,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition shadow-xs"
             >
               <Sparkles className="w-3.5 h-3.5 text-white" />
-              <span>1-Tap Demo: Kofi Mensah (Ejura)</span>
+              <span>Use sample farmer (Kofi, Ejura)</span>
             </button>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            Sign In to Farm Twin
+            Log In
           </button>
           <button
             type="button"
@@ -200,7 +200,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            Create Farm Account
+            Create Account
           </button>
         </div>
 
@@ -216,7 +216,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
           {isRegister && (
             <>
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Farmer Full Name</label>
+                <label className="block font-bold text-slate-700 mb-1">Your full name</label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <input
@@ -260,7 +260,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                     >
                       {GHANA_REGIONS.map((r) => (
                         <option key={r} value={r}>
-                          {r} {r === 'Ashanti' ? '(Primary Region)' : ''}
+                          {r}
                         </option>
                       ))}
                     </select>
@@ -276,7 +276,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                     >
                       {ASHANTI_DISTRICTS.map((d) => (
                         <option key={d} value={d}>
-                          {d} {d === 'Ejura-Sekyedumase' ? '(Pilot Site)' : ''}
+                          {d} {d === 'Ejura-Sekyedumase' ? '(our first district)' : ''}
                         </option>
                       ))}
                     </select>
@@ -284,7 +284,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                 </div>
 
                 <div className="pt-1">
-                  <label className="block font-bold text-[10px] text-slate-600 mb-0.5">Community / Village</label>
+                  <label className="block font-bold text-[10px] text-slate-600 mb-0.5">Town / Village</label>
                   <input
                     type="text"
                     value={community}
@@ -299,7 +299,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
 
           {/* Phone Number */}
           <div>
-            <label className="block font-bold text-slate-700 mb-1">Ghanaian Phone Number</label>
+            <label className="block font-bold text-slate-700 mb-1">Your phone number</label>
             <div className="relative">
               <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
@@ -312,13 +312,13 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
               />
             </div>
             <span className="text-[10px] text-slate-400 mt-0.5 block">
-              Used to access your digital farm twin anytime
+              You will use this number to open your farm page anytime
             </span>
           </div>
 
           {/* 4-digit PIN */}
           <div>
-            <label className="block font-bold text-slate-700 mb-1">4-Digit Security PIN</label>
+            <label className="block font-bold text-slate-700 mb-1">Your secret 4 numbers (PIN)</label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
@@ -339,7 +339,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
             disabled={loading}
             className="w-full py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-sm shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            <span>{isRegister ? 'Create Farm Digital Twin' : 'Sign In to Farm Twin'}</span>
+            <span>{isRegister ? 'Create My Farm Record' : 'Log In'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>

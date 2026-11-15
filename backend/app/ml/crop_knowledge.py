@@ -27,9 +27,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "Medium",
         "soil_organic_matter_benefit": "High",
         "agronomic_guidance": (
-            "Drought-hardy legume ideal for rotating after maize. Fixes ~65 kg N/ha into the soil, "
-            "starves Fall Armyworm larvae by breaking the cereal monoculture host chain, and thrives "
-            "during irregular rainfall or dry spells."
+            "Cowpea is strong in dry weather. Plant it after maize, because it feeds the soil for free "
+            "and the armyworms cannot feed on it."
         ),
     },
     "Groundnut": {
@@ -52,11 +51,11 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "High",
         "soil_organic_matter_benefit": "High",
         "agronomic_guidance": (
-            "Excellent canopy cover that reduces soil moisture evaporation and weed emergence. "
-            "High local market demand in Ejura and Techiman grain hubs. Leaves substantial nitrogen residue."
+            "Groundnut covers the ground with leaves, so the soil stays cool and weeds do not grow. "
+            "One bag sells for a good price in Ejura and Techiman."
         ),
     },
-    "Soybean": {
+    "Soyabean": {
         "scientific_name": "Glycine max",
         "family": "Legume (Nitrogen Fixer & Feed)",
         "maturity_days_min": 85,
@@ -76,8 +75,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "Medium",
         "soil_organic_matter_benefit": "Medium",
         "agronomic_guidance": (
-            "Strong agro-industrial processing demand for poultry feed in central Ghana. "
-            "Interrupts pest lifecycles and restores soil macronutrients."
+            "Soyabean sells well to poultry feed buyers. It feeds the soil and stops the worms from "
+            "finding food on your land."
         ),
     },
     "Cassava": {
@@ -100,8 +99,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "Medium",
         "soil_organic_matter_benefit": "High",
         "agronomic_guidance": (
-            "Maximum resilience against erratic rainfall and severe dry spells. Deep fibrous root system "
-            "extracts deep subsoil moisture. Acts as a total biological dead-end for Fall Armyworm."
+            "Cassava is the strongest crop in dry weather. It stays alive when the rains stop, "
+            "and the armyworms cannot feed on it."
         ),
     },
     "Yam": {
@@ -124,8 +123,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "High",
         "soil_organic_matter_benefit": "Medium",
         "agronomic_guidance": (
-            "Top income generator in Ejura. Deep tuber formation breaks compacted hardpans. "
-            "Requires staking and mounding; rotate after legumes to leverage restored organic nitrogen."
+            "Yam gives the most money in Ejura. It needs strong stakes and big mounds. "
+            "Plant it after beans, because the beans would have fed the soil already."
         ),
     },
     "Pigeon Pea": {
@@ -148,8 +147,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "Low",
         "soil_organic_matter_benefit": "Very High",
         "agronomic_guidance": (
-            "Aggressive subsoiler taproot (reaches up to 2m) that breaks plow pans and mines phosphorus. "
-            "Fixes over 90 kg N/ha, produces abundant leaf biomass mulch, and completely suppresses weeds and pests."
+            "Pigeon pea has long roots that go deep for water and break hard soil. It feeds the soil "
+            "very well, and weeds and worms find it hard to grow around it."
         ),
     },
     "Rice": {
@@ -172,8 +171,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "High",
         "soil_organic_matter_benefit": "Medium",
         "agronomic_guidance": (
-            "High grain demand. Best suited for high rainfall periods or lowland inland valley swamps in Ejura. "
-            "Moderate pest risk; rotate with legumes to reduce synthetic fertilizer requirements."
+            "Rice sells well. Plant it in low land that holds water, and plant beans on the land "
+            "now and then so you spend less money on fertilizer."
         ),
     },
     "Maize": {
@@ -196,8 +195,8 @@ CROP_DATABASE: Dict[str, Dict[str, Any]] = {
         "labor_intensity": "Medium",
         "soil_organic_matter_benefit": "Low",
         "agronomic_guidance": (
-            "Ghana's primary staple grain and Ejura's baseline crop. Continuous monoculture leads to "
-            "severe Fall Armyworm vulnerability, depleted soil nitrogen, and heavy reliance on costly synthetic NPK."
+            "Maize is the main food crop in Ejura. Do not plant it on the same land every year, "
+            "or the worms will come and the soil will get weak."
         ),
     },
 }
@@ -210,7 +209,7 @@ ROTATION_AFFINITY_MATRIX: Dict[str, Dict[str, float]] = {
         "Groundnut": 0.94,   # Legume breaks FAW & adds N
         "Cassava": 0.90,     # Soil rest & root expansion
         "Pigeon Pea": 0.97,  # Maximum biological recovery
-        "Soybean": 0.92,     # Legume rotation
+        "Soyabean": 0.92,    # Legume rotation
         "Yam": 0.85,         # Tuber rotation
         "Rice": 0.60,        # Cereal-cereal (not recommended)
         "Maize": 0.20,       # Continuous monoculture penalty
@@ -221,7 +220,7 @@ ROTATION_AFFINITY_MATRIX: Dict[str, Dict[str, float]] = {
         "Cassava": 0.88,
         "Rice": 0.82,
         "Groundnut": 0.65,
-        "Soybean": 0.60,
+        "Soyabean": 0.60,
         "Pigeon Pea": 0.70,
         "Cowpea": 0.40,
     },
@@ -232,14 +231,14 @@ ROTATION_AFFINITY_MATRIX: Dict[str, Dict[str, float]] = {
         "Rice": 0.80,
         "Cowpea": 0.65,
         "Groundnut": 0.40,
-        "Soybean": 0.60,
+        "Soyabean": 0.60,
         "Pigeon Pea": 0.70,
     },
     "Cassava": {
         "Cowpea": 0.94,
         "Groundnut": 0.90,
         "Maize": 0.88,
-        "Soybean": 0.86,
+        "Soyabean": 0.86,
         "Pigeon Pea": 0.85,
         "Yam": 0.65,
         "Cassava": 0.35,
@@ -249,7 +248,7 @@ ROTATION_AFFINITY_MATRIX: Dict[str, Dict[str, float]] = {
         "Cowpea": 0.95,
         "Groundnut": 0.92,
         "Maize": 0.88,
-        "Soybean": 0.88,
+        "Soyabean": 0.88,
         "Pigeon Pea": 0.90,
         "Rice": 0.70,
         "Yam": 0.30,
@@ -258,7 +257,7 @@ ROTATION_AFFINITY_MATRIX: Dict[str, Dict[str, float]] = {
     "Rice": {
         "Cowpea": 0.95,
         "Groundnut": 0.88,
-        "Soybean": 0.85,
+        "Soyabean": 0.85,
         "Pigeon Pea": 0.80,
         "Maize": 0.65,
         "Cassava": 0.70,
@@ -275,7 +274,7 @@ SOIL_SUITABILITY: Dict[str, Dict[str, float]] = {
         "Cassava": 1.02,
         "Yam": 1.03,
         "Maize": 1.00,
-        "Soybean": 0.95,
+        "Soyabean": 0.95,
         "Pigeon Pea": 1.02,
         "Rice": 0.85,
     },
@@ -285,13 +284,13 @@ SOIL_SUITABILITY: Dict[str, Dict[str, float]] = {
         "Cassava": 1.00,
         "Yam": 1.02,
         "Maize": 1.05,
-        "Soybean": 1.05,
+        "Soyabean": 1.05,
         "Pigeon Pea": 1.00,
         "Rice": 0.98,
     },
     "Clay Loam": {
         "Rice": 1.08,
-        "Soybean": 1.02,
+        "Soyabean": 1.02,
         "Maize": 0.98,
         "Pigeon Pea": 1.00,
         "Cowpea": 0.92,
@@ -305,7 +304,7 @@ SOIL_SUITABILITY: Dict[str, Dict[str, float]] = {
         "Cassava": 0.98,
         "Yam": 0.96,
         "Maize": 1.00,
-        "Soybean": 1.00,
+        "Soyabean": 1.00,
         "Pigeon Pea": 1.00,
         "Rice": 0.95,
     },

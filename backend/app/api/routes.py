@@ -184,7 +184,7 @@ def get_pilot_data():
             "Cassava (Resilient Food Reserve)",
             "Rice (Upland & Valley Grain)",
             "Pigeon Pea (Cover Crop & Biological Armor)",
-            "Soybean (Protein Legume)",
+            "Soyabean (Protein Legume)",
         ],
         challenges=[
             "Continuous maize monoculture (88% of cultivated acreage) causing synthetic fertilizer dependency",

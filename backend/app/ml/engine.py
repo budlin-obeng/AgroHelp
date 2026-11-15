@@ -184,8 +184,8 @@ class AgroHelpMLEngine:
 
             # Specific guidance for this rotation
             guidance = (
-                f"{c_meta['agronomic_guidance']} Rotating {candidate} after {request.current_crop} "
-                f"provides a rotation affinity index of {int(affinity * 100)}% on {request.soil_type}."
+                f"{c_meta['agronomic_guidance']} Planting {candidate} after {request.current_crop} "
+                f"works well on your {request.soil_type} soil."
             )
 
             rec = CropRecommendation(
@@ -423,21 +423,21 @@ class AgroHelpMLEngine:
                     crop_name=crop_name,
                     is_approved=False,
                     status_code="RISKY_MONOCULTURE",
-                    verdict_badge="High Risk • Armyworm & Soil Warning",
-                    verdict_headline="Planting Maize Again on This Field Is Not Recommended",
+                    verdict_badge="Warning • Worms and weak soil",
+                    verdict_headline="Do not plant maize on this land again",
                     explanation=(
-                        f"You have already grown Maize on this land for {req.monocropping_seasons} seasons, "
-                        "and Fall Armyworms were present. Planting Maize again allows the pests to multiply rapidly "
-                        "and severely exhausts your soil nitrogen."
+                        f"You have planted Maize on this land for {req.monocropping_seasons} seasons, "
+                        "and armyworms came. If you plant maize again, the worms will come in plenty "
+                        "and eat your young plants, and the soil will get poor."
                     ),
                     reasons=[
-                        "Fall Armyworm Threat: Armyworm pupae persist in maize stalks and soil. Repeating maize gives pests an uninterrupted food source.",
-                        "Expensive Fertilizer Costs: Two back-to-back maize seasons deplete available nitrogen, forcing you to purchase 40% to 60% more chemical NPK.",
-                        "Declining Yield: Historic field data across Ejura shows consecutive maize harvests drop by up to 35% without a break."
+                        "The worms hide in the old maize stalks and in the soil. If you plant maize again, they get food straight away and grow in number.",
+                        "Two maize crops one after the other take all the food out of the soil. You will have to buy 40% to 60% more fertilizer.",
+                        "Farm records in Ejura show that maize harvests keep going down, by as much as 35%, when maize stays on the same land every year."
                     ],
                     agronomic_guidance=(
-                        "Break the pest cycle! Plant a broadleaf legume like Cowpea or Soybean, or deep-rooted Cassava. "
-                        "This naturally starves Armyworms and leaves free organic nitrogen in your soil for next year's maize."
+                        "Stop the worms. Plant cowpea, soyabean or groundnut instead, or plant cassava. "
+                        "The worms cannot feed on these crops, and the beans also leave free food in the soil for your maize next year."
                     ),
                     confidence_score=0.94
                 )
@@ -449,19 +449,19 @@ class AgroHelpMLEngine:
                     crop_name=crop_name,
                     is_approved=False,
                     status_code="WATER_DEFICIT",
-                    verdict_badge="Water Deficit • Dry Season Alert",
-                    verdict_headline=f"Insufficient Rainfall for {crop_name} in {req.target_season}",
+                    verdict_badge="Warning • Not enough water",
+                    verdict_headline=f"There is not enough rain for {crop_name} this season",
                     explanation=(
-                        f"NASA decadal satellite data shows severe moisture deficits and high heat stress during the Harmattan in Ejura. "
-                        f"Rainfed {crop_name} faces a very high risk of drying up before maturity."
+                        "NASA satellites show that this season in Ejura is very dry and very hot. "
+                        f"If you plant {crop_name} with only rain water, it may dry up before you can harvest."
                     ),
                     reasons=[
-                        "NASA GPM Satellite Data: Soil moisture falls to critical levels (< 0.20) during this period.",
-                        "Intense Harmattan Winds: Dry northeast winds accelerate water loss from large cereal leaves.",
-                        "Water Stress Window: Standard maize needs steady rainfall during tasseling which is absent in this season."
+                        "The water in the soil goes very low at this time of the year.",
+                        "The dry Harmattan wind blows water out of the wide leaves of maize and rice very fast.",
+                        "Maize needs steady rain when it is flowering, and this season does not have steady rain."
                     ],
                     agronomic_guidance=(
-                        "Choose drought-hardy crops like Cassava or quick-maturing Cowpea, or prepare mounds for early April rains."
+                        "Choose strong crops like cassava or early cowpea, or make your mounds and wait for the April rains."
                     ),
                     confidence_score=0.91
                 )
@@ -474,20 +474,20 @@ class AgroHelpMLEngine:
                     crop_name=crop_name,
                     is_approved=True,
                     status_code="APPROVED",
-                    verdict_badge="Approved • Good Match for Your Field",
-                    verdict_headline=f"Great Choice! {crop_name} Is Well-Suited for Your Land",
+                    verdict_badge="Good • This crop fits your land",
+                    verdict_headline=f"Good choice! {crop_name} should do well on your land",
                     explanation=(
-                        f"NASA Earth Observations and SoilGrids data confirm that {crop_name} matches your {req.soil_type} "
-                        f"and the upcoming {req.target_season} rainfall pattern."
+                        f"Records of rain and soil from NASA show that {crop_name} fits your {req.soil_type} "
+                        f"soil and the rain we expect in the {req.target_season}."
                     ),
                     reasons=[
-                        f"Rainfall & Sun Match: Decadal satellite observations indicate favorable moisture in Ejura for {crop_name}.",
-                        f"Soil Synergy: Your {req.soil_type} provides good root development and drainage.",
-                        f"Crop Health: Rotating {crop_name} after {req.current_crop} supports balanced soil nutrition."
+                        f"The rain and sun in Ejura are good for {crop_name}.",
+                        f"Your {req.soil_type} soil lets the roots grow well and lets water pass.",
+                        f"Planting {crop_name} after {req.current_crop} keeps your soil healthy."
                     ],
                     agronomic_guidance=(
                         c_meta.get("agronomic_guidance") or
-                        f"Plant at recommended row spacing and weed within the first 3 to 4 weeks for maximum yield."
+                        f"Plant with the right spacing and pull weeds in the first 3 to 4 weeks so you get a good harvest."
                     ),
                     confidence_score=0.92
                 )
