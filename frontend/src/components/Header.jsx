@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2, 
+import {
+  Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2,
   User, Sparkles, LogOut, Layers, ExternalLink, HelpCircle as QuestionIcon
 } from 'lucide-react';
 
-export default function Header({ 
-  onRefresh, 
-  isRefreshing = false, 
-  farmer, 
-  onOpenAuthModal, 
-  onLogout 
+export default function Header({
+  onRefresh,
+  isRefreshing = false,
+  farmer,
+  onOpenAuthModal,
+  onLogout
 }) {
   const [open, setOpen] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -63,7 +63,7 @@ export default function Header({
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b border-zinc-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
-        
+
         {/* Logo & Brand Identity */}
         <a
           href="/"
@@ -81,13 +81,12 @@ export default function Header({
         <nav className="hidden md:flex items-center gap-1">
           {navLink('#questions-section', 'Farm Questions')}
           {navLink('#solutions-section', 'Solutions')}
-          {navLink('/Space2Soil/web/index.html', 'NASA Space2Soil')}
           {navLink('#help', 'How To Use', () => setShowHelpModal(!showHelpModal))}
         </nav>
 
         {/* Right Side */}
         <div className="flex items-center gap-2 sm:gap-3">
-          
+
           {/* Refresh / Update Button */}
           {onRefresh && (
             <button
@@ -118,7 +117,7 @@ export default function Header({
               {/* Dropdown Menu */}
               {open && (
                 <div className="absolute right-0 top-12 sm:top-13 w-64 bg-white border border-zinc-200 rounded-2xl shadow-xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                  
+
                   {/* User Information */}
                   <div className="px-4 py-3 border-b border-zinc-100 bg-emerald-50/40">
                     <p className="text-sm font-bold text-zinc-900 truncate">
@@ -137,7 +136,7 @@ export default function Header({
 
                   {/* Menu Items */}
                   <div className="p-1.5">
-                    
+
                     {/* My Farm Twin Profile */}
                     <button
                       type="button"
@@ -251,7 +250,7 @@ export default function Header({
             </div>
 
             <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
-              When we plant maize year after year on the same field, the soil loses its strength, fertilizer becomes very expensive, and Fall Armyworms keep coming back to destroy our harvest. 
+              When we plant maize year after year on the same field, the soil loses its strength, fertilizer becomes very expensive, and Fall Armyworms keep coming back to destroy our harvest.
               <strong> AgroHelp shows you the best crops to plant next to heal your soil, save money, and harvest more food and cash.</strong>
             </p>
 

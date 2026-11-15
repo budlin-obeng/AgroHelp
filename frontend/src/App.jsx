@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
+import HeroSection from './components/HeroSection';
 import GuidedFarmQuestions from './components/GuidedFarmQuestions';
 import ThreeSolutions from './components/ThreeSolutions';
 import Footer from './components/Footer';
@@ -197,6 +198,16 @@ export default function App() {
         farmer={farmer}
         onOpenAuthModal={handleOpenAuth}
         onLogout={handleLogout}
+      />
+
+      {/* Hero Section based on template */}
+      <HeroSection
+        onGetStarted={() => handleOpenAuth('register')}
+        onExploreSolutions={() => {
+          const el = document.getElementById('questions-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+        farmer={farmer}
       />
 
       {/* Main Content Area */}
