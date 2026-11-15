@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="soyPodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CA8A04"/>
+      <stop offset="40%" stop-color="#84CC16"/>
+      <stop offset="100%" stop-color="#4D7C0F"/>
+    </linearGradient>
+    <linearGradient id="soyPodInner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="soyBeanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF9C3"/>
+      <stop offset="50%" stop-color="#FACC15"/>
+      <stop offset="100%" stop-color="#CA8A04"/>
+    </linearGradient>
+    <linearGradient id="leafGradS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#86EFAC"/>
+      <stop offset="70%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+    <filter id="soyShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#365314" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="60" cy="60" r="54" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="2"/>
+
+  <g filter="url(#soyShadow)">
+    <!-- Foliage Leaf (Top Left) -->
+    <g transform="translate(24, 16)">
+      <path d="M26 32 C18 20 12 12 4 10 C-4 20 6 34 24 36" fill="url(#leafGradS)" stroke="#15803D" stroke-width="1.2"/>
+      <path d="M26 32 C28 14 38 6 48 8 C54 20 44 32 28 36" fill="url(#leafGradS)" stroke="#15803D" stroke-width="1.2"/>
+      <path d="M26 32 C24 16 32 4 34 0 C38 6 40 18 28 32" fill="#86EFAC" stroke="#15803D" stroke-width="1"/>
+      <path d="M26 34 L28 48" stroke="#15803D" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- Background Intact Fuzzy Pod (Right) -->
+    <g transform="rotate(35 75 58)">
+      <!-- Pod Shape with 3 Bulges -->
+      <path d="M52 38 C60 36 74 44 80 54 C84 62 82 72 74 80 C68 86 58 84 54 78 C48 70 48 54 50 42 Z" 
+            fill="url(#soyPodGrad)" stroke="#3F6212" stroke-width="1.4"/>
+      <!-- Pod Pubescence / Fuzzy Bristles Texture -->
+      <path d="M78 48 L83 46 M81 58 L86 57 M78 68 L83 69 M71 78 L74 83 M58 82 L57 87" 
+            stroke="#FEF08A" stroke-width="1.2" stroke-linecap="round"/>
+      <!-- Pod Beak -->
+      <path d="M74 80 C76 84 76 87 75 90" stroke="#365314" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+
+    <!-- Foreground Open Soybean Pod Revealing 3 Golden Beans -->
+    <g transform="rotate(-18 52 68)">
+      <!-- Back Half Shell -->
+      <path d="M22 42 C16 54 18 70 28 82 C34 90 44 94 52 92 C58 90 62 84 60 76 C56 62 46 48 32 40 Z" 
+            fill="url(#soyPodGrad)" stroke="#3F6212" stroke-width="1.4"/>
+      <!-- Inner Cavity -->
+      <path d="M25 46 C20 56 22 69 30 79 C35 85 43 88 49 86 C46 76 40 60 33 46 Z" 
+            fill="url(#soyPodInner)" stroke="#A16207" stroke-width="0.8"/>
+
+      <!-- Bean 1 (Top) -->
+      <circle cx="34" cy="54" r="7" fill="url(#soyBeanGrad)" stroke="#A16207" stroke-width="1"/>
+      <ellipse cx="32" cy="52" rx="2.5" ry="1.2" fill="#FEFCE8" opacity="0.8"/>
+      <!-- Hilum (seed scar) -->
+      <path d="M36 53 C37 54 37 56 36 57" stroke="#713F12" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Bean 2 (Middle) -->
+      <circle cx="38" cy="69" r="7.5" fill="url(#soyBeanGrad)" stroke="#A16207" stroke-width="1"/>
+      <ellipse cx="36" cy="67" rx="2.8" ry="1.4" fill="#FEFCE8" opacity="0.8"/>
+      <path d="M40 68 C41 69 41 71 40 72" stroke="#713F12" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Bean 3 (Bottom) -->
+      <circle cx="44" cy="83" r="7" fill="url(#soyBeanGrad)" stroke="#A16207" stroke-width="1"/>
+      <ellipse cx="42" cy="81" rx="2.5" ry="1.2" fill="#FEFCE8" opacity="0.8"/>
+      <path d="M46 82 C47 83 47 85 46 86" stroke="#713F12" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Hairy Outer Edge Bristles -->
+      <path d="M19 50 L14 48 M17 62 L12 62 M20 74 L15 76 M26 86 L23 90" 
+            stroke="#FEF08A" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

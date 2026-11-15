@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0F2FE"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="resilientSprout" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#86EFAC"/>
+      <stop offset="60%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+    <filter id="droughtShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#0369A1" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Outer Glow -->
+  <circle cx="60" cy="60" r="54" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="2"/>
+
+  <g filter="url(#droughtShadow)">
+    <!-- Left Half: Radiant Blazing Sun (Drought / Heat Stress) -->
+    <g transform="translate(18, 18)">
+      <!-- Sun Rays -->
+      <line x1="22" y1="2" x2="22" y2="8" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="8" y1="8" x2="12" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="2" y1="22" x2="8" y2="22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="8" y1="36" x2="12" y2="32" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Sun Core -->
+      <circle cx="22" cy="22" r="14" fill="url(#sunGrad)" stroke="#C2410C" stroke-width="1.5"/>
+      <path d="M16 16 Q20 12 24 16" stroke="#FEF08A" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- Right Half: Refreshing Raincloud & Droplets (Precipitation / Relief) -->
+    <g transform="translate(56, 16)">
+      <!-- Rain Cloud Body -->
+      <path d="M16 28 C12 28 8 24 8 20 C8 15 12 12 16 12 C18 6 26 4 32 8 C36 4 44 6 46 12 C52 12 56 16 56 22 C56 28 50 28 46 28 Z" 
+            fill="url(#cloudGrad)" stroke="#0369A1" stroke-width="1.5"/>
+      <!-- Rain Droplets -->
+      <path d="M20 34 C20 32 23 30 23 30 C23 30 26 32 26 34 C26 36 24 37 23 37 C22 37 20 36 20 34 Z" fill="#0284C7"/>
+      <path d="M34 36 C34 34 37 32 37 32 C37 32 40 34 40 36 C40 38 38 39 37 39 C36 39 34 38 34 36 Z" fill="#0284C7"/>
+      <path d="M46 33 C46 31 49 29 49 29 C49 29 52 31 52 33 C52 35 50 36 49 36 C48 36 46 35 46 33 Z" fill="#0284C7"/>
+    </g>
+
+    <!-- Ground Horizon Line & Soil Base -->
+    <path d="M18 90 C34 86 52 88 68 86 C84 88 102 90 102 90" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+    <!-- Deep Root Zone Underground -->
+    <path d="M60 88 C60 96 58 104 56 112" stroke="#92400E" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M60 94 C54 99 48 104 42 107" stroke="#A16207" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M60 98 C66 103 74 106 80 108" stroke="#A16207" stroke-width="1.8" stroke-linecap="round"/>
+
+    <!-- Resilient Drought-Hardy Plant Standing Tall and Healthy in Center -->
+    <!-- Upright Sturdy Stem -->
+    <path d="M60 88 C60 72 60 56 60 46" stroke="#16A34A" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Left Resilient Leaf -->
+    <path d="M60 68 C46 62 34 70 42 80 C50 84 56 76 60 68 Z" fill="url(#resilientSprout)" stroke="#14532D" stroke-width="1.2"/>
+    <path d="M60 68 C50 72 46 76 42 80" stroke="#BBF7D0" stroke-width="1" fill="none"/>
+
+    <!-- Right Resilient Leaf with Water Drop -->
+    <path d="M60 58 C74 52 86 60 78 70 C70 74 64 66 60 58 Z" fill="url(#resilientSprout)" stroke="#14532D" stroke-width="1.2"/>
+    <path d="M60 58 C70 62 74 66 78 70" stroke="#BBF7D0" stroke-width="1" fill="none"/>
+
+    <!-- Top Sprout Bud -->
+    <path d="M60 48 C56 42 56 36 60 34 C64 36 64 42 60 48 Z" fill="#4ADE80" stroke="#15803D" stroke-width="1"/>
+
+    <!-- Quenched Droplet on Leaf Tip -->
+    <circle cx="79" cy="65" r="2.5" fill="#38BDF8" stroke="#0284C7" stroke-width="0.8"/>
+  </g>
+</svg>

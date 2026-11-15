@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="clayBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEDD5"/>
+      <stop offset="50%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+    <linearGradient id="clayDeep" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="50%" stop-color="#9A3412"/>
+      <stop offset="100%" stop-color="#7C2D12"/>
+    </linearGradient>
+    <filter id="clayShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#7C2D12" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Outer Frame -->
+  <circle cx="60" cy="60" r="54" fill="#FFF7ED" stroke="#FDBA74" stroke-width="2"/>
+
+  <g filter="url(#clayShadow)">
+    <clipPath id="clayCircleClip">
+      <circle cx="60" cy="60" r="46"/>
+    </clipPath>
+
+    <g clip-path="url(#clayCircleClip)">
+      <!-- Base Red Clay Matrix Layer -->
+      <rect x="10" y="10" width="100" height="100" fill="url(#clayBg)"/>
+
+      <!-- Lower Clay Horizon with Dense Crumb Wave -->
+      <path d="M10 58 Q32 48 64 56 T110 50 L110 110 L10 110 Z" fill="url(#clayDeep)"/>
+      <path d="M10 78 Q45 70 80 76 T110 70 L110 110 L10 110 Z" fill="#431407"/>
+
+      <!-- Ferric Ironstone Gravel / Laterite Nodules -->
+      <ellipse cx="34" cy="38" rx="5" ry="4" transform="rotate(-15 34 38)" fill="#7F1D1D" stroke="#450A0A" stroke-width="1"/>
+      <ellipse cx="78" cy="32" rx="6" ry="4.5" transform="rotate(20 78 32)" fill="#991B1B" stroke="#450A0A" stroke-width="1"/>
+      <ellipse cx="56" cy="48" rx="4.5" ry="3.5" transform="rotate(-30 56 48)" fill="#7F1D1D" stroke="#450A0A" stroke-width="1"/>
+      <ellipse cx="26" cy="68" rx="5.5" ry="4" transform="rotate(10 26 68)" fill="#B91C1C" stroke="#7F1D1D" stroke-width="1"/>
+      <ellipse cx="88" cy="64" rx="5" ry="3.8" transform="rotate(-20 88 64)" fill="#7F1D1D" stroke="#450A0A" stroke-width="1"/>
+      <ellipse cx="62" cy="78" rx="6" ry="4.5" transform="rotate(15 62 78)" fill="#991B1B" stroke="#450A0A" stroke-width="1"/>
+
+      <!-- Clay Ribbons / Moisture Crumb Texture -->
+      <path d="M22 28 C28 26 36 28 42 30" stroke="#EA580C" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M62 24 C68 22 74 24 82 22" stroke="#EA580C" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M42 62 C50 60 58 64 68 62" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+      <!-- Water Moisture Beads (High Moisture Holding Capacity) -->
+      <path d="M46 20 C46 16 52 12 52 12 C52 12 58 16 58 20 C58 23 55 26 52 26 C49 26 46 23 46 20 Z" 
+            fill="#38BDF8" stroke="#0284C7" stroke-width="1"/>
+      <circle cx="51" cy="18" r="1.5" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Outer Protective Ring Accent -->
+    <circle cx="60" cy="60" r="46" fill="none" stroke="#C2410C" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,134 +1,112 @@
 import React, { useState } from 'react';
-import { Sprout, Satellite, Activity, ShieldCheck, Sparkles, ExternalLink, RefreshCw } from 'lucide-react';
+import { Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2, PhoneCall } from 'lucide-react';
 
-export default function Header({ pipelineStatus = 'online', onRefresh, isRefreshing = false }) {
-  const [showStatusModal, setShowStatusModal] = useState(false);
+export default function Header({ onRefresh, isRefreshing = false }) {
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <header className="sticky top-0 z-30 bg-emerald-900 text-white shadow-md border-b border-emerald-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 sm:h-20">
-          {/* Logo & Project Identity */}
-          <div className="flex items-center gap-3.5">
-            <div className="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-agro-600 via-agro-700 to-agro-900 text-white shadow-md shadow-agro-600/20">
-              <Sprout className="w-6 h-6 text-emerald-300" />
-              <div className="absolute -top-1 -right-1 p-0.5 rounded-full bg-nasa-blue text-white ring-2 ring-white">
-                <Satellite className="w-3.5 h-3.5 text-blue-200" />
-              </div>
+        <div className="flex items-center justify-between h-20 sm:h-22">
+          {/* Logo & Warm Title */}
+          <div className="flex items-center gap-3.5 sm:gap-4">
+            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-800 border-2 border-emerald-400 text-emerald-200 shadow-inner shrink-0">
+              <Sprout className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-300" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
-                  Agro<span className="text-agro-600">Help</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-1.5">
+                  Agro<span className="text-amber-400">Help</span>
                 </h1>
-                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-agro-100 text-agro-800 border border-agro-200">
-                  Space2Soil Engine
-                </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-nasa-blue/10 text-nasa-blue border border-nasa-blue/20">
-                  NASA Space Apps
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-800 text-emerald-200 border border-emerald-700">
+                  Farming Companion
                 </span>
               </div>
-              <p className="text-xs text-slate-500 font-medium hidden md:block">
-                AI & Earth Observation Rotation Intelligence for Smallholders &bull; Ejura-Sekyedumase Pilot
+              <p className="text-xs sm:text-sm text-emerald-100 font-medium">
+                Simple crop rotation advice for farmers in Ejura-Sekyedumase
               </p>
             </div>
           </div>
 
-          {/* Right Toolbar: Pipeline Status & Space Apps tag */}
-          <div className="flex items-center gap-2.5 sm:gap-4">
-            {/* Space2Soil Data Pipeline Status Pill */}
+          {/* Right Toolbar: Help & Refresh */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Friendly Location Badge */}
+            <div className="hidden md:flex items-center gap-1.5 bg-emerald-800/80 px-3.5 py-1.5 rounded-full text-xs font-semibold text-emerald-200 border border-emerald-700">
+              <MapPin className="w-3.5 h-3.5 text-amber-400" />
+              <span>Ejura, Ashanti Region</span>
+            </div>
+
+            {/* How It Works / Help Button */}
             <button
-              onClick={() => setShowStatusModal(!showStatusModal)}
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 transition shadow-xs"
-              title="Click to view Space2Soil NASA telemetry status"
+              type="button"
+              onClick={() => setShowHelpModal(!showHelpModal)}
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-xs sm:text-sm transition shadow-sm"
+              title="Click for simple farming tips"
             >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              <span className="font-semibold text-slate-800 hidden sm:inline">Space2Soil Pipeline:</span>
-              <span className="font-bold text-emerald-700">Decadal Sync (10-Yr)</span>
-              <Activity className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 ml-0.5" />
+              <HelpCircle className="w-4 h-4 text-emerald-950" />
+              <span>How To Use</span>
             </button>
 
-            {/* Manual Refresh / Re-simulate Button */}
+            {/* Refresh / Update Button */}
             {onRefresh && (
               <button
+                type="button"
                 onClick={onRefresh}
                 disabled={isRefreshing}
-                className="p-2 text-slate-600 hover:text-agro-700 hover:bg-agro-50 rounded-xl border border-slate-200 transition disabled:opacity-50"
-                title="Recalculate Predictions"
+                className="p-2.5 text-emerald-200 hover:text-white hover:bg-emerald-800 rounded-xl border border-emerald-700 transition disabled:opacity-50"
+                title="Update Advice"
+                aria-label="Update Advice"
               >
-                <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-agro-600' : ''}`} />
+                <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-amber-400' : ''}`} />
               </button>
             )}
           </div>
         </div>
       </div>
 
-      {/* NASA Pipeline Details Dropdown / Modal */}
-      {showStatusModal && (
-        <div className="bg-slate-900 text-white border-b border-slate-800 px-4 py-4 sm:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-              <div className="flex items-center gap-2">
-                <Satellite className="w-4 h-4 text-emerald-400" />
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-                  Space2Soil NASA Satellite Ingestion Pipeline &bull; Ejura District Telemetry
-                </h4>
-              </div>
+      {/* Helpful Guide Drawer / Modal */}
+      {showHelpModal && (
+        <div className="bg-emerald-950 text-white border-t border-emerald-800 px-4 py-5 sm:px-8">
+          <div className="max-w-4xl mx-auto space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-emerald-800">
+              <h3 className="text-base sm:text-lg font-bold text-amber-300 flex items-center gap-2">
+                <Sprout className="w-5 h-5 text-emerald-400" />
+                Welcome to AgroHelp &bull; Akwaaba!
+              </h3>
               <button
-                onClick={() => setShowStatusModal(false)}
-                className="text-slate-400 hover:text-white text-xs font-semibold px-2 py-0.5 rounded bg-slate-800"
+                type="button"
+                onClick={() => setShowHelpModal(false)}
+                className="text-emerald-300 hover:text-white text-xs font-bold px-3 py-1 rounded bg-emerald-900 border border-emerald-700"
               >
                 Close &times;
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-              <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
-                <div className="flex items-center justify-between font-bold text-slate-200 mb-1">
-                  <span>NASA POWER Climatology</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                    Active
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400">Daily Tmax, Tmin, RH, Diurnal Range (2016–2025)</p>
-                <div className="mt-1.5 text-[10px] text-slate-300 font-mono">Records: 3,652 days verified</div>
+            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
+              When we plant maize year after year on the same field, the soil loses its strength, fertilizer becomes very expensive, and Fall Armyworms keep coming back to destroy our harvest. 
+              <strong> AgroHelp shows you the best crops to plant next to heal your soil, save money, and harvest more food and cash.</strong>
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
+              <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
+                <span className="font-bold text-amber-300 block mb-1">Step 1: Your Current Crop</span>
+                <p className="text-emerald-100">Tap the crop you currently have on your farm (like Maize, Cassava, or Yam).</p>
               </div>
 
-              <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
-                <div className="flex items-center justify-between font-bold text-slate-200 mb-1">
-                  <span>NASA GPM IMERG v07</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                    Active
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400">Rainfall totals, dry spell tracking, extreme storm flags</p>
-                <div className="mt-1.5 text-[10px] text-slate-300 font-mono">Mean: 1,284.6 mm/yr</div>
+              <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
+                <span className="font-bold text-amber-300 block mb-1">Step 2: Your Goal</span>
+                <p className="text-emerald-100">Tap what matters most right now: earning good cash, cutting fertilizer bills, beating worms, or surviving dry spells.</p>
               </div>
 
-              <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
-                <div className="flex items-center justify-between font-bold text-slate-200 mb-1">
-                  <span>NASA SMAP L3/L4</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                    Active
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400">Surface (0-5cm) & Root-zone volumetric soil moisture</p>
-                <div className="mt-1.5 text-[10px] text-slate-300 font-mono">Calibrated to Savannah Ochrosol</div>
+              <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
+                <span className="font-bold text-amber-300 block mb-1">Step 3: Your 3 Solutions</span>
+                <p className="text-emerald-100">See 3 practical crop choices with pictures, expected cash earnings, simple benefits, and things to know.</p>
               </div>
+            </div>
 
-              <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
-                <div className="flex items-center justify-between font-bold text-slate-200 mb-1">
-                  <span>NASA/USGS Landsat 8/9</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                    Active
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400">Multispectral NDVI, NDRE, NDWI 10-year vegetation trends</p>
-                <div className="mt-1.5 text-[10px] text-slate-300 font-mono">30-meter resolution grid</div>
-              </div>
+            <div className="pt-2 flex items-center justify-between text-xs text-emerald-300 border-t border-emerald-800/80">
+              <span>🌾 Calibrated with local farming knowledge and weather observations in Ejura.</span>
+              <span className="font-bold text-amber-300">Free companion for all farmers</span>
             </div>
           </div>
         </div>

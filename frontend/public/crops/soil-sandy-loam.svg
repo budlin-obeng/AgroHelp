@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sandyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="50%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="sandyEarth" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="50%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <filter id="soilShadow1" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#78350F" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Outer Frame -->
+  <circle cx="60" cy="60" r="54" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2"/>
+
+  <g filter="url(#soilShadow1)">
+    <!-- Soil Horizon Cross-Section Circle Cut -->
+    <clipPath id="soilCircleClip">
+      <circle cx="60" cy="60" r="46"/>
+    </clipPath>
+
+    <g clip-path="url(#soilCircleClip)">
+      <!-- Top Sandy-Loam Layer (Warm Ochre / Sand) -->
+      <rect x="10" y="10" width="100" height="100" fill="url(#sandyBg)"/>
+
+      <!-- Lower Horizon Mound -->
+      <path d="M10 65 Q35 55 60 62 T110 58 L110 110 L10 110 Z" fill="url(#sandyEarth)"/>
+      <path d="M10 82 Q40 76 75 80 T110 74 L110 110 L10 110 Z" fill="#78350F"/>
+
+      <!-- Granular Sand Texture Specks (Sandy Loam Grains) -->
+      <!-- Upper Layer Sand Particles -->
+      <circle cx="32" cy="34" r="1.8" fill="#B45309"/>
+      <circle cx="48" cy="28" r="2.2" fill="#D97706"/>
+      <circle cx="72" cy="32" r="1.6" fill="#92400E"/>
+      <circle cx="86" cy="24" r="2.0" fill="#B45309"/>
+      <circle cx="24" cy="48" r="2.4" fill="#92400E"/>
+      <circle cx="42" cy="46" r="1.8" fill="#F59E0B"/>
+      <circle cx="64" cy="42" r="2.6" fill="#B45309"/>
+      <circle cx="82" cy="48" r="1.8" fill="#D97706"/>
+      <circle cx="95" cy="40" r="2.0" fill="#92400E"/>
+
+      <!-- Middle Crumb Particles -->
+      <circle cx="28" cy="68" r="3" fill="#FDE68A" opacity="0.6"/>
+      <circle cx="50" cy="72" r="3.5" fill="#FEF3C7" opacity="0.6"/>
+      <circle cx="78" cy="68" r="3" fill="#FDE68A" opacity="0.6"/>
+      <circle cx="92" cy="76" r="2.5" fill="#FEF3C7" opacity="0.5"/>
+
+      <!-- Porous Aeration Soil Pores (High drainage symbol) -->
+      <ellipse cx="44" cy="38" rx="4" ry="2" fill="#FEF3C7"/>
+      <ellipse cx="68" cy="52" rx="4.5" ry="2.2" fill="#FEF3C7"/>
+      <ellipse cx="56" cy="25" rx="3.5" ry="1.8" fill="#FEF3C7"/>
+
+      <!-- Feeder Rootlet Penetrating Freely through sandy porous loam -->
+      <path d="M60 14 C62 26 58 38 66 52 C70 60 72 74 68 88" stroke="#15803D" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      <path d="M60 30 C54 36 46 40 40 42" stroke="#22C55E" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M64 48 C72 54 80 56 86 62" stroke="#22C55E" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M69 68 C62 74 54 80 48 84" stroke="#4ADE80" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- Outer Protective Ring Accent -->
+    <circle cx="60" cy="60" r="46" fill="none" stroke="#D97706" stroke-width="3"/>
+  </g>
+</svg>

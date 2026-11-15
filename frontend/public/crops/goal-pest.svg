@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bioShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="60%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+    <linearGradient id="wormGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A3E635"/>
+      <stop offset="50%" stop-color="#65A30D"/>
+      <stop offset="100%" stop-color="#365314"/>
+    </linearGradient>
+    <filter id="pestShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#7F1D1D" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Outer Glow -->
+  <circle cx="60" cy="60" r="54" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+
+  <g filter="url(#pestShadow)">
+    <!-- Protective Bio-Shield (Background) -->
+    <path d="M60 12 C82 12 96 22 96 42 C96 74 68 98 60 106 C52 98 24 74 24 42 C24 22 38 12 60 12 Z" 
+          fill="url(#bioShieldGrad)" stroke="#14532D" stroke-width="2.5"/>
+    <path d="M60 18 C78 18 90 26 90 42 C90 70 66 92 60 98 C54 92 30 70 30 42 C30 26 42 18 60 18 Z" 
+          fill="none" stroke="#86EFAC" stroke-width="1.2" opacity="0.8"/>
+
+    <!-- Inner Cream Circular Field for Caterpillar -->
+    <circle cx="60" cy="56" r="30" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+
+    <!-- Fall Armyworm Caterpillar (Spodoptera frugiperda) -->
+    <g transform="rotate(-15 60 56)">
+      <!-- Segmented Larval Body -->
+      <path d="M38 58 C42 50 48 48 54 50 C60 52 66 50 72 52 C78 54 84 50 86 56 C88 62 82 66 76 64 C70 62 64 64 58 62 C52 60 44 64 38 58 Z" 
+            fill="url(#wormGrad)" stroke="#1A2E05" stroke-width="1.2"/>
+
+      <!-- Longitudinal Dorsal Stripes -->
+      <path d="M38 58 C52 53 66 54 86 56" stroke="#FEF08A" stroke-width="1.5" stroke-dasharray="3 1" fill="none"/>
+      <path d="M40 60 C54 57 68 58 84 62" stroke="#365314" stroke-width="1.2" fill="none"/>
+
+      <!-- Caterpillar Head Capsule with Inverted 'Y' Suture Mark -->
+      <circle cx="36" cy="58" r="6" fill="#451A03" stroke="#1C0A00" stroke-width="1"/>
+      <!-- Inverted Y mark characteristic of Fall Armyworm -->
+      <path d="M33 55 L36 58 L39 55 M36 58 L36 63" stroke="#FEF08A" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+
+      <!-- Caterpillar Prolegs / True Legs -->
+      <path d="M46 63 L44 68 M52 62 L51 68 M62 63 L61 68 M70 63 L70 68 M78 63 L79 67" 
+            stroke="#365314" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Characteristic 4 Pinacula Dots on Terminal Segment -->
+      <circle cx="80" cy="54" r="0.8" fill="#000000"/>
+      <circle cx="83" cy="54" r="0.8" fill="#000000"/>
+      <circle cx="80" cy="58" r="0.8" fill="#000000"/>
+      <circle cx="83" cy="58" r="0.8" fill="#000000"/>
+    </g>
+
+    <!-- Bold Red Prohibition Sign (Cancel / Stop Circle + Diagonal Slash) -->
+    <circle cx="60" cy="56" r="30" fill="none" stroke="#DC2626" stroke-width="6"/>
+    <line x1="39" y1="35" x2="81" y2="77" stroke="#DC2626" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

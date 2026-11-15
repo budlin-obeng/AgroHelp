@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
-import FarmMap from './components/FarmMap';
-import FarmProfileControls from './components/FarmProfileControls';
-import MLPredictionCards from './components/MLPredictionCards';
-import TradeoffExplorer from './components/TradeoffExplorer';
-import NasaIndicatorsDashboard from './components/NasaIndicatorsDashboard';
+import GuidedFarmQuestions from './components/GuidedFarmQuestions';
+import ThreeSolutions from './components/ThreeSolutions';
 import Footer from './components/Footer';
 import { predictRotations } from './services/api';
-import { Sparkles, MapPin, AlertCircle, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Sprout, CheckCircle2, ShieldCheck, MapPin } from 'lucide-react';
 
 export default function App() {
   const [profile, setProfile] = useState({
@@ -15,19 +12,20 @@ export default function App() {
     current_crop: 'Maize',
     farm_size_hectares: 2.0,
     target_season: 'Major Rainy Season',
-    market_priority: 0.35,
-    fertilizer_savings_priority: 0.25,
-    faw_disruption_priority: 0.20,
-    drought_resilience_priority: 0.20,
+    market_priority: 0.70,
+    fertilizer_savings_priority: 0.10,
+    faw_disruption_priority: 0.10,
+    drought_resilience_priority: 0.10,
     latitude: 7.3856,
     longitude: -1.3562,
   });
 
+  const [activePriority, setActivePriority] = useState('income');
   const [predictions, setPredictions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState(null);
 
-  // Function to execute dynamic ML prediction
+  // Fetch dynamic rotation predictions from backend
   const fetchPredictions = useCallback(async (currentSettings) => {
     setIsLoading(true);
     try {
@@ -49,11 +47,11 @@ export default function App() {
     }
   }, []);
 
-  // Fetch predictions on initial load and whenever profile changes (debounced)
+  // Fetch on mount and when settings change
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchPredictions(profile);
-    }, 250);
+    }, 200);
 
     return () => clearTimeout(timer);
   }, [
@@ -65,22 +63,16 @@ export default function App() {
     profile.fertilizer_savings_priority,
     profile.faw_disruption_priority,
     profile.drought_resilience_priority,
-    fetchPredictions
+    fetchPredictions,
   ]);
 
-  // Handler for partial profile updates
-  const handleProfileChange = (updates) => {
-    setProfile((prev) => ({ ...prev, ...updates }));
+  const handleCropSelect = (cropId) => {
+    setProfile((prev) => ({ ...prev, current_crop: cropId }));
+    showNotification(`Selected ${cropId} as current crop`);
   };
 
-  // Handler for map location changes
-  const handleLocationChange = (lat, lng) => {
-    setProfile((prev) => ({ ...prev, latitude: lat, longitude: lng }));
-    showNotification(`Farm pin updated: ${lat.toFixed(4)}° N, ${lng.toFixed(4)}° W`);
-  };
-
-  // Handler for applying quick goal presets
-  const handleApplyPreset = (weights) => {
+  const handlePrioritySelect = (priorityId, weights) => {
+    setActivePriority(priorityId);
     setProfile((prev) => ({
       ...prev,
       market_priority: weights.market,
@@ -88,103 +80,87 @@ export default function App() {
       faw_disruption_priority: weights.faw,
       drought_resilience_priority: weights.drought,
     }));
-    showNotification('Goal preset applied: recalculating ML models...');
+    showNotification(`Goal updated: Finding best options for your farm`);
   };
 
-  // Toast notification helper
+  const handleSoilSelect = (soilId) => {
+    setProfile((prev) => ({ ...prev, soil_type: soilId }));
+    showNotification(`Soil updated to ${soilId}`);
+  };
+
+  const handleSizeChange = (ha) => {
+    setProfile((prev) => ({ ...prev, farm_size_hectares: ha }));
+  };
+
   const showNotification = (msg) => {
     setNotification(msg);
     setTimeout(() => {
       setNotification((curr) => (curr === msg ? null : curr));
-    }, 3500);
+    }, 3000);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-800 font-sans">
-      {/* Header with Space2Soil branding & telemetry */}
+    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-900">
+      {/* Warm & Respectful Header */}
       <Header
-        pipelineStatus="online"
         onRefresh={() => fetchPredictions(profile)}
         isRefreshing={isLoading}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        {/* Pilot Context Alert Banner */}
-        <div className="bg-gradient-to-r from-agro-900 via-agro-800 to-slate-900 text-white rounded-2xl p-4 sm:p-5 shadow-sm border border-agro-700/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl shrink-0 mt-0.5">
-              <ShieldAlert className="w-5 h-5 text-emerald-400" />
+      {/* Main Content Area */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+        {/* Warm Welcome Companion Banner */}
+        <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-3xl p-6 sm:p-8 shadow-sm border border-emerald-600/40 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-xs font-black uppercase tracking-wider">
+              <span>🌾 Simple Farming Guide</span>
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-sm sm:text-base font-bold text-white">
-                  Ejura-Sekyedumase Smallholder Pilot: Overcoming Monoculture Vulnerability
-                </h2>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                  Critical Challenge
-                </span>
-              </div>
-              <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
-                Ejura is Ghana's premier maize belt, where continuous monoculture has triggered recurring Fall Armyworm
-                (<em>Spodoptera frugiperda</em>) devastation and steep synthetic fertilizer expenditure.
-                AgroHelp ingests 10 years of NASA satellite observations to generate optimized, resilient crop rotation regimes.
-              </p>
-            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+              Akwaaba! Welcome to Your Farm Companion
+            </h2>
+            <p className="text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
+              Continuous maize in Ejura invites Fall Armyworm pests and drains your soil. 
+              Tap the 3 simple questions below to discover your <strong>3 best crop rotation solutions</strong> to save money on fertilizer, protect your harvest, and boost your family income.
+            </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono bg-white/10 px-3 py-2 rounded-xl shrink-0 border border-white/10 self-start md:self-center">
-            <MapPin className="w-4 h-4 text-emerald-400" />
-            <span>7.3856&deg; N, -1.3562&deg; W</span>
+          <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 text-xs font-bold bg-white/10 px-3.5 py-2 rounded-2xl border border-white/20">
+              <MapPin className="w-4 h-4 text-amber-300" />
+              <span>Ejura-Sekyedumase, Ghana</span>
+            </div>
+            <span className="text-[11px] text-emerald-200">
+              Calibrated for local soils & rainfall
+            </span>
           </div>
         </div>
 
-        {/* Top Grid: Interactive Map + Farm Profile & Priority Controls */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Map & Controls (7 cols on lg) */}
-          <div className="lg:col-span-7 space-y-6">
-            {/* Interactive Leaflet Map */}
-            <FarmMap
-              latitude={profile.latitude}
-              longitude={profile.longitude}
-              onLocationChange={handleLocationChange}
-            />
+        {/* Guided 3 Questions (HCI & Gestalt Design) */}
+        <GuidedFarmQuestions
+          profile={profile}
+          activePriority={activePriority}
+          onCropSelect={handleCropSelect}
+          onPrioritySelect={handlePrioritySelect}
+          onSoilSelect={handleSoilSelect}
+          onSizeChange={handleSizeChange}
+          isLoading={isLoading}
+        />
 
-            {/* Farm Profile & Optimization Controls */}
-            <FarmProfileControls
-              profile={profile}
-              onChange={handleProfileChange}
-              onApplyPreset={handleApplyPreset}
-              isLoading={isLoading}
-            />
-          </div>
-
-          {/* Right Column: ML-Predicted Rotation Cards (5 cols on lg) */}
-          <div className="lg:col-span-5">
-            <MLPredictionCards
-              predictions={predictions}
-              isLoading={isLoading}
-              currentCrop={profile.current_crop}
-              farmSizeHa={profile.farm_size_hectares}
-            />
-          </div>
-        </div>
-
-        {/* Full-width Section: Trade-off Explorer */}
-        <section>
-          <TradeoffExplorer recommendations={predictions?.recommendations} />
-        </section>
-
-        {/* Full-width Section: NASA Indicators Dashboard */}
-        <section>
-          <NasaIndicatorsDashboard />
+        {/* Exactly Three Solutions */}
+        <section id="solutions-section">
+          <ThreeSolutions
+            predictions={predictions}
+            isLoading={isLoading}
+            farmSizeHa={profile.farm_size_hectares}
+            currentCrop={profile.current_crop}
+          />
         </section>
       </main>
 
-      {/* Floating Notification Toast */}
+      {/* Friendly Notification Toast */}
       {notification && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2 animate-bounce">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-900 text-white text-xs sm:text-sm font-bold px-4 py-3 rounded-2xl shadow-xl border border-emerald-700 flex items-center gap-2 animate-bounce">
+          <CheckCircle2 className="w-4 h-4 text-amber-300 shrink-0" />
           <span>{notification}</span>
         </div>
       )}

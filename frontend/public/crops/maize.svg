@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="huskGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="60%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+    <linearGradient id="huskInner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#86EFAC"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="stalkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+    <filter id="maizeShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#064E3B" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Green Background Circular Glow -->
+  <circle cx="60" cy="60" r="54" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="2"/>
+
+  <g filter="url(#maizeShadow)">
+    <!-- Main Plant Stalk -->
+    <path d="M52 112 C52 85 54 45 56 16 C57 16 61 16 62 16 C60 45 58 85 58 112 Z" fill="url(#stalkGrad)"/>
+    <path d="M53 72 L61 72 M54 48 L60 48" stroke="#15803D" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Left Arching Foliage Leaf -->
+    <path d="M54 75 C40 68 22 70 12 84 C20 90 38 88 54 80 Z" fill="url(#huskGrad)"/>
+    <path d="M54 75 C36 74 24 78 12 84" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Right Arching Foliage Leaf -->
+    <path d="M58 55 C74 46 94 48 106 62 C96 68 76 66 58 60 Z" fill="url(#huskGrad)"/>
+    <path d="M58 55 C76 53 90 57 106 62" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Silk Tassel at Cob Tip -->
+    <path d="M60 28 C61 20 63 12 66 8 M62 27 C66 18 70 12 75 10 M59 28 C56 19 54 12 51 9" 
+          stroke="#B45309" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+    <!-- Corn Cob Body -->
+    <g transform="rotate(16 60 55)">
+      <!-- Base Ear Shape -->
+      <path d="M48 30 C58 24 64 24 72 30 C76 40 76 72 68 84 C62 88 56 88 50 84 C42 72 42 40 48 30 Z" 
+            fill="url(#cobGrad)" stroke="#B45309" stroke-width="1.5"/>
+
+      <!-- Individual Kernels Grid Texture -->
+      <!-- Row 1 -->
+      <circle cx="56" cy="34" r="2.4" fill="#FEF08A"/>
+      <circle cx="62" cy="34" r="2.4" fill="#FEF08A"/>
+      <!-- Row 2 -->
+      <ellipse cx="52" cy="41" rx="2.6" ry="2.2" fill="#FDE047"/>
+      <ellipse cx="58" cy="41" rx="2.8" ry="2.3" fill="#FEF08A"/>
+      <ellipse cx="64" cy="41" rx="2.6" ry="2.2" fill="#FDE047"/>
+      <!-- Row 3 -->
+      <ellipse cx="50" cy="48" rx="2.7" ry="2.3" fill="#FEF08A"/>
+      <ellipse cx="56" cy="48" rx="3.0" ry="2.4" fill="#FFFBEB"/>
+      <ellipse cx="62" cy="48" rx="3.0" ry="2.4" fill="#FEF08A"/>
+      <ellipse cx="68" cy="48" rx="2.7" ry="2.3" fill="#FDE047"/>
+      <!-- Row 4 -->
+      <ellipse cx="49" cy="56" rx="2.8" ry="2.4" fill="#FDE047"/>
+      <ellipse cx="55" cy="56" rx="3.1" ry="2.5" fill="#FFFBEB"/>
+      <ellipse cx="61" cy="56" rx="3.1" ry="2.5" fill="#FEF08A"/>
+      <ellipse cx="67" cy="56" rx="2.8" ry="2.4" fill="#FDE047"/>
+      <!-- Row 5 -->
+      <ellipse cx="50" cy="64" rx="2.8" ry="2.4" fill="#F59E0B"/>
+      <ellipse cx="56" cy="64" rx="3.0" ry="2.5" fill="#FEF08A"/>
+      <ellipse cx="62" cy="64" rx="3.0" ry="2.5" fill="#FEF08A"/>
+      <ellipse cx="68" cy="64" rx="2.8" ry="2.4" fill="#F59E0B"/>
+      <!-- Row 6 -->
+      <ellipse cx="52" cy="72" rx="2.7" ry="2.3" fill="#D97706"/>
+      <ellipse cx="58" cy="72" rx="2.9" ry="2.4" fill="#FEF08A"/>
+      <ellipse cx="64" cy="72" rx="2.7" ry="2.3" fill="#F59E0B"/>
+      <!-- Row 7 -->
+      <ellipse cx="55" cy="79" rx="2.5" ry="2.2" fill="#D97706"/>
+      <ellipse cx="61" cy="79" rx="2.5" ry="2.2" fill="#D97706"/>
+
+      <!-- Peeling Husk Leaves Left & Right -->
+      <path d="M42 42 C38 60 40 82 56 88 C46 82 42 66 45 48 Z" fill="url(#huskInner)" stroke="#15803D" stroke-width="1.2"/>
+      <path d="M38 52 C32 68 36 86 54 94 C44 88 40 74 42 56 Z" fill="url(#huskGrad)" stroke="#166534" stroke-width="1.2"/>
+      <path d="M78 44 C82 62 78 82 62 88 C72 82 76 66 73 50 Z" fill="url(#huskInner)" stroke="#15803D" stroke-width="1.2"/>
+      <path d="M82 54 C88 70 82 86 64 94 C74 88 78 74 76 58 Z" fill="url(#huskGrad)" stroke="#166534" stroke-width="1.2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="riceGrain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#EAB308"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="riceStem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#84CC16"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+    <linearGradient id="riceBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="70%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+    <filter id="riceShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#854D0E" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="60" cy="60" r="54" fill="#FEFCE8" stroke="#FDE047" stroke-width="2"/>
+
+  <g filter="url(#riceShadow)">
+    <!-- Rice Culm (Stem Base) & Slender Grass Blades -->
+    <path d="M22 112 C24 88 32 60 46 36" stroke="url(#riceStem)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    
+    <!-- Long Slender Leaf Blade 1 (Left arch) -->
+    <path d="M22 108 C16 80 14 55 20 28 C26 50 32 75 25 106 Z" fill="url(#riceBlade)" stroke="#15803D" stroke-width="1"/>
+    <!-- Long Slender Leaf Blade 2 (Right upright) -->
+    <path d="M26 104 C36 82 52 64 68 44 C56 65 44 86 28 108 Z" fill="url(#riceBlade)" stroke="#15803D" stroke-width="1"/>
+
+    <!-- Drooping Main Panicle Rachis Stem (Arching gracefully across top and right) -->
+    <path d="M46 36 C56 22 74 18 88 28 C96 34 102 46 100 62 C98 76 90 92 82 104" 
+          stroke="url(#riceStem)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+    <!-- Secondary Branchlets -->
+    <path d="M60 22 C66 16 74 15 80 18" stroke="#A3E635" stroke-width="1.2" fill="none"/>
+    <path d="M72 22 C78 26 84 26 90 24" stroke="#A3E635" stroke-width="1.2" fill="none"/>
+    <path d="M84 26 C90 32 94 36 96 42" stroke="#A3E635" stroke-width="1.2" fill="none"/>
+    <path d="M94 36 C100 42 102 50 102 58" stroke="#A3E635" stroke-width="1.2" fill="none"/>
+    <path d="M100 52 C104 60 102 68 98 76" stroke="#A3E635" stroke-width="1.2" fill="none"/>
+    <path d="M96 68 C94 76 90 84 86 92" stroke="#A3E635" stroke-width="1.2" fill="none"/>
+
+    <!-- Plump Golden Rice Spikelets / Grains -->
+    <!-- Top Arc Grains -->
+    <ellipse cx="64" cy="18" rx="6" ry="3" transform="rotate(-15 64 18)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="74" cy="16" rx="6" ry="3" transform="rotate(5 74 16)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="82" cy="19" rx="6" ry="3" transform="rotate(25 82 19)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+
+    <!-- Upper Right Cluster -->
+    <ellipse cx="78" cy="27" rx="6" ry="3.2" transform="rotate(20 78 27)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="88" cy="24" rx="6.2" ry="3.2" transform="rotate(35 88 24)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="94" cy="30" rx="6.2" ry="3.2" transform="rotate(45 94 30)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    
+    <!-- Middle Right Cluster -->
+    <ellipse cx="88" cy="38" rx="6.5" ry="3.2" transform="rotate(50 88 38)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="97" cy="40" rx="6.5" ry="3.2" transform="rotate(60 97 40)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="102" cy="48" rx="6.5" ry="3.2" transform="rotate(70 102 48)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="93" cy="52" rx="6.5" ry="3.2" transform="rotate(65 93 52)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+
+    <!-- Lower Right Drooping Grains -->
+    <ellipse cx="101" cy="62" rx="6.5" ry="3.2" transform="rotate(80 101 62)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="94" cy="67" rx="6.5" ry="3.2" transform="rotate(75 94 67)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="98" cy="76" rx="6.5" ry="3.2" transform="rotate(90 98 76)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="89" cy="80" rx="6.5" ry="3.2" transform="rotate(85 89 80)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    
+    <!-- Tip Terminals -->
+    <ellipse cx="92" cy="90" rx="6" ry="3" transform="rotate(100 92 90)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="83" cy="94" rx="6" ry="3" transform="rotate(95 83 94)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+    <ellipse cx="83" cy="104" rx="5.5" ry="2.8" transform="rotate(110 83 104)" fill="url(#riceGrain)" stroke="#854D0E" stroke-width="0.8"/>
+
+    <!-- Delicate Husk Ridges / Awns on Top Grains -->
+    <path d="M84 16 L88 11 M96 26 L102 22 M104 44 L110 42" stroke="#CA8A04" stroke-width="0.8" stroke-linecap="round"/>
+  </g>
+</svg>

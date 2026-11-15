@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="40%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <linearGradient id="coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#FACC15"/>
+      <stop offset="100%" stop-color="#CA8A04"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#4ADE80"/>
+    </linearGradient>
+    <filter id="incomeShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#78350F" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Outer Glow -->
+  <circle cx="60" cy="60" r="54" fill="#FEFCE8" stroke="#FDE047" stroke-width="2"/>
+
+  <g filter="url(#incomeShadow)">
+    <!-- Upward Profit Arrow (Background Dynamic Graphic) -->
+    <path d="M22 88 L52 58 L72 72 L102 36" stroke="#22C55E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.4"/>
+    <polygon points="104,26 106,42 90,38" fill="#22C55E" opacity="0.6"/>
+
+    <!-- Jute Burlap Cash Sack Body -->
+    <!-- Gathered Neck of Sack -->
+    <path d="M50 38 C42 32 40 24 46 20 C54 22 66 22 74 20 C80 24 78 32 70 38 Z" 
+          fill="url(#sackGrad)" stroke="#78350F" stroke-width="1.5"/>
+    <!-- Tied Cord Around Sack Neck -->
+    <ellipse cx="60" cy="38" rx="14" ry="4" fill="#B45309" stroke="#78350F" stroke-width="1.2"/>
+    <path d="M60 40 C62 46 64 50 68 54 M60 40 C58 46 54 50 50 52" stroke="#B45309" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Main Sack Bulb -->
+    <path d="M46 38 C32 44 24 62 26 82 C28 98 42 106 60 106 C78 106 92 98 94 82 C96 62 88 44 74 38 Z" 
+          fill="url(#sackGrad)" stroke="#78350F" stroke-width="1.8"/>
+
+    <!-- Burlap Weave Texture Marks -->
+    <path d="M38 60 C48 58 58 60 68 58 M36 75 C48 73 62 75 74 72 M42 90 C54 88 68 90 78 88" 
+          stroke="#FEF3C7" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- Currency Emblem on Sack (Ghana Cedi / Cash Badge) -->
+    <circle cx="60" cy="74" r="16" fill="#FEF3C7" stroke="#B45309" stroke-width="1.8"/>
+    <!-- Bold Cedi Sign '₵' with vertical slash -->
+    <text x="60" y="81" font-family="Arial, sans-serif" font-weight="900" font-size="20" text-anchor="middle" fill="#92400E">₵</text>
+
+    <!-- Golden Coins Spilling and Stacking -->
+    <!-- Coin 1 (Right Front) -->
+    <ellipse cx="88" cy="94" rx="11" ry="6" fill="url(#coinGrad)" stroke="#B45309" stroke-width="1.2"/>
+    <ellipse cx="88" cy="92" rx="9" ry="4.5" fill="#FEF08A" stroke="#CA8A04" stroke-width="0.8"/>
+    
+    <!-- Coin 2 (Middle Stacking) -->
+    <ellipse cx="86" cy="85" rx="10" ry="5.5" fill="url(#coinGrad)" stroke="#B45309" stroke-width="1.2"/>
+    <ellipse cx="86" cy="83" rx="8" ry="4" fill="#FEF08A" stroke="#CA8A04" stroke-width="0.8"/>
+
+    <!-- Coin 3 (Left Front) -->
+    <ellipse cx="32" cy="95" rx="10" ry="5.5" fill="url(#coinGrad)" stroke="#B45309" stroke-width="1.2"/>
+    <ellipse cx="32" cy="93" rx="8" ry="4" fill="#FEF08A" stroke="#CA8A04" stroke-width="0.8"/>
+
+    <!-- Prosperity Sparkle Stars -->
+    <polygon points="98,18 100,24 106,26 100,28 98,34 96,28 90,26 96,24" fill="#FACC15" stroke="#CA8A04" stroke-width="0.5"/>
+    <polygon points="20,38 21,42 25,43 21,44 20,48 19,44 15,43 19,42" fill="#FACC15" stroke="#CA8A04" stroke-width="0.5"/>
+  </g>
+</svg>

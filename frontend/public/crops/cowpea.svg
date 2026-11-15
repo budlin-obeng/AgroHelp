@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="podGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="60%" stop-color="#15803D"/>
+      <stop offset="90%" stop-color="#7E22CE"/>
+      <stop offset="100%" stop-color="#581C87"/>
+    </linearGradient>
+    <linearGradient id="podGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#86EFAC"/>
+      <stop offset="70%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#9333EA"/>
+    </linearGradient>
+    <linearGradient id="flowerPetal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E9D5FF"/>
+      <stop offset="60%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#7E22CE"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+    <filter id="cowpeaShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#3B0764" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="60" cy="60" r="54" fill="#FDF4FF" stroke="#F0ABFC" stroke-width="2"/>
+
+  <g filter="url(#cowpeaShadow)">
+    <!-- Branch / Vine Stem -->
+    <path d="M25 18 C40 28 65 32 95 24" stroke="#15803D" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M50 28 C52 40 50 50 46 60" stroke="#15803D" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Trifoliate Broad Leaf Background -->
+    <g transform="translate(18, 20)">
+      <!-- Left Leaflet -->
+      <path d="M16 14 C4 18 0 32 10 38 C20 44 24 30 18 16 Z" fill="url(#leafGrad)" stroke="#166534" stroke-width="1.2"/>
+      <path d="M16 16 C12 24 10 32 10 38" stroke="#86EFAC" stroke-width="1" fill="none"/>
+      <!-- Right Leaflet -->
+      <path d="M22 16 C34 16 42 28 34 38 C24 44 20 30 22 16 Z" fill="url(#leafGrad)" stroke="#166534" stroke-width="1.2"/>
+      <path d="M22 16 C26 24 30 32 34 38" stroke="#86EFAC" stroke-width="1" fill="none"/>
+      <!-- Center Leaflet -->
+      <path d="M20 16 C14 2 24 -6 28 2 C32 10 24 16 20 16 Z" fill="#22C55E" stroke="#166534" stroke-width="1.2"/>
+    </g>
+
+    <!-- Legume Flower (Papilionaceous Cowpea Blossom) -->
+    <g transform="translate(68, 16)">
+      <!-- Back / Banner Petal -->
+      <path d="M16 18 C6 6 26 -2 32 8 C36 14 24 22 16 18 Z" fill="url(#flowerPetal)" stroke="#6B21A8" stroke-width="1.2"/>
+      <!-- Wing Petals -->
+      <ellipse cx="14" cy="22" rx="8" ry="5" transform="rotate(-20 14 22)" fill="#C084FC" stroke="#6B21A8" stroke-width="1"/>
+      <ellipse cx="22" cy="20" rx="8" ry="4" transform="rotate(15 22 20)" fill="#D8B4FE" stroke="#6B21A8" stroke-width="1"/>
+      <!-- Keel Petal & Yellow Throat -->
+      <path d="M12 23 C16 26 22 25 24 22 C22 28 14 29 12 23 Z" fill="#FDE047" stroke="#CA8A04" stroke-width="1"/>
+      <!-- Pedicel -->
+      <path d="M8 26 C4 24 -2 18 -6 12" stroke="#15803D" stroke-width="2" fill="none"/>
+    </g>
+
+    <!-- Long Curved Cowpea Pod #1 (Primary foreground) -->
+    <g>
+      <path d="M46 32 C48 48 54 68 50 88 C48 98 42 106 38 112 C40 110 43 103 46 95 C54 75 58 52 52 32 Z" 
+            fill="url(#podGrad1)" stroke="#14532D" stroke-width="1.5"/>
+      <!-- Pod seed bulge segments -->
+      <ellipse cx="50" cy="50" rx="2" ry="4" fill="#86EFAC" opacity="0.7"/>
+      <ellipse cx="52" cy="64" rx="2.2" ry="4.5" fill="#86EFAC" opacity="0.7"/>
+      <ellipse cx="50" cy="78" rx="2.2" ry="4" fill="#86EFAC" opacity="0.7"/>
+      <ellipse cx="45" cy="92" rx="1.8" ry="3.5" fill="#C084FC" opacity="0.8"/>
+      <!-- Pod beak / tip -->
+      <path d="M38 112 C37 114 36 116 35 117" stroke="#581C87" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Long Curved Cowpea Pod #2 (Secondary pair) -->
+    <g>
+      <path d="M50 33 C58 50 72 70 76 90 C78 100 76 108 72 114 C74 110 78 103 79 94 C80 72 68 50 55 33 Z" 
+            fill="url(#podGrad2)" stroke="#14532D" stroke-width="1.4"/>
+      <!-- Pod seed bulge segments -->
+      <ellipse cx="60" cy="52" rx="2" ry="4" fill="#BBF7D0" opacity="0.75"/>
+      <ellipse cx="70" cy="68" rx="2.2" ry="4" fill="#BBF7D0" opacity="0.75"/>
+      <ellipse cx="76" cy="84" rx="2" ry="3.5" fill="#BBF7D0" opacity="0.75"/>
+      <ellipse cx="74" cy="98" rx="1.8" ry="3" fill="#D8B4FE" opacity="0.8"/>
+      <!-- Pod beak tip -->
+      <path d="M72 114 C71 116 70 117 69 118" stroke="#6B21A8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Calyx Cap at Base of Pods -->
+    <path d="M44 32 C48 30 54 30 58 34 C54 36 48 36 44 32 Z" fill="#15803D" stroke="#052E16" stroke-width="1"/>
+  </g>
+</svg>

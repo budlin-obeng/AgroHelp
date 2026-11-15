@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="yamSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5F370E"/>
+      <stop offset="50%" stop-color="#451A03"/>
+      <stop offset="100%" stop-color="#270F02"/>
+    </linearGradient>
+    <linearGradient id="yamFlesh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="80%" stop-color="#FEFCE8"/>
+      <stop offset="100%" stop-color="#FEF08A"/>
+    </linearGradient>
+    <linearGradient id="yamLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="70%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+    <filter id="yamShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2.5" flood-color="#270F02" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="60" cy="60" r="54" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2"/>
+
+  <g filter="url(#yamShadow)">
+    <!-- Twining Yam Vine & Heart-Shaped (Cordate) Foliage (Top) -->
+    <g transform="translate(42, 12)">
+      <!-- Twining Vine Tendril -->
+      <path d="M-8 28 C-2 18 10 16 16 8 C22 0 34 2 42 12" stroke="#16A34A" stroke-width="2" stroke-linecap="round" fill="none"/>
+      
+      <!-- Heart-Shaped Leaf 1 -->
+      <g transform="translate(18, 4) rotate(15)">
+        <path d="M0 0 C-10 -12 -24 -2 -14 14 C-8 24 0 28 0 28 C0 28 8 24 14 14 C24 -2 10 -12 0 0 Z" 
+              fill="url(#yamLeaf)" stroke="#14532D" stroke-width="1.2"/>
+        <!-- Curved Veins Radiating from Base -->
+        <path d="M0 2 C-6 8 -10 16 -8 24 M0 2 C6 8 10 16 8 24 M0 0 L0 26" 
+              stroke="#86EFAC" stroke-width="0.9" fill="none"/>
+      </g>
+
+      <!-- Smaller Cordate Leaf 2 -->
+      <g transform="translate(-8, 16) rotate(-35) scale(0.65)">
+        <path d="M0 0 C-10 -12 -24 -2 -14 14 C-8 24 0 28 0 28 C0 28 8 24 14 14 C24 -2 10 -12 0 0 Z" 
+              fill="url(#yamLeaf)" stroke="#14532D" stroke-width="1.2"/>
+      </g>
+    </g>
+
+    <!-- Main Yam Tuber Body (Large, Cylindrical, African White Yam) -->
+    <g transform="rotate(22 62 76)">
+      <!-- Heavy Tuber Trunk -->
+      <path d="M26 56 C34 50 78 48 94 56 C102 62 104 80 96 88 C88 94 36 96 26 88 C18 80 18 64 26 56 Z" 
+            fill="url(#yamSkin)" stroke="#270F02" stroke-width="1.6"/>
+
+      <!-- Rough Bark Ridges & Scales -->
+      <path d="M42 54 C46 66 45 78 41 89 M58 52 C62 66 60 78 57 91 M72 53 C76 65 74 77 71 89 M86 57 C89 67 87 75 84 84" 
+            stroke="#78350F" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+      <!-- Fibrous Root Hairs Protruding from Tuber -->
+      <path d="M22 64 C16 63 12 65 8 68 M24 76 C17 78 12 82 10 88 M48 92 C46 98 48 104 46 108 M68 93 C67 99 71 105 70 110 M98 62 C104 60 110 59 114 61 M100 78 C106 82 111 85 116 86" 
+            stroke="#A16207" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- Sliced Tuber Cross Section (Foreground Left - Glistening White/Ivory Starch) -->
+    <g transform="translate(18, 54)">
+      <!-- Dark Bark Rim -->
+      <ellipse cx="22" cy="24" rx="16" ry="21" fill="#451A03" stroke="#1C0A00" stroke-width="1.6"/>
+      <!-- Inner Thin Tan Skin Ring -->
+      <ellipse cx="22" cy="24" rx="14.5" ry="19.5" fill="#B45309"/>
+      <!-- Pristine White Moist Starchy Flesh -->
+      <ellipse cx="22" cy="24" rx="13" ry="18" fill="url(#yamFlesh)" stroke="#E2E8F0" stroke-width="0.8"/>
+      <!-- Moist Flesh Texture & Starch Grains -->
+      <ellipse cx="18" cy="18" rx="3" ry="2" fill="#FFFFFF" opacity="0.9"/>
+      <circle cx="22" cy="24" r="1.5" fill="#FDE047" opacity="0.7"/>
+      <circle cx="26" cy="30" r="1.2" fill="#FEF08A"/>
+      <circle cx="17" cy="29" r="1.2" fill="#FEF08A"/>
+    </g>
+  </g>
+</svg>
