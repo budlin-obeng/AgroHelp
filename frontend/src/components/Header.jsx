@@ -64,27 +64,17 @@ export default function Header({
     <header className="sticky top-0 z-40 w-full bg-white border-b border-zinc-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
         
-        {/* Logo & Brand Identity */}
+        {/* Logo */}
         <a
           href="/"
-          className="flex items-center gap-3"
+          className="flex items-center"
           aria-label="AgroHelp Home"
         >
           <img
-            src="/logo-icon.png"
-            alt="AgroHelp Emblem"
-            className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl p-1 bg-emerald-50 border-2 border-emerald-500 shadow-xs object-contain shrink-0"
+            src="/logo.png"
+            alt="AgroHelp - Smarter Farming. Better Harvest."
+            className="h-10 sm:h-12 w-auto object-contain hover:opacity-95 transition-opacity"
           />
-          <div className="flex flex-col justify-center">
-            <img
-              src="/logo.png"
-              alt="AgroHelp - Smarter Farming. Better Harvest."
-              className="h-8 sm:h-9 w-auto max-w-[170px] sm:max-w-[220px] object-contain"
-            />
-            <span className="text-[10px] sm:text-[11px] text-emerald-800 font-bold tracking-wide hidden sm:block">
-              Farming Companion &bull; Ejura-Sekyedumase
-            </span>
-          </div>
         </a>
 
         {/* Center Navigation Links (visible when signed in or desktop) */}
