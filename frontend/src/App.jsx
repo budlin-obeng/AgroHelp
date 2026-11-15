@@ -111,17 +111,24 @@ export default function App() {
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
         {/* Warm Welcome Companion Banner */}
         <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-3xl p-6 sm:p-8 shadow-sm border border-emerald-600/40 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-xs font-black uppercase tracking-wider">
-              <span>🌾 Simple Farming Guide</span>
+          <div className="flex items-start sm:items-center gap-4 sm:gap-6">
+            <img 
+              src="/logo-icon.png" 
+              alt="AgroHelp Farmer" 
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-1 bg-white/10 border border-white/20 shadow-inner object-contain shrink-0 hidden sm:block"
+            />
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-xs font-black uppercase tracking-wider">
+                <span>🌾 Simple Farming Guide</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                Akwaaba! Welcome to Your Farm Companion
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
+                Continuous maize in Ejura invites Fall Armyworm pests and drains your soil. 
+                Tap the 3 simple questions below to discover your <strong>3 best crop rotation solutions</strong> to save money on fertilizer, protect your harvest, and boost your family income.
+              </p>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              Akwaaba! Welcome to Your Farm Companion
-            </h2>
-            <p className="text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
-              Continuous maize in Ejura invites Fall Armyworm pests and drains your soil. 
-              Tap the 3 simple questions below to discover your <strong>3 best crop rotation solutions</strong> to save money on fertilizer, protect your harvest, and boost your family income.
-            </p>
           </div>
 
           <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end gap-2 shrink-0">

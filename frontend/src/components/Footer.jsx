@@ -6,15 +6,19 @@ export default function Footer() {
     <footer className="mt-14 bg-white border-t border-slate-200 py-8 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Project info */}
-        <div className="flex items-center gap-3 text-center md:text-left">
-          <div className="flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-800 text-white shadow-xs">
-            <Sprout className="w-5 h-5 text-emerald-300" />
-          </div>
+        <div className="flex items-center gap-3.5 text-center md:text-left">
+          <img
+            src="/logo-icon.png"
+            alt="AgroHelp Emblem"
+            className="w-12 h-12 rounded-2xl p-1 bg-emerald-50 border border-emerald-300 shadow-xs object-contain shrink-0"
+          />
           <div>
-            <span className="font-extrabold text-slate-900 text-sm block">
-              AgroHelp &bull; Your Practical Farming Companion
-            </span>
-            <p className="text-[11px] text-slate-500">
+            <img
+              src="/logo.png"
+              alt="AgroHelp - Smarter Farming. Better Harvest."
+              className="h-8 w-auto object-contain mx-auto md:mx-0"
+            />
+            <p className="text-[11px] text-slate-500 mt-0.5">
               Supporting smallholder farmers in Ejura-Sekyedumase with healthy soils and better harvests.
             </p>
           </div>

@@ -5,34 +5,37 @@ export default function Header({ onRefresh, isRefreshing = false }) {
   const [showHelpModal, setShowHelpModal] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 bg-emerald-900 text-white shadow-md border-b border-emerald-800">
+    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm text-slate-800 shadow-xs border-b border-emerald-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 sm:h-22">
-          {/* Logo & Warm Title */}
-          <div className="flex items-center gap-3.5 sm:gap-4">
-            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-800 border-2 border-emerald-400 text-emerald-200 shadow-inner shrink-0">
-              <Sprout className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-300" />
+          {/* Logo & Farmer Emblem */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="relative shrink-0">
+              <img
+                src="/logo-icon.png"
+                alt="AgroHelp Farmer Emblem"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-1 bg-emerald-50 border-2 border-emerald-500 shadow-xs object-contain"
+              />
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-1.5">
-                  Agro<span className="text-amber-400">Help</span>
-                </h1>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-800 text-emerald-200 border border-emerald-700">
-                  Farming Companion
+            <div className="flex flex-col justify-center">
+              <img
+                src="/logo.png"
+                alt="AgroHelp - Smarter Farming. Better Harvest."
+                className="h-9 sm:h-11 w-auto max-w-[190px] sm:max-w-[260px] object-contain"
+              />
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-[11px] sm:text-xs text-emerald-800 font-bold tracking-wide">
+                  Farming Companion &bull; Ejura-Sekyedumase
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-emerald-100 font-medium">
-                Simple crop rotation advice for farmers in Ejura-Sekyedumase
-              </p>
             </div>
           </div>
 
           {/* Right Toolbar: Help & Refresh */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Friendly Location Badge */}
-            <div className="hidden md:flex items-center gap-1.5 bg-emerald-800/80 px-3.5 py-1.5 rounded-full text-xs font-semibold text-emerald-200 border border-emerald-700">
-              <MapPin className="w-3.5 h-3.5 text-amber-400" />
+            <div className="hidden md:flex items-center gap-1.5 bg-emerald-50 px-3.5 py-1.5 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200">
+              <MapPin className="w-3.5 h-3.5 text-amber-500" />
               <span>Ejura, Ashanti Region</span>
             </div>
 
@@ -40,7 +43,7 @@ export default function Header({ onRefresh, isRefreshing = false }) {
             <button
               type="button"
               onClick={() => setShowHelpModal(!showHelpModal)}
-              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-xs sm:text-sm transition shadow-sm"
+              className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-xs sm:text-sm transition shadow-xs"
               title="Click for simple farming tips"
             >
               <HelpCircle className="w-4 h-4 text-emerald-950" />
@@ -53,11 +56,11 @@ export default function Header({ onRefresh, isRefreshing = false }) {
                 type="button"
                 onClick={onRefresh}
                 disabled={isRefreshing}
-                className="p-2.5 text-emerald-200 hover:text-white hover:bg-emerald-800 rounded-xl border border-emerald-700 transition disabled:opacity-50"
+                className="p-2.5 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-slate-200 transition disabled:opacity-50"
                 title="Update Advice"
                 aria-label="Update Advice"
               >
-                <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-amber-400' : ''}`} />
+                <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-600' : ''}`} />
               </button>
             )}
           </div>
