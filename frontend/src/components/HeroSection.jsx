@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowRight, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
 
-export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }) {
+export default function HeroSection({ onGetStarted, onExploreSolutions, farmer, currentLocation }) {
+  const townName = currentLocation?.town || farmer?.location?.community || 'Your Area';
+  const countryName = currentLocation?.country || farmer?.location?.country || 'Ghana';
+
   return (
     <section id="hero-section" className="bg-gradient-to-b from-[#F0FDF4] via-[#FFFBEB] to-[#F8FAFC] w-full border-b border-emerald-100 overflow-hidden">
       <div className="flex flex-col md:flex-row items-center max-md:text-center justify-between py-12 md:py-18 px-6 sm:px-10 md:px-16 lg:px-24 max-w-7xl mx-auto w-full gap-10">
@@ -15,7 +18,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
             className="mb-6 flex items-center space-x-2 border border-emerald-600 text-emerald-800 text-xs font-semibold rounded-full px-4 pr-1.5 py-1.5 bg-emerald-50/90 hover:bg-emerald-100 transition shadow-2xs group"
           >
             <span>
-              NASA space data and soil advice for Ejura farmers
+              NASA space data &amp; crop rotation guidance for {townName}, {countryName}
             </span>
             <span className="flex items-center justify-center size-6 p-1 rounded-full bg-emerald-700 group-hover:bg-emerald-600 transition text-white">
               <svg width="14" height="11" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +38,7 @@ export default function HeroSection({ onGetStarted, onExploreSolutions, farmer }
           {/* Subtitle / Description */}
           <p className="mt-4 text-slate-600 max-w-lg text-sm sm:text-base leading-relaxed">
             Are armyworms spoiling your maize? Is fertilizer too expensive? See which crops will grow well
-            on your land in Ejura-Sekyedumase, and how to keep the worms away and save money.
+            on your land in {townName}, and how to keep pests away, protect topsoil, and save money.
           </p>
 
           {/* CTA Buttons */}

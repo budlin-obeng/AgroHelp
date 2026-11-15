@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2,
   User, Sparkles, LogOut, Layers, ExternalLink, Satellite,
-  CloudRain, Droplets, Sun, Activity
+  CloudRain, Droplets, Sun, Activity, Store, AlertTriangle
 } from 'lucide-react';
 
 export default function Header({
@@ -10,7 +10,10 @@ export default function Header({
   isRefreshing = false,
   farmer,
   onOpenAuthModal,
-  onLogout
+  onLogout,
+  currentLocation,
+  activeTab = 'farm',
+  onSelectTab,
 }) {
   const [open, setOpen] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -61,9 +64,10 @@ export default function Header({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
         {/* Logo & Brand Identity */}
         <div className="flex items-center gap-3">
-          <a
-            href="/"
-            className="flex items-center py-1"
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab('farm')}
+            className="flex items-center py-1 cursor-pointer focus:outline-none"
             aria-label="AgroHelp Home"
           >
             <img
@@ -71,7 +75,7 @@ export default function Header({
               alt="AgroHelp - Smarter Farming. Better Harvest."
               className="h-10 sm:h-12 w-auto max-w-[190px] sm:max-w-[240px] object-contain"
             />
-          </a>
+          </button>
 
           {/* NASA Partnership Badge */}
           <div className="hidden sm:flex flex-col border-l border-slate-200 pl-3">
@@ -79,18 +83,74 @@ export default function Header({
               <Satellite className="w-3 h-3 text-[#0B3D91]" />
               NASA Space Satellites
             </span>
-            <span className="text-[9px] text-slate-500 font-medium">10 Years of Ejura Rain &amp; Sun Records</span>
+            <span className="text-[9px] text-slate-500 font-medium">
+              10-Year Records &bull; {currentLocation?.town || farmer?.location?.district || 'Global'}
+            </span>
           </div>
         </div>
 
-        {/* Center Navigation Links in Friendly Ghanaian English */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navLink('#questions-section', 'My Farm', <Sprout className="w-3.5 h-3.5 text-emerald-600" />)}
-          {navLink('#nasa-telemetry', 'NASA Rain & Sun Records', <Satellite className="w-3.5 h-3.5 text-[#0B3D91]" />)}
-          {navLink('#satellite-map', 'See Farm from Space', <MapPin className="w-3.5 h-3.5 text-sky-600" />)}
-          {navLink('#solutions-section', 'What to Plant Next', <Sparkles className="w-3.5 h-3.5 text-amber-600" />)}
-          {navLink('#tradeoff-section', 'Money & Soil Gains', <Activity className="w-3.5 h-3.5 text-purple-600" />)}
-          {navLink('#help', 'How It Works', <HelpCircle className="w-3.5 h-3.5 text-slate-500" />, () => setShowHelpModal(!showHelpModal))}
+        {/* Streamlined Center Navigation Tabs */}
+        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/60">
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab('farm')}
+            className={`px-3 py-1.5 text-xs lg:text-sm rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === 'farm'
+                ? 'bg-white text-emerald-800 shadow-2xs border border-emerald-200'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <Sprout className={`w-3.5 h-3.5 ${activeTab === 'farm' ? 'text-emerald-600' : 'text-slate-400'}`} />
+            <span>Farm &amp; Advice</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab('market')}
+            className={`px-3 py-1.5 text-xs lg:text-sm rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === 'market'
+                ? 'bg-white text-emerald-800 shadow-2xs border border-emerald-200'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <Store className={`w-3.5 h-3.5 ${activeTab === 'market' ? 'text-emerald-600' : 'text-slate-400'}`} />
+            <span>Market Prices</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab('nasa')}
+            className={`px-3 py-1.5 text-xs lg:text-sm rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === 'nasa'
+                ? 'bg-white text-[#0B3D91] shadow-2xs border border-blue-200'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <Satellite className={`w-3.5 h-3.5 ${activeTab === 'nasa' ? 'text-[#0B3D91]' : 'text-slate-400'}`} />
+            <span>NASA Space Data</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab('alerts')}
+            className={`px-3 py-1.5 text-xs lg:text-sm rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === 'alerts'
+                ? 'bg-white text-rose-700 shadow-2xs border border-rose-200'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <AlertTriangle className={`w-3.5 h-3.5 ${activeTab === 'alerts' ? 'text-rose-500' : 'text-slate-400'}`} />
+            <span>Threat Radar</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowHelpModal(!showHelpModal)}
+            className="px-2.5 py-1.5 text-xs text-slate-500 hover:text-slate-800 hover:bg-white/60 rounded-lg font-medium transition-colors flex items-center gap-1 ml-1"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>How It Works</span>
+          </button>
         </nav>
 
         {/* Right Side */}
@@ -226,22 +286,22 @@ export default function Header({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
               <div className="bg-slate-800/90 p-3.5 rounded-2xl border border-slate-700">
                 <span className="font-bold text-sky-300 block mb-1">1. Rain &amp; Soil Water from NASA</span>
-                <p className="text-slate-300">NASA satellites in the sky track when the rain starts and when dry spells come in Ejura, so you plant at the right time.</p>
+                <p className="text-slate-300">NASA satellites in the sky track when the rain starts and when dry spells come in {currentLocation?.town || 'your area'}, so you plant at the right time.</p>
               </div>
 
               <div className="bg-slate-800/90 p-3.5 rounded-2xl border border-slate-700">
-                <span className="font-bold text-amber-300 block mb-1">2. Sun &amp; Harmattan Heat</span>
-                <p className="text-slate-300">Satellites track the hot dry Harmattan wind so you don't waste seeds when the ground is too hot for tender plants.</p>
+                <span className="font-bold text-amber-300 block mb-1">2. Sun &amp; Heat Stress</span>
+                <p className="text-slate-300">Satellites track extreme heat and dry spells so you don't waste seeds when the ground is too hot for tender plants.</p>
               </div>
 
               <div className="bg-slate-800/90 p-3.5 rounded-2xl border border-slate-700">
                 <span className="font-bold text-teal-300 block mb-1">3. Clear Farm Advice</span>
-                <p className="text-slate-300">We advise you on 3 good crops to rotate—like cowpea (adua), soyabean, or cassava—to kill worms naturally and make profit.</p>
+                <p className="text-slate-300">We advise you on 3 good crops to rotate—like cowpea, soyabean, or cassava—to kill worms naturally and make profit.</p>
               </div>
             </div>
 
             <div className="pt-2 flex items-center justify-between text-xs text-emerald-300 border-t border-slate-800">
-              <span className="flex items-center gap-1.5"><Sprout className="w-3.5 h-3.5 text-emerald-400" /> Made for farmers in Ejura-Sekyedumase with agricultural officers.</span>
+              <span className="flex items-center gap-1.5"><Sprout className="w-3.5 h-3.5 text-emerald-400" /> Powered by NASA Earth Observations for farmers across Africa &amp; globally.</span>
               <span className="font-bold text-emerald-300">Free for every farmer</span>
             </div>
           </div>

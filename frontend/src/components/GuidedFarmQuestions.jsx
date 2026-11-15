@@ -7,7 +7,7 @@ import {
 import { CropImage, SoilImage, GoalImage } from './CropVisuals';
 
 const BASE_CROPS = [
-  { id: 'Maize', name: 'Maize / Corn', localName: 'Aburo', desc: 'Most common crop in the Ejura area', imageKey: 'maize' },
+  { id: 'Maize', name: 'Maize / Corn', localName: 'Aburo', desc: 'Major staple cereal and cash grain', imageKey: 'maize' },
   { id: 'Cassava', name: 'Cassava', localName: 'Bankye', desc: 'Strong crop that lives through dry weather', imageKey: 'cassava' },
   { id: 'Yam', name: 'Yam', localName: 'Bayere', desc: 'Climbing vine with tubers under the ground', imageKey: 'yam' },
   { id: 'Cowpea', name: 'Cowpea / Beans', localName: 'Adua', desc: 'Fast beans that feed the soil', imageKey: 'cowpea' },
@@ -22,7 +22,7 @@ const BASE_CROPS = [
 ];
 
 const SOILS = [
-  { id: 'Sandy Loam', title: 'Sandy Loam', desc: 'Light brown soil. Water drains away fast. Most common soil in Ejura', typeKey: 'sandy loam' },
+  { id: 'Sandy Loam', title: 'Sandy Loam', desc: 'Light brown soil. Water drains away fast. Common in savannah and transitional soils', typeKey: 'sandy loam' },
   { id: 'Clay Loam', title: 'Red Clay', desc: 'Red soil. It holds water and feels sticky when wet', typeKey: 'red clay' },
   { id: 'Loam', title: 'Black Loam', desc: 'Dark black soil. Very good soil, seen near river valleys', typeKey: 'black loam' },
 ];
@@ -138,7 +138,7 @@ export default function GuidedFarmQuestions({
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                    <MapPin className="w-3.5 h-3.5 text-emerald-700" /> Using Ejura town location
+                    <MapPin className="w-3.5 h-3.5 text-emerald-700" /> Using {profile.town || farmer?.location?.community || 'Selected'} town location
                   </span>
                 )}
               </div>
@@ -174,7 +174,7 @@ export default function GuidedFarmQuestions({
         {gpsStatus?.error && (
           <div className="mt-5 p-3.5 rounded-2xl bg-rose-900/60 border border-rose-400 text-xs text-rose-100 flex items-center gap-2.5">
             <AlertCircle className="w-4 h-4 text-rose-300 shrink-0" />
-            <span>{gpsStatus.error} (We will use Ejura town instead: 7.3856° N, 1.3562° W)</span>
+            <span>{gpsStatus.error} (Using area coordinates: {profile.latitude || 7.3856}° N, {profile.longitude || -1.3562}° E)</span>
           </div>
         )}
       </section>

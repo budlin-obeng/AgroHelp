@@ -5,18 +5,18 @@ import {
 } from 'lucide-react';
 import { getEnvironmentalProfile } from '../services/api';
 
-export default function NasaIndicatorsDashboard() {
+export default function NasaIndicatorsDashboard({ currentLocation }) {
   const [profile, setProfile] = useState(null);
   const [selectedMetric, setSelectedMetric] = useState('rainfall'); // 'rainfall', 'moisture', 'heat', 'vegetation', 'ecostress'
   const [activeMonth, setActiveMonth] = useState(null);
 
   useEffect(() => {
     let mounted = true;
-    getEnvironmentalProfile().then((data) => {
+    getEnvironmentalProfile(currentLocation || {}).then((data) => {
       if (mounted) setProfile(data);
     });
     return () => { mounted = false; };
-  }, []);
+  }, [currentLocation?.latitude, currentLocation?.longitude, currentLocation?.country, currentLocation?.town]);
 
   const climatology = profile?.monthly_climatology || [];
   const decadal = profile?.decadal_summary || {};
@@ -24,6 +24,10 @@ export default function NasaIndicatorsDashboard() {
   const soilStats = profile?.soil_moisture_stats || {};
   const climateStats = profile?.climate_stats || {};
   const vegStats = profile?.vegetation_stats || {};
+  const loc = profile?.location || {};
+  const townName = loc.town || currentLocation?.town || 'Local Farm';
+  const countryName = loc.country || currentLocation?.country || 'Ghana';
+  const ecoZone = loc.agro_ecological_zone || 'Agricultural Zone';
 
   const maxRainfall = 220; // mm for chart scaling
 
@@ -41,14 +45,14 @@ export default function NasaIndicatorsDashboard() {
                 10 Years of Rain, Sun, and Soil Records from NASA Satellites
               </h2>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#0B3D91] text-white font-mono">
-                10-Year Ejura Record
+                10-Year {townName} Record
               </span>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                Ready for Your Farm
+                Calibrated to Coordinates
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Checked specifically for farms in <strong>Ejura-Sekyedumase</strong> (Ashanti Region &bull; 7.3856&deg; N, -1.3562&deg; W)
+              NASA telemetry calibrated for <strong>{townName}, {countryName}</strong> ({ecoZone} &bull; {loc.latitude || currentLocation?.latitude || 7.3856}&deg; N, {loc.longitude || currentLocation?.longitude || -1.3562}&deg; E)
             </p>
           </div>
         </div>
@@ -277,7 +281,7 @@ export default function NasaIndicatorsDashboard() {
               Soil Type &amp; Water
             </span>
             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-100 text-purple-800">
-              Ejura Ground
+              {townName} Ground
             </span>
           </div>
           <div className="text-xl font-black text-slate-900 font-mono mt-1">
@@ -306,7 +310,7 @@ export default function NasaIndicatorsDashboard() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="text-xs font-bold text-slate-800 flex items-center gap-2">
             <Calendar className="w-4 h-4 text-[#0B3D91]" />
-            <span>Month-by-Month Rain and Weather in Ejura (10-Year NASA Average)</span>
+            <span>Month-by-Month Rain and Weather in {townName} (10-Year NASA Average)</span>
           </div>
           <span className="text-[11px] text-slate-500">
             Hover or tap any month to see rain and weather details
@@ -358,7 +362,7 @@ export default function NasaIndicatorsDashboard() {
                   {/* Tooltip on hover */}
                   {isHovered && (
                     <div className="absolute -top-18 z-30 bg-slate-900 text-white text-[10px] px-3 py-2 rounded-xl shadow-xl whitespace-nowrap pointer-events-none border border-slate-700">
-                      <span className="font-bold text-sky-300">{monthLabel} Weather in Ejura:</span><br />
+                      <span className="font-bold text-sky-300">{monthLabel} Weather in {townName}:</span><br />
                       🌧️ Rain: {rainVal.toFixed(0)} mm<br />
                       💧 Soil Water: {moistureVal > 0.25 ? 'Very wet' : 'Medium wet'}<br />
                       ☀️ Hot Days: {heatVal} days
@@ -405,13 +409,11 @@ export default function NasaIndicatorsDashboard() {
         <div className="p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed space-y-2">
           <div className="flex items-center gap-2 font-bold text-slate-900">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-            <span>What This Means for Your Farm in Ejura:</span>
+            <span>What This Means for Your Farm in {townName}:</span>
           </div>
           <p>
-            In Ejura, rain comes in two seasons. The first big rains start in April and reach the top in June (~185 mm). 
-            August gets a small dry break, then the second rains come in September and October (~198 mm). 
-            In February and March, the hot Harmattan wind blows and dries up bare soil fast. 
-            Planting cowpeas (adua) or groundnuts (nkate) covers the ground, protects the soil from washing away, and gives you food and cash even when rains are short.
+            In {townName} ({countryName}), satellite records track rain onset, seasonal dry breaks, and dry winds that dry up bare soil fast. 
+            Planting legumes (cowpeas or groundnuts) covers the ground, protects the soil from washing away during heavy storms, and provides reliable food and cash even when rains are short.
           </p>
         </div>
       </div>
@@ -424,7 +426,7 @@ export default function NasaIndicatorsDashboard() {
             <span>How NASA Satellites Work for Your Farm</span>
           </div>
           <p className="text-slate-600 max-w-3xl leading-relaxed">
-            NASA has satellites high up in space that watch rain clouds, check heat in the air, and measure water under the ground. We combine these satellite records with what agricultural officers and farmers in Ejura know on the ground, so you get farm advice that is truthful, safe, and profitable.
+            NASA has satellites high up in space that watch rain clouds, check heat in the air, and measure water under the ground. We combine these satellite records with what agricultural officers and farmers in {townName} know on the ground, so you get farm advice that is truthful, safe, and profitable.
           </p>
         </div>
 

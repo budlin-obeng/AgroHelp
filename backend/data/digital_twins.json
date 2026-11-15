@@ -10,8 +10,8 @@
         "district": "Ejura-Sekyedumase",
         "community": "Ejura Central"
       },
-      "latitude": 7.29,
-      "longitude": -1.34,
+      "latitude": 7.45,
+      "longitude": -1.38,
       "gps_recorded_on_farm": true,
       "gps_accuracy_meters": 3.8,
       "farm_size_hectares": 2.0,
@@ -36,7 +36,7 @@
       "crop_in_mind": "Maize",
       "target_season": "Major Rainy Season",
       "created_at": "2026-11-15T06:57:39.141901+00:00",
-      "updated_at": "2026-11-15T13:42:27.182673+00:00"
+      "updated_at": "2026-11-15T14:59:20.811153+00:00"
     }
   },
   "pins": {

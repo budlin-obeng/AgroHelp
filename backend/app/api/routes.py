@@ -15,6 +15,9 @@ from fastapi import APIRouter, HTTPException, Query, status
 from app.config import settings
 from app.core.data_loader import data_loader
 from app.core.digital_twin_store import digital_twin_store
+from app.core.market_service import market_service
+from app.core.challenges_store import challenges_store
+from app.core.telemetry_calculator import calculate_location_telemetry
 from app.ml.engine import ml_engine
 from app.schemas.models import (
     CropRotationRequest,
@@ -34,6 +37,11 @@ from app.schemas.farmer import (
     RecordGPSRequest,
     CropFeasibilityRequest,
     CropFeasibilityResponse,
+)
+from app.schemas.challenges import (
+    ChallengeCreateRequest,
+    ChallengeRecord,
+    ChallengesListResponse,
 )
 
 logger = logging.getLogger(__name__)
@@ -118,7 +126,20 @@ def get_tradeoffs(
     return ml_engine.evaluate_tradeoffs(req)
 
 @router.get("/environmental-profile", response_model=EnvironmentalProfileResponse, summary="10-Year Decadal Environmental Profile")
-def get_environmental_profile():
+def get_environmental_profile(
+    latitude: Optional[float] = Query(None, description="Latitude for local NASA telemetry calibration"),
+    longitude: Optional[float] = Query(None, description="Longitude for local NASA telemetry calibration"),
+    country: Optional[str] = Query(None, description="Country name"),
+    town: Optional[str] = Query(None, description="Town or community name"),
+):
+    if latitude is not None and longitude is not None:
+        dynamic_profile = calculate_location_telemetry(
+            lat=latitude,
+            lon=longitude,
+            country=country or "Selected Region",
+            town=town or "Local Farm"
+        )
+        return EnvironmentalProfileResponse(**dynamic_profile)
     """
     Returns decadal environmental statistics and 12-month climatology extracted directly
     from Space2Soil processed NASA datasets for Ejura Sekyedumasi.
@@ -314,3 +335,82 @@ def evaluate_crop_feasibility(req: CropFeasibilityRequest):
     except Exception as e:
         logger.exception("Error evaluating crop feasibility")
         raise HTTPException(status_code=500, detail=f"Feasibility evaluation failed: {str(e)}")
+
+# ========================================================
+# AFRICAN REGIONAL PRODUCE & MARKET INTELLIGENCE (FAOSTAT + MOFA)
+# ========================================================
+
+@router.get("/market-intelligence/countries", summary="List Supported African Countries")
+def get_market_countries():
+    """Lists supported countries across West Africa and Africa with market counts and sub-regions."""
+    return market_service.get_supported_countries()
+
+@router.get("/market-intelligence/markets", summary="Query Agricultural Market Hubs & Crop Prices")
+def get_markets(
+    country: Optional[str] = Query(None, description="Country filter: Ghana, Nigeria, Côte d'Ivoire, Kenya, Senegal, Mali"),
+    market_id: Optional[str] = Query(None, description="Specific market ID: e.g. gh-ejura, ng-kano-dawanau"),
+    crop: Optional[str] = Query(None, description="Filter markets and produce by crop name or category"),
+):
+    """
+    Returns prominent agricultural markets, dominant crops produced, and real-time/benchmark
+    farmgate and wholesale prices normalized across local currency and USD.
+    """
+    return market_service.get_markets(country=country, market_id=market_id, crop_query=crop)
+
+@router.get("/market-intelligence/compare", summary="Cross-Border Commodity Price Comparison")
+def compare_market_prices(
+    crops: Optional[str] = Query(None, description="Comma-separated crops: e.g. Maize,Cowpea,Soybean"),
+    markets: Optional[str] = Query(None, description="Comma-separated market IDs: e.g. gh-ejura,ng-kano-dawanau,ci-bouake"),
+):
+    """
+    Compares crop prices, yield benchmarks, and marketing units across multiple African markets.
+    """
+    crop_list = [c.strip() for c in crops.split(",")] if crops else None
+    market_list = [m.strip() for m in markets.split(",")] if markets else None
+    return market_service.compare_prices(crop_names=crop_list, market_ids=market_list)
+
+@router.get("/market-intelligence/faostat", summary="Live UN FAOSTAT Benchmark Query")
+def query_faostat_benchmark(
+    country: str = Query("Ghana", description="Country name"),
+    crop: str = Query("Maize", description="Crop name"),
+):
+    """
+    Queries live UN FAOSTAT API for historical yield benchmarks with graceful offline fallback.
+    """
+    return market_service.fetch_live_faostat_data(country=country, crop=crop)
+
+
+
+# ========================================================
+# FARMER CHALLENGES & GLOBAL / REGIONAL ALERT INTELLIGENCE
+# ========================================================
+
+@router.post("/challenges", response_model=ChallengeRecord, summary="Submit a Farm Challenge Report")
+def submit_farmer_challenge(req: ChallengeCreateRequest):
+    """
+    Allows farmers to log their field challenges (pests, drought, soil exhaustion, input prices).
+    Persists to the crowdsourced challenges database and detects if the issue is local or global.
+    """
+    try:
+        return challenges_store.add_challenge(req)
+    except Exception as e:
+        logger.exception("Error submitting farmer challenge")
+        raise HTTPException(status_code=500, detail=f"Failed to submit challenge: {str(e)}")
+
+@router.get("/challenges", response_model=ChallengesListResponse, summary="List Crowdsourced Challenges & Threat Clusters")
+def get_farmer_challenges(
+    country: Optional[str] = Query(None, description="Filter by country"),
+    town: Optional[str] = Query(None, description="Filter by town/community"),
+    crop: Optional[str] = Query(None, description="Filter by crop affected"),
+    challenge_type: Optional[str] = Query(None, description="Filter by challenge category"),
+):
+    """
+    Retrieves reported challenges and clusters them across geography to detect
+    cross-border epidemics (e.g. Fall Armyworm across Ghana and Nigeria) vs local alerts.
+    """
+    return challenges_store.get_challenges_and_alerts(
+        country=country,
+        town=town,
+        crop=crop,
+        challenge_type=challenge_type
+    )

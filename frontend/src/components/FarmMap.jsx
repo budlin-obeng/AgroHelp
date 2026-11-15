@@ -40,30 +40,36 @@ const createCustomIcon = (bgColor, svgContent, size = 38) => {
 const farmIcon = createCustomIcon('#047857', sproutSvg, 42);
 const hubIcon = createCustomIcon('#0B3D91', pinSvg, 30);
 
-// Key farming communities in Ejura-Sekyedumase
-const EJURA_CLUSTERS = [
-  { name: 'Ejura Central', lat: 7.3856, lng: -1.3562, desc: 'Market town center, common maize land' },
-  { name: 'Babaso Belt', lat: 7.4320, lng: -1.3250, desc: 'Big maize farming area; plenty armyworms in the past' },
-  { name: 'Sekyedumase West', lat: 7.3800, lng: -1.4100, desc: 'Good land for cowpeas (adua) and groundnuts' },
-  { name: 'Anyinasu South', lat: 7.3100, lng: -1.3900, desc: 'Moist land; good for cassava (bankye) and yam (bayere)' },
-  { name: 'Hiawoanwu North', lat: 7.4500, lng: -1.3800, desc: 'Drier northern land; needs crops that survive dry weather' },
-  { name: 'Frante Valley', lat: 7.2900, lng: -1.3400, desc: 'Low valley land that holds water well' },
-];
-
-const LANDSAT_BOUNDS = [
-  [7.35185, -1.39025],
-  [7.41935, -1.32215]
-];
-
-const SMAP_GRID_BOUNDS = [
-  [7.3451, -1.397],
-  [7.4261, -1.3154]
-];
-
-const GPM_GRID_BOUNDS = [
-  [7.3406, -1.4012],
-  [7.4306, -1.3112]
-];
+// Regional agricultural clusters across Africa
+const REGIONAL_CLUSTERS = {
+  'Ghana': [
+    { name: 'Ejura Central', lat: 7.3856, lng: -1.3562, desc: 'Maize belt market center' },
+    { name: 'Techiman', lat: 7.5833, lng: -1.9333, desc: 'Major agricultural wholesale hub' },
+    { name: 'Tamale North', lat: 9.4008, lng: -0.8393, desc: 'Savannah grain & legume production center' },
+    { name: 'Babaso Belt', lat: 7.4320, lng: -1.3250, desc: 'Maize farming area; historical armyworm zone' },
+    { name: 'Sekyedumase West', lat: 7.3800, lng: -1.4100, desc: 'Cowpea and groundnut production belt' },
+    { name: 'Anyinasu South', lat: 7.3100, lng: -1.3900, desc: 'Root tuber and plantain zone' },
+  ],
+  'Nigeria': [
+    { name: 'Kano (Dawanau)', lat: 12.0022, lng: 8.5920, desc: 'Largest grain market in West Africa' },
+    { name: 'Ibadan (Bodija)', lat: 7.3775, lng: 3.9470, desc: 'Key southern consumption and distribution hub' },
+    { name: 'Kaduna', lat: 10.5105, lng: 7.4165, desc: 'Northern grain and legume belt' },
+  ],
+  "Côte d'Ivoire": [
+    { name: 'Bouaké', lat: 7.6900, lng: -5.0300, desc: 'Central transit and food trade hub' },
+    { name: 'Korhogo', lat: 9.4580, lng: -5.6296, desc: 'Northern cotton, maize and cashew hub' },
+  ],
+  'Kenya': [
+    { name: 'Eldoret', lat: 0.5143, lng: 35.2698, desc: 'Rift Valley grain basket' },
+    { name: 'Nakuru', lat: -0.3031, lng: 36.0800, desc: 'Central agricultural trading center' },
+  ],
+  'Senegal': [
+    { name: 'Kaolack', lat: 14.1667, lng: -16.0833, desc: 'Peanut basin capital' },
+  ],
+  'Mali': [
+    { name: 'Sikasso', lat: 11.3176, lng: -5.6665, desc: 'Southern grain and fruit breadbasket' },
+  ]
+};
 
 function LocationMarker({ position, onLocationChange }) {
   const map = useMap();
@@ -125,12 +131,27 @@ function MapCenterController({ center }) {
   return null;
 }
 
-export default function FarmMap({ latitude, longitude, onLocationChange }) {
+export default function FarmMap({ latitude, longitude, onLocationChange, currentLocation }) {
   const [mapLayer, setMapLayer] = useState('satellite'); // 'osm' or 'satellite'
   const [ndviOverlay, setNdviOverlay] = useState('none'); // 'none', 'major', 'harmattan'
   const [showGrids, setShowGrids] = useState(true);
 
-  const currentPos = [latitude || 7.3856, longitude || -1.3562];
+  const currentPos = [latitude || currentLocation?.latitude || 7.3856, longitude || currentLocation?.longitude || -1.3562];
+  const activeClusters = REGIONAL_CLUSTERS[currentLocation?.country] || REGIONAL_CLUSTERS['Ghana'];
+
+  // Dynamically calculate satellite grid envelopes around the active farm coordinates
+  const smapBounds = [
+    [currentPos[0] - 0.040, currentPos[1] - 0.040],
+    [currentPos[0] + 0.040, currentPos[1] + 0.040]
+  ];
+  const gpmBounds = [
+    [currentPos[0] - 0.045, currentPos[1] - 0.045],
+    [currentPos[0] + 0.045, currentPos[1] + 0.045]
+  ];
+  const landsatBounds = [
+    [currentPos[0] - 0.034, currentPos[1] - 0.034],
+    [currentPos[0] + 0.034, currentPos[1] + 0.034]
+  ];
 
   const handleSelectCluster = (cluster) => {
     onLocationChange(cluster.lat, cluster.lng);
@@ -144,7 +165,7 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
 
   return (
     <section id="satellite-map" className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden flex flex-col scroll-mt-24">
-      {/* Map Header Toolbar in Simple Ghanaian English */}
+      {/* Map Header Toolbar */}
       <div className="px-5 sm:px-6 py-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-[#0B3D91]/10 text-[#0B3D91] rounded-xl">
@@ -160,12 +181,12 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
               </span>
             </div>
             <p className="text-xs text-slate-500">
-              Ejura-Sekyedumase District (Ashanti Region, Ghana &bull; 7.3856&deg; N, -1.3562&deg; W)
+              {currentLocation?.town || 'Agricultural Zone'} ({currentLocation?.country || 'Pan-Africa'} &bull; {currentPos[0].toFixed(4)}&deg; N, {currentPos[1].toFixed(4)}&deg; W)
             </p>
           </div>
         </div>
 
-        {/* Controls Toolbar in Simple Ghanaian English */}
+        {/* Controls Toolbar */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Base Layer Switcher */}
           <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5 text-xs font-semibold text-slate-700 shadow-2xs">
@@ -215,9 +236,9 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
 
           {/* Reset Center */}
           <button
-            onClick={() => onLocationChange(7.3856, -1.3562)}
+            onClick={() => onLocationChange(currentLocation?.latitude || 7.3856, currentLocation?.longitude || -1.3562)}
             className="p-1.5 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg border border-slate-200 transition"
-            title="Reset back to Ejura town center"
+            title="Reset back to selected farming center"
           >
             <Navigation className="w-4 h-4" />
           </button>
@@ -248,7 +269,7 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
           {getOverlayUrl() && (
             <ImageOverlay
               url={getOverlayUrl()}
-              bounds={LANDSAT_BOUNDS}
+              bounds={landsatBounds}
               opacity={0.78}
             />
           )}
@@ -256,13 +277,13 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
           {/* NASA SMAP 9km Grid Polygon */}
           {showGrids && (
             <Rectangle
-              bounds={SMAP_GRID_BOUNDS}
+              bounds={smapBounds}
               pathOptions={{ color: '#10B981', weight: 2, fillOpacity: 0.04, dashArray: '4, 4' }}
             >
               <Popup>
                 <div className="text-xs p-1">
                   <strong className="text-emerald-800">NASA Soil Water Zone (9 km)</strong><br />
-                  Good moisture level for crops: 0.228
+                  Calibrated for {currentLocation?.town || 'selected area'}
                 </div>
               </Popup>
             </Rectangle>
@@ -271,13 +292,13 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
           {/* NASA GPM 10km Grid Polygon */}
           {showGrids && (
             <Rectangle
-              bounds={GPM_GRID_BOUNDS}
+              bounds={gpmBounds}
               pathOptions={{ color: '#0284C7', weight: 2, fillOpacity: 0.03, dashArray: '6, 6' }}
             >
               <Popup>
                 <div className="text-xs p-1">
                   <strong className="text-sky-800">NASA Rain Zone (10 km)</strong><br />
-                  Average Rain: ~1,285 mm a year
+                  Satellite precipitation monitoring grid
                 </div>
               </Popup>
             </Rectangle>
@@ -286,8 +307,8 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
           <MapCenterController center={currentPos} />
           <LocationMarker position={currentPos} onLocationChange={onLocationChange} />
 
-          {/* Community Hub Markers */}
-          {EJURA_CLUSTERS.map((cluster) => (
+          {/* Regional Agricultural Hub Markers */}
+          {activeClusters.map((cluster) => (
             <Marker
               key={cluster.name}
               position={[cluster.lat, cluster.lng]}
@@ -329,14 +350,14 @@ export default function FarmMap({ latitude, longitude, onLocationChange }) {
         </div>
       </div>
 
-      {/* Cluster Pills in Simple Ghanaian English */}
+      {/* Cluster Pills */}
       <div className="p-3.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center gap-2">
         <span className="text-xs font-bold text-slate-600 mr-1 flex items-center gap-1">
           <Layers className="w-3.5 h-3.5 text-slate-500" />
-          Farming Towns in Ejura:
+          {currentLocation?.country || 'Regional'} Reference Farming Hubs:
         </span>
-        {EJURA_CLUSTERS.map((cl) => {
-          const isSelected = Math.abs(cl.lat - currentPos[0]) < 0.005 && Math.abs(cl.lng - currentPos[1]) < 0.005;
+        {activeClusters.map((cl) => {
+          const isSelected = Math.abs(cl.lat - currentPos[0]) < 0.01 && Math.abs(cl.lng - currentPos[1]) < 0.01;
           return (
             <button
               key={cl.name}
