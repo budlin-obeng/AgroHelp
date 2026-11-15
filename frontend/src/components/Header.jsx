@@ -64,16 +64,16 @@ export default function Header({
     <header className="sticky top-0 z-40 w-full bg-white border-b border-zinc-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
         
-        {/* Logo */}
+        {/* Logo & Brand Identity */}
         <a
           href="/"
-          className="flex items-center"
+          className="flex items-center py-1"
           aria-label="AgroHelp Home"
         >
           <img
             src="/logo.png"
             alt="AgroHelp - Smarter Farming. Better Harvest."
-            className="h-10 sm:h-12 w-auto object-contain hover:opacity-95 transition-opacity"
+            className="h-10 sm:h-12 w-auto max-w-[220px] sm:max-w-[280px] object-contain"
           />
         </a>
 
