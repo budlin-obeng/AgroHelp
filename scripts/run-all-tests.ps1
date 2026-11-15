@@ -1,4 +1,4 @@
-﻿# AgroHelp Master Test Runner
+# AgroHelp Master Test Runner
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "Running AgroHelp & Space2Soil Consolidated Test Suites" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
