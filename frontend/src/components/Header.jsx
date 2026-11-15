@@ -1,94 +1,244 @@
-import React, { useState } from 'react';
-import { Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2, User, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Sprout, HelpCircle, RefreshCw, MapPin, CheckCircle2, 
+  User, Sparkles, LogOut, Layers, ExternalLink, HelpCircle as QuestionIcon
+} from 'lucide-react';
 
-export default function Header({ onRefresh, isRefreshing = false, farmer, onOpenAuthModal }) {
+export default function Header({ 
+  onRefresh, 
+  isRefreshing = false, 
+  farmer, 
+  onOpenAuthModal, 
+  onLogout 
+}) {
+  const [open, setOpen] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const menuRef = useRef(null);
+
+  // Close dropdown when clicking outside (as in template)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    setOpen(false);
+    if (onLogout) {
+      onLogout();
+    }
+  };
+
+  const handleAuth = (type) => {
+    if (onOpenAuthModal) {
+      onOpenAuthModal(type);
+    }
+  };
+
+  const navLink = (href, label, onClick = null) => {
+    return (
+      <a
+        href={href}
+        onClick={(e) => {
+          if (onClick) {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+        className="px-3 py-2 text-sm text-zinc-600 hover:text-emerald-800 font-medium transition-colors"
+      >
+        {label}
+      </a>
+    );
+  };
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm text-slate-800 shadow-xs border-b border-emerald-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 sm:h-22">
-          {/* Logo & Farmer Emblem */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="relative shrink-0">
-              <img
-                src="/logo-icon.png"
-                alt="AgroHelp Farmer Emblem"
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-1 bg-emerald-50 border-2 border-emerald-500 shadow-xs object-contain"
-              />
-            </div>
-            <div className="flex flex-col justify-center">
-              <img
-                src="/logo.png"
-                alt="AgroHelp - Smarter Farming. Better Harvest."
-                className="h-8 sm:h-10 w-auto max-w-[180px] sm:max-w-[240px] object-contain"
-              />
-              <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="text-[11px] sm:text-xs text-emerald-800 font-bold tracking-wide">
-                  Farming Companion &bull; Ejura-Sekyedumase
-                </span>
-              </div>
-            </div>
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-zinc-200 shadow-xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
+        
+        {/* Logo & Brand Identity */}
+        <a
+          href="/"
+          className="flex items-center gap-3"
+          aria-label="AgroHelp Home"
+        >
+          <img
+            src="/logo-icon.png"
+            alt="AgroHelp Emblem"
+            className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl p-1 bg-emerald-50 border-2 border-emerald-500 shadow-xs object-contain shrink-0"
+          />
+          <div className="flex flex-col justify-center">
+            <img
+              src="/logo.png"
+              alt="AgroHelp - Smarter Farming. Better Harvest."
+              className="h-8 sm:h-9 w-auto max-w-[170px] sm:max-w-[220px] object-contain"
+            />
+            <span className="text-[10px] sm:text-[11px] text-emerald-800 font-bold tracking-wide hidden sm:block">
+              Farming Companion &bull; Ejura-Sekyedumase
+            </span>
           </div>
+        </a>
 
-          {/* Right Toolbar: Digital Twin Pill & Help */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Farmer Digital Twin Badge */}
-            {farmer ? (
-              <button
-                type="button"
-                onClick={onOpenAuthModal}
-                className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 rounded-2xl text-left transition"
-                title="View / Edit your Farm Digital Twin"
-              >
-                <div className="w-7 h-7 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-black text-xs shrink-0">
-                  {farmer.full_name?.charAt(0) || 'K'}
-                </div>
-                <div className="hidden sm:block">
-                  <span className="text-xs font-black text-emerald-950 block leading-tight">
-                    {farmer.full_name || 'Kofi Mensah'}
-                  </span>
-                  <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" /> Farm Twin Synced
-                  </span>
-                </div>
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={onOpenAuthModal}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs transition"
-              >
-                <User className="w-3.5 h-3.5" />
-                <span>Create Farm Twin</span>
-              </button>
-            )}
+        {/* Center Navigation Links (visible when signed in or desktop) */}
+        <nav className="hidden md:flex items-center gap-1">
+          {navLink('#questions-section', 'Farm Questions')}
+          {navLink('#solutions-section', 'Solutions')}
+          {navLink('/Space2Soil/web/index.html', 'NASA Space2Soil')}
+          {navLink('#help', 'How To Use', () => setShowHelpModal(!showHelpModal))}
+        </nav>
 
-            {/* How It Works / Help Button */}
+        {/* Right Side */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          
+          {/* Refresh / Update Button */}
+          {onRefresh && (
             <button
               type="button"
-              onClick={() => setShowHelpModal(!showHelpModal)}
-              className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-xs sm:text-sm transition shadow-xs"
-              title="Click for simple farming tips"
+              onClick={onRefresh}
+              disabled={isRefreshing}
+              className="p-2 text-zinc-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-zinc-200 transition-colors disabled:opacity-50"
+              title="Update Advice"
+              aria-label="Update Advice"
             >
-              <HelpCircle className="w-4 h-4 text-emerald-950" />
-              <span className="hidden sm:inline">How To Use</span>
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-600' : ''}`} />
             </button>
+          )}
 
-            {/* Refresh / Update Button */}
-            {onRefresh && (
+          {/* User State */}
+          {farmer ? (
+            <div ref={menuRef} className="relative">
+              {/* Avatar Button */}
               <button
                 type="button"
-                onClick={onRefresh}
-                disabled={isRefreshing}
-                className="p-2 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl border border-slate-200 transition disabled:opacity-50"
-                title="Update Advice"
-                aria-label="Update Advice"
+                onClick={() => setOpen(!open)}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-800 text-white flex items-center justify-center text-sm font-bold hover:bg-emerald-700 transition-colors shadow-xs"
+                aria-label="Farmer profile menu"
               >
-                <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-600' : ''}`} />
+                {farmer.full_name?.charAt(0).toUpperCase() || 'K'}
               </button>
-            )}
-          </div>
+
+              {/* Dropdown Menu */}
+              {open && (
+                <div className="absolute right-0 top-12 sm:top-13 w-64 bg-white border border-zinc-200 rounded-2xl shadow-xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                  
+                  {/* User Information */}
+                  <div className="px-4 py-3 border-b border-zinc-100 bg-emerald-50/40">
+                    <p className="text-sm font-bold text-zinc-900 truncate">
+                      {farmer.full_name || 'Kofi Mensah'}
+                    </p>
+
+                    <p className="text-xs text-zinc-500 truncate mt-0.5">
+                      {farmer.phone_number} &bull; {farmer.location?.district || 'Ejura'}
+                    </p>
+
+                    <div className="mt-1.5 flex items-center gap-1 text-[10px] font-bold text-emerald-700">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      <span>Farm Digital Twin Active</span>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="p-1.5">
+                    
+                    {/* My Farm Twin Profile */}
+                    <button
+                      type="button"
+                      onClick={() => { setOpen(false); handleAuth('profile'); }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors text-left"
+                    >
+                      <User className="w-4 h-4 text-emerald-600" />
+                      <span>My Farm Twin Profile</span>
+                    </button>
+
+                    {/* Field Questions */}
+                    <a
+                      href="#questions-section"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
+                    >
+                      <Layers className="w-4 h-4 text-emerald-600" />
+                      <span>Field Crops & Soil</span>
+                    </a>
+
+                    {/* Solutions */}
+                    <a
+                      href="#solutions-section"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
+                    >
+                      <Sprout className="w-4 h-4 text-emerald-600" />
+                      <span>Rotation Solutions</span>
+                    </a>
+
+                    {/* Space2Soil NASA Intelligence */}
+                    <a
+                      href="/Space2Soil/web/index.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Sparkles className="w-4 h-4 text-amber-500" />
+                        <span>NASA Space2Soil Portal</span>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
+                    </a>
+
+                    {/* How To Use Guide */}
+                    <button
+                      type="button"
+                      onClick={() => { setOpen(false); setShowHelpModal(true); }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors text-left"
+                    >
+                      <HelpCircle className="w-4 h-4 text-emerald-600" />
+                      <span>How To Use Guide</span>
+                    </button>
+                  </div>
+
+                  {/* Sign Out */}
+                  <div className="p-1.5 border-t border-zinc-100">
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-rose-600 hover:bg-rose-50 transition-colors text-left"
+                    >
+                      <LogOut className="w-4 h-4 text-rose-500" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              {/* Sign In */}
+              <button
+                type="button"
+                onClick={() => handleAuth('login')}
+                className="px-3 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+              >
+                Sign In
+              </button>
+
+              {/* Get Started */}
+              <button
+                type="button"
+                onClick={() => handleAuth('register')}
+                className="px-4 py-2 rounded-xl bg-emerald-800 text-white text-sm font-medium hover:bg-emerald-700 transition-colors shadow-xs"
+              >
+                Get Started
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -122,13 +272,13 @@ export default function Header({ onRefresh, isRefreshing = false, farmer, onOpen
               </div>
 
               <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-amber-300 block mb-1">Step 2: Your Goal</span>
-                <p className="text-emerald-100">Tap what matters most right now: earning good cash, cutting fertilizer bills, beating worms, or surviving dry spells.</p>
+                <span className="font-bold text-amber-300 block mb-1">Step 2: Have a Crop in Mind?</span>
+                <p className="text-emerald-100">Tell us what you plan to plant or let our ML engine recommend the top crops based on NASA satellite data.</p>
               </div>
 
               <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-amber-300 block mb-1">Step 3: Your 3 Solutions</span>
-                <p className="text-emerald-100">See 3 practical crop choices with pictures, expected cash earnings, simple benefits, and things to know.</p>
+                <span className="font-bold text-amber-300 block mb-1">Step 3: Clear Solutions</span>
+                <p className="text-emerald-100">Get honest advice on whether your plan is safe or risky, with up to 3 practical alternatives.</p>
               </div>
             </div>
 

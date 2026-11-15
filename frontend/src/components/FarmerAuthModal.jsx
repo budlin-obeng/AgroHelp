@@ -30,8 +30,8 @@ const ASHANTI_DISTRICTS = [
   'Afigya Kwabre North',
 ];
 
-export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, currentFarmer }) {
-  const [isRegister, setIsRegister] = useState(!currentFarmer);
+export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, currentFarmer, initialMode = 'login' }) {
+  const [isRegister, setIsRegister] = useState(initialMode === 'register');
   const [phoneNumber, setPhoneNumber] = useState(currentFarmer?.phone_number || '');
   const [pin, setPin] = useState('');
   const [fullName, setFullName] = useState(currentFarmer?.full_name || '');
@@ -43,6 +43,24 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
   const [soilType, setSoilType] = useState('Sandy Loam');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Sync mode when modal opens
+  React.useEffect(() => {
+    if (isOpen) {
+      setIsRegister(initialMode === 'register');
+      setError(null);
+      if (currentFarmer) {
+        setPhoneNumber(currentFarmer.phone_number || '');
+        setFullName(currentFarmer.full_name || '');
+        if (currentFarmer.location) {
+          setCountry(currentFarmer.location.country || 'Ghana');
+          setRegion(currentFarmer.location.region || 'Ashanti');
+          setDistrict(currentFarmer.location.district || 'Ejura-Sekyedumase');
+          setCommunity(currentFarmer.location.community || 'Ejura Central');
+        }
+      }
+    }
+  }, [isOpen, initialMode, currentFarmer]);
 
   if (!isOpen) return null;
 

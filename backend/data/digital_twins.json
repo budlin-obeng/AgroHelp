@@ -10,8 +10,8 @@
         "district": "Ejura-Sekyedumase",
         "community": "Ejura Central"
       },
-      "latitude": 7.3912,
-      "longitude": -1.3541,
+      "latitude": 7.3856,
+      "longitude": -1.3562,
       "gps_recorded_on_farm": true,
       "gps_accuracy_meters": 3.8,
       "farm_size_hectares": 2.0,
@@ -33,10 +33,10 @@
         "armyworm_attacks": true,
         "water_source": "Rainfed"
       },
-      "crop_in_mind": "Cowpea",
+      "crop_in_mind": "Maize",
       "target_season": "Major Rainy Season",
       "created_at": "2026-11-15T06:57:39.141901+00:00",
-      "updated_at": "2026-11-15T07:00:51.983595+00:00"
+      "updated_at": "2026-11-15T07:10:50.803482+00:00"
     }
   },
   "pins": {

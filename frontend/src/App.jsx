@@ -19,6 +19,7 @@ export default function App() {
   // 1. Farmer Digital Twin Account
   const [farmer, setFarmer] = useState(() => getStoredFarmer() || getDemoFarmerProfile());
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
 
   // 2. Field profile & Land Usage State
   const [profile, setProfile] = useState({
@@ -152,6 +153,17 @@ export default function App() {
     showNotification(`Selected ${cropId} as current standing crop`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('agrohelp_farmer');
+    setFarmer(null);
+    showNotification('Signed out of Farm Digital Twin.');
+  };
+
+  const handleOpenAuth = (mode = 'login') => {
+    setAuthMode(mode === 'register' ? 'register' : 'login');
+    setIsAuthModalOpen(true);
+  };
+
   // Soil type selection
   const handleSoilSelect = (soilId) => {
     setProfile((prev) => ({ ...prev, soil_type: soilId }));
@@ -183,7 +195,8 @@ export default function App() {
         onRefresh={() => runEvaluation(profile, cropInMind, farmer)}
         isRefreshing={isLoading}
         farmer={farmer}
-        onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        onOpenAuthModal={handleOpenAuth}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Area */}
@@ -222,19 +235,21 @@ export default function App() {
         </div>
 
         {/* Guided Farm Questions & History Flow */}
-        <GuidedFarmQuestions
-          profile={profile}
-          farmer={farmer}
-          cropInMind={cropInMind}
-          onCropInMindChange={setCropInMind}
-          onCropSelect={handleCropSelect}
-          onSoilSelect={handleSoilSelect}
-          onSizeChange={handleSizeChange}
-          onGpsRecord={handleGpsRecord}
-          onAddCustomCrop={handleAddCustomCrop}
-          onFarmUsageChange={handleFarmUsageChange}
-          isLoading={isLoading}
-        />
+        <div id="questions-section">
+          <GuidedFarmQuestions
+            profile={profile}
+            farmer={farmer}
+            cropInMind={cropInMind}
+            onCropInMindChange={setCropInMind}
+            onCropSelect={handleCropSelect}
+            onSoilSelect={handleSoilSelect}
+            onSizeChange={handleSizeChange}
+            onGpsRecord={handleGpsRecord}
+            onAddCustomCrop={handleAddCustomCrop}
+            onFarmUsageChange={handleFarmUsageChange}
+            isLoading={isLoading}
+          />
+        </div>
 
         {/* Feasibility Verdict & Dynamic Solutions (Max 3) */}
         <section id="solutions-section">
@@ -253,6 +268,7 @@ export default function App() {
         onClose={() => setIsAuthModalOpen(false)}
         onAuthSuccess={handleAuthSuccess}
         currentFarmer={farmer}
+        initialMode={authMode}
       />
 
       {/* Friendly Notification Toast */}
