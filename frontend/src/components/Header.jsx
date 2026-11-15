@@ -176,7 +176,7 @@ export default function Header({
                       className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-zinc-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors"
                     >
                       <div className="flex items-center gap-2.5">
-                        <Sparkles className="w-4 h-4 text-amber-500" />
+                        <Sparkles className="w-4 h-4 text-emerald-600" />
                         <span>NASA Space2Soil Portal</span>
                       </div>
                       <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
@@ -236,7 +236,7 @@ export default function Header({
         <div className="bg-emerald-950 text-white border-t border-emerald-800 px-4 py-5 sm:px-8">
           <div className="max-w-4xl mx-auto space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-emerald-800">
-              <h3 className="text-base sm:text-lg font-bold text-amber-300 flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-bold text-emerald-200 flex items-center gap-2">
                 <Sprout className="w-5 h-5 text-emerald-400" />
                 Welcome to AgroHelp &bull; Akwaaba!
               </h3>
@@ -256,24 +256,24 @@ export default function Header({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
               <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-amber-300 block mb-1">Step 1: Your Current Crop</span>
+                <span className="font-bold text-emerald-300 block mb-1">Step 1: Your Current Crop</span>
                 <p className="text-emerald-100">Tap the crop you currently have on your farm (like Maize, Cassava, or Yam).</p>
               </div>
 
               <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-amber-300 block mb-1">Step 2: Have a Crop in Mind?</span>
+                <span className="font-bold text-emerald-300 block mb-1">Step 2: Have a Crop in Mind?</span>
                 <p className="text-emerald-100">Tell us what you plan to plant or let our ML engine recommend the top crops based on NASA satellite data.</p>
               </div>
 
               <div className="bg-emerald-900/80 p-3 rounded-xl border border-emerald-700">
-                <span className="font-bold text-amber-300 block mb-1">Step 3: Clear Solutions</span>
+                <span className="font-bold text-emerald-300 block mb-1">Step 3: Clear Solutions</span>
                 <p className="text-emerald-100">Get honest advice on whether your plan is safe or risky, with up to 3 practical alternatives.</p>
               </div>
             </div>
 
             <div className="pt-2 flex items-center justify-between text-xs text-emerald-300 border-t border-emerald-800/80">
-              <span>🌾 Calibrated with local farming knowledge and weather observations in Ejura.</span>
-              <span className="font-bold text-amber-300">Free companion for all farmers</span>
+              <span className="flex items-center gap-1.5"><Sprout className="w-3.5 h-3.5 text-emerald-400" /> Calibrated with local farming knowledge and weather observations in Ejura.</span>
+              <span className="font-bold text-emerald-300">Free companion for all farmers</span>
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ const COMPARISON_DATA = [
     farmerVerdict: 'Vulnerable to pest shocks and high input debts',
   },
   {
-    name: 'Maize ➔ Cowpea Rotation',
+    name: 'Maize to Cowpea Rotation',
     badge: 'Optimal Nitrogen & Pest Break',
     badgeColor: 'bg-agro-100 text-agro-800 border-agro-300',
     incomeScore: 78,
@@ -29,9 +29,9 @@ const COMPARISON_DATA = [
     farmerVerdict: 'Fast cash turnaround, major cost reduction',
   },
   {
-    name: 'Maize ➔ Soybean Commercial',
+    name: 'Maize to Soybean Commercial',
     badge: 'High Market Value',
-    badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
+    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
     incomeScore: 88,
     soilOmScore: 82,
     fawBreakScore: 91,
@@ -42,7 +42,7 @@ const COMPARISON_DATA = [
     farmerVerdict: 'Highest commercial gross margin for feed mills',
   },
   {
-    name: 'Maize ➔ Pigeonpea Buffer',
+    name: 'Maize to Pigeonpea Buffer',
     badge: 'Maximum Soil & Drought Shield',
     badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
     incomeScore: 65,
@@ -55,7 +55,7 @@ const COMPARISON_DATA = [
     farmerVerdict: 'Ultimate climate hedge against dry spells',
   },
   {
-    name: 'Maize ➔ Cassava Break',
+    name: 'Maize to Cassava Break',
     badge: 'Starch Security & Non-Host',
     badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
     incomeScore: 82,
@@ -106,7 +106,7 @@ export default function TradeoffExplorer({ recommendations = [] }) {
                 : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
             }`}
           >
-            {item.name.split('➔')[1] || item.name}
+            {item.name.replace('Maize to ', '')}
           </button>
         ))}
       </div>

@@ -658,7 +658,7 @@ export async function evaluateCropFeasibility(params) {
           crop_name: cropInMind,
           is_approved: false,
           status_code: 'RISKY_MONOCULTURE',
-          verdict_badge: '⚠️ High Risk • Armyworm & Soil Warning',
+          verdict_badge: 'High Risk • Armyworm & Soil Warning',
           verdict_headline: 'Planting Maize Again on This Field Is Not Recommended',
           explanation: `You have grown Maize continuously for ${params.monocropping_seasons} seasons. Repeating maize allows Fall Armyworms to multiply and depletes nitrogen.`,
           reasons: [
@@ -683,7 +683,7 @@ export async function evaluateCropFeasibility(params) {
         crop_name: cropInMind,
         is_approved: true,
         status_code: 'APPROVED',
-        verdict_badge: '✓ Approved • Good Match for Your Field',
+        verdict_badge: 'Approved • Good Match for Your Field',
         verdict_headline: `Great Choice! ${cropInMind} Is Well-Suited for Your Land`,
         explanation: `NASA Earth Observations and SoilGrids data confirm ${cropInMind} matches your ${params.soil_type} and rainfall pattern.`,
         reasons: [

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   CheckCircle2, AlertTriangle, Sparkles, DollarSign, 
   Droplets, ShieldCheck, Clock, ChevronDown, ChevronUp, 
-  Printer, Share2, HelpCircle, Check, XCircle, AlertCircle, ArrowRight
+  Printer, Share2, HelpCircle, Check, XCircle, AlertCircle, ArrowRight,
+  Sprout, Leaf
 } from 'lucide-react';
 import { CropImage } from './CropVisuals';
 
@@ -149,7 +150,7 @@ export default function ThreeSolutions({
       <div className="bg-white rounded-3xl p-10 border-2 border-emerald-200 shadow-sm flex flex-col items-center justify-center min-h-[380px] text-center">
         <div className="relative flex items-center justify-center w-20 h-20 mb-4">
           <div className="w-20 h-20 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
-          <span className="text-2xl absolute">🌱</span>
+          <Sprout className="w-8 h-8 text-emerald-600 animate-pulse absolute" />
         </div>
         <h3 className="text-xl font-extrabold text-slate-900">
           Running ML Engine & NASA Weather Calibration...
@@ -175,7 +176,7 @@ export default function ThreeSolutions({
           className={`rounded-3xl p-6 sm:p-8 border-2 shadow-md transition-all ${
             verdict.is_approved
               ? 'bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 text-white border-emerald-500'
-              : 'bg-gradient-to-br from-amber-950 via-slate-900 to-rose-950 text-white border-amber-500'
+              : 'bg-gradient-to-br from-slate-900 via-rose-950 to-slate-900 text-white border-rose-500'
           }`}
         >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/20">
@@ -194,13 +195,13 @@ export default function ThreeSolutions({
                   className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-2 shadow-xs ${
                     verdict.is_approved
                       ? 'bg-emerald-400 text-emerald-950'
-                      : 'bg-amber-400 text-amber-950'
+                      : 'bg-rose-500 text-white'
                   }`}
                 >
                   {verdict.is_approved ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-950" />
                   ) : (
-                    <AlertTriangle className="w-4 h-4 text-amber-950" />
+                    <AlertTriangle className="w-4 h-4 text-white" />
                   )}
                   <span>{verdict.verdict_badge}</span>
                 </span>
@@ -216,13 +217,13 @@ export default function ThreeSolutions({
 
             <div className="flex items-center gap-2 bg-black/30 border border-white/15 px-4 py-2.5 rounded-2xl text-xs font-bold text-emerald-200 shrink-0">
               <span>Your Plot:</span>
-              <span className="text-amber-300 font-extrabold">{farmSizeAcres} Acres (~{farmSizeHa} Ha)</span>
+              <span className="text-emerald-300 font-extrabold">{farmSizeAcres} Acres (~{farmSizeHa} Ha)</span>
             </div>
           </div>
 
           {/* 3 Agronomic Reasons */}
           <div className="pt-6">
-            <h4 className="text-xs font-black uppercase tracking-wider text-amber-300 mb-3">
+            <h4 className="text-xs font-black uppercase tracking-wider text-emerald-200 mb-3">
               {verdict.is_approved ? 'Why This Crop Matches Your Farm:' : 'Agronomic Concerns on This Field:'}
             </h4>
 
@@ -233,13 +234,13 @@ export default function ThreeSolutions({
                   className={`p-4 rounded-2xl border text-xs leading-relaxed flex items-start gap-2.5 ${
                     verdict.is_approved
                       ? 'bg-white/10 border-white/15 text-emerald-50'
-                      : 'bg-white/10 border-white/15 text-amber-100'
+                      : 'bg-white/10 border-white/15 text-rose-100'
                   }`}
                 >
                   {verdict.is_approved ? (
                     <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   ) : (
-                    <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                   )}
                   <span>{reason}</span>
                 </div>
@@ -248,7 +249,7 @@ export default function ThreeSolutions({
 
             {/* Agronomic Guidance Pill */}
             <div className="mt-4 p-3.5 rounded-2xl bg-black/25 border border-white/15 text-xs text-white/90 flex items-center gap-2">
-              <span className="font-black text-amber-300 shrink-0">Agronomist Tip:</span>
+              <span className="font-black text-emerald-300 shrink-0">Agronomist Tip:</span>
               <span>{verdict.agronomic_guidance}</span>
             </div>
           </div>
@@ -262,7 +263,7 @@ export default function ThreeSolutions({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-              <span>🌾</span>
+              <Sprout className="w-5 h-5 text-emerald-600 shrink-0" />
               <span>
                 {hasCropInMind && verdict?.is_approved
                   ? 'Complementary & Companion Crop Options'
@@ -370,8 +371,8 @@ export default function ThreeSolutions({
                       </div>
 
                       {/* Trade-off / Watch Out */}
-                      <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
-                        <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-start gap-2">
+                        <AlertCircle className="w-3.5 h-3.5 text-emerald-700 shrink-0 mt-0.5" />
                         <span><strong>Thing to Know:</strong> {data.tradeoffs[0]}</span>
                       </div>
                     </div>

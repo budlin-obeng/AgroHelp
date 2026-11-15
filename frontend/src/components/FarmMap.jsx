@@ -4,7 +4,10 @@ import L from 'leaflet';
 import { MapPin, Navigation, Layers, Info, CheckCircle2 } from 'lucide-react';
 
 // Custom SVG Icons to avoid Leaflet default image 404 bundling issues
-const createCustomIcon = (bgColor, iconChar, size = 38) => {
+const sproutSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>`;
+const pinSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+const createCustomIcon = (bgColor, svgContent, size = 38) => {
   return L.divIcon({
     className: 'custom-map-marker',
     html: `
@@ -20,13 +23,12 @@ const createCustomIcon = (bgColor, iconChar, size = 38) => {
         border: 2px solid white;
         box-shadow: 0 4px 10px rgba(0,0,0,0.35);
       ">
-        <span style="
+        <div style="
           transform: rotate(45deg);
-          color: white;
-          font-weight: 700;
-          font-size: ${size * 0.4}px;
-          line-height: 1;
-        ">${iconChar}</span>
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">${svgContent}</div>
       </div>
     `,
     iconSize: [size, size],
@@ -35,8 +37,8 @@ const createCustomIcon = (bgColor, iconChar, size = 38) => {
   });
 };
 
-const farmIcon = createCustomIcon('#2c8744', '🌱', 42);
-const hubIcon = createCustomIcon('#0B3D91', '📍', 30);
+const farmIcon = createCustomIcon('#047857', sproutSvg, 42);
+const hubIcon = createCustomIcon('#0B3D91', pinSvg, 30);
 
 // Key farming communities and pilot clusters in Ejura-Sekyedumase
 const EJURA_CLUSTERS = [

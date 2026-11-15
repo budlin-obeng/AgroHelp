@@ -80,7 +80,7 @@ export default function MLPredictionCards({ predictions, isLoading, currentCrop,
               {isTop && (
                 <div className="bg-gradient-to-r from-agro-600 via-agro-700 to-agro-800 text-white px-4 py-1.5 flex items-center justify-between text-xs font-bold tracking-wide">
                   <div className="flex items-center gap-1.5">
-                    <Award className="w-4 h-4 text-amber-300" />
+                    <Award className="w-4 h-4 text-emerald-300" />
                     <span>#1 TOP RECOMMENDED AGRO-ECOLOGICAL ROTATION</span>
                   </div>
                   <span className="text-[11px] text-agro-200 font-normal">
@@ -101,7 +101,7 @@ export default function MLPredictionCards({ predictions, isLoading, currentCrop,
                       isTop
                         ? 'bg-agro-600 text-white shadow-sm'
                         : index === 1
-                        ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                         : 'bg-slate-100 text-slate-700 border border-slate-200'
                     }`}
                   >
@@ -180,7 +180,7 @@ export default function MLPredictionCards({ predictions, isLoading, currentCrop,
                   {/* Agronomic Guidance Banner */}
                   <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
                     <h4 className="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-2">
-                      <Sparkles className="w-4 h-4 text-amber-500" />
+                      <Sparkles className="w-4 h-4 text-emerald-600" />
                       Agronomic Implementation Guidance (Ejura District)
                     </h4>
                     <p className="text-slate-600 leading-relaxed text-xs">

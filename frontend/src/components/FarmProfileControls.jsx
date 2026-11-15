@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
-import { Sliders, Layers, DollarSign, ShieldAlert, Droplets, Leaf, Sparkles, HelpCircle } from 'lucide-react';
+import { Sliders, Layers, DollarSign, ShieldAlert, Droplets, Leaf, Sparkles, HelpCircle, Bug, TrendingUp, Sun, Scale } from 'lucide-react';
 
 const PRESETS = [
   {
     name: 'FAW Pest Defense',
-    icon: '🐛',
+    Icon: Bug,
     desc: 'Break Fall Armyworm monoculture green-bridge',
     weights: { market: 0.15, fertilizer: 0.20, faw: 0.50, drought: 0.15 }
   },
   {
     name: 'Fertilizer Cost Cutting',
-    icon: '💰',
+    Icon: DollarSign,
     desc: 'Maximize biological N fixation, slash synthetic NPK',
     weights: { market: 0.20, fertilizer: 0.50, faw: 0.15, drought: 0.15 }
   },
   {
     name: 'Drought Resilience',
-    icon: '☀️',
+    Icon: Sun,
     desc: 'Endure mid-season dry spells and Harmattan heat',
     weights: { market: 0.15, fertilizer: 0.15, faw: 0.20, drought: 0.50 }
   },
   {
     name: 'Max Market Revenue',
-    icon: '📈',
+    Icon: TrendingUp,
     desc: 'Target high-yield commercial cash crops for Ejura markets',
     weights: { market: 0.55, fertilizer: 0.20, faw: 0.15, drought: 0.10 }
   },
   {
     name: 'Balanced Regenerative',
-    icon: '⚖️',
+    Icon: Scale,
     desc: 'Balanced agronomic & economic portfolio',
     weights: { market: 0.25, fertilizer: 0.25, faw: 0.25, drought: 0.25 }
   }
@@ -76,7 +76,7 @@ export default function FarmProfileControls({ profile, onChange, onApplyPreset, 
       {/* Preset Strategy Buttons */}
       <div>
         <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
           Quick Farmer Goal Presets
         </label>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
@@ -88,7 +88,7 @@ export default function FarmProfileControls({ profile, onChange, onApplyPreset, 
               className="p-2.5 rounded-xl border border-slate-200 hover:border-agro-500 hover:bg-agro-50/50 text-left transition flex flex-col justify-between group shadow-2xs"
             >
               <div className="flex items-center justify-between w-full mb-1">
-                <span className="text-base">{preset.icon}</span>
+                <preset.Icon className="w-4 h-4 text-emerald-700" />
                 <span className="text-[10px] font-bold text-slate-400 group-hover:text-agro-700">Apply</span>
               </div>
               <div>

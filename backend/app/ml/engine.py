@@ -423,7 +423,7 @@ class AgroHelpMLEngine:
                     crop_name=crop_name,
                     is_approved=False,
                     status_code="RISKY_MONOCULTURE",
-                    verdict_badge="⚠️ High Risk • Armyworm & Soil Warning",
+                    verdict_badge="High Risk • Armyworm & Soil Warning",
                     verdict_headline="Planting Maize Again on This Field Is Not Recommended",
                     explanation=(
                         f"You have already grown Maize on this land for {req.monocropping_seasons} seasons, "
@@ -449,7 +449,7 @@ class AgroHelpMLEngine:
                     crop_name=crop_name,
                     is_approved=False,
                     status_code="WATER_DEFICIT",
-                    verdict_badge="⚠️ Water Deficit • Dry Season Alert",
+                    verdict_badge="Water Deficit • Dry Season Alert",
                     verdict_headline=f"Insufficient Rainfall for {crop_name} in {req.target_season}",
                     explanation=(
                         f"NASA decadal satellite data shows severe moisture deficits and high heat stress during the Harmattan in Ejura. "
@@ -474,7 +474,7 @@ class AgroHelpMLEngine:
                     crop_name=crop_name,
                     is_approved=True,
                     status_code="APPROVED",
-                    verdict_badge="✓ Approved • Good Match for Your Field",
+                    verdict_badge="Approved • Good Match for Your Field",
                     verdict_headline=f"Great Choice! {crop_name} Is Well-Suited for Your Land",
                     explanation=(
                         f"NASA Earth Observations and SoilGrids data confirm that {crop_name} matches your {req.soil_type} "

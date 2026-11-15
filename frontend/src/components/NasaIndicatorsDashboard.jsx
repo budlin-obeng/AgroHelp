@@ -124,7 +124,7 @@ export default function NasaIndicatorsDashboard() {
               <span>Root Zone (0-100cm):</span>
               <span className="font-semibold text-slate-900">0.246 m&sup3;/m&sup3;</span>
             </div>
-            <div className="flex justify-between text-amber-700 font-medium pt-1 border-t border-agro-100">
+            <div className="flex justify-between text-rose-700 font-medium pt-1 border-t border-agro-100">
               <span>Decadal Drought Events:</span>
               <span className="font-bold">26 recorded</span>
             </div>
@@ -132,13 +132,13 @@ export default function NasaIndicatorsDashboard() {
         </div>
 
         {/* Heat Stress Card */}
-        <div className={`p-4 rounded-xl border transition ${selectedMetric === 'heat' ? 'bg-amber-50/60 border-amber-300 ring-1 ring-amber-200' : 'bg-slate-50 border-slate-200'}`}>
-          <div className="flex items-center justify-between text-xs text-amber-800 font-bold mb-1">
+        <div className={`p-4 rounded-xl border transition ${selectedMetric === 'heat' ? 'bg-rose-50/60 border-rose-300 ring-1 ring-rose-200' : 'bg-slate-50 border-slate-200'}`}>
+          <div className="flex items-center justify-between text-xs text-rose-800 font-bold mb-1">
             <span className="flex items-center gap-1.5">
-              <Sun className="w-4 h-4 text-amber-600" />
+              <Sun className="w-4 h-4 text-rose-600" />
               Annual Heat Stress
             </span>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">
               NASA POWER
             </span>
           </div>
@@ -155,7 +155,7 @@ export default function NasaIndicatorsDashboard() {
               <span>Peak Desiccation:</span>
               <span className="font-semibold text-slate-900">Feb &ndash; Mar</span>
             </div>
-            <div className="flex justify-between text-rose-600 font-medium pt-1 border-t border-amber-100">
+            <div className="flex justify-between text-rose-600 font-medium pt-1 border-t border-rose-100">
               <span>Maize Pollen Threshold:</span>
               <span className="font-bold">&ge; 35.0 &deg;C</span>
             </div>
@@ -195,7 +195,7 @@ export default function NasaIndicatorsDashboard() {
                 barColor = 'bg-agro-500 hover:bg-agro-600';
               } else if (selectedMetric === 'heat') {
                 activeHeight = heatDaysHeight;
-                barColor = 'bg-amber-500 hover:bg-amber-600';
+                barColor = 'bg-rose-500 hover:bg-rose-600';
               }
 
               const isHovered = activeMonth === monthLabel;

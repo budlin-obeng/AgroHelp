@@ -170,9 +170,9 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
               type="button"
               onClick={handleDemoSignIn}
               disabled={loading}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black transition shadow-xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition shadow-xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-950" />
+              <Sparkles className="w-3.5 h-3.5 text-white" />
               <span>1-Tap Demo: Kofi Mensah (Ejura)</span>
             </button>
           </div>
@@ -246,7 +246,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                       onChange={(e) => setCountry(e.target.value)}
                       className="w-full p-2 rounded-lg border border-slate-200 bg-white font-medium text-slate-800 text-[11px]"
                     >
-                      <option value="Ghana">🇬🇭 Ghana</option>
+                      <option value="Ghana">Ghana</option>
                     </select>
                   </div>
 
@@ -260,7 +260,7 @@ export default function FarmerAuthModal({ isOpen, onClose, onAuthSuccess, curren
                     >
                       {GHANA_REGIONS.map((r) => (
                         <option key={r} value={r}>
-                          {r} {r === 'Ashanti' ? '★' : ''}
+                          {r} {r === 'Ashanti' ? '(Primary Region)' : ''}
                         </option>
                       ))}
                     </select>
