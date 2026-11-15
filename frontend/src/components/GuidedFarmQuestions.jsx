@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  CheckCircle2, ChevronRight, Sparkles, HelpCircle, 
-  Minus, Plus, MapPin, Navigation, Compass, AlertCircle, 
-  Leaf, PlusCircle, Calendar, Bug, Layers 
+import {
+  CheckCircle2, ChevronRight, Sparkles, HelpCircle,
+  Minus, Plus, MapPin, Navigation, Compass, AlertCircle,
+  Leaf, PlusCircle, Calendar, Bug, Layers
 } from 'lucide-react';
 import { CropImage, SoilImage, GoalImage } from './CropVisuals';
 
@@ -124,9 +124,7 @@ export default function GuidedFarmQuestions({
       <section className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-3xl p-6 sm:p-8 shadow-sm border border-emerald-700/60">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-700/80 border border-emerald-400/50 flex items-center justify-center text-white shadow-inner shrink-0">
-              <Compass className="w-6 h-6 text-emerald-200" />
-            </div>
+
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
@@ -218,11 +216,10 @@ export default function GuidedFarmQuestions({
                 key={crop.id}
                 type="button"
                 onClick={() => onCropSelect(crop.id)}
-                className={`relative flex flex-col items-center text-center p-3 sm:p-3.5 rounded-2xl border-2 transition-all duration-150 group cursor-pointer ${
-                  isSelected
-                    ? 'border-emerald-600 bg-emerald-50/90 ring-4 ring-emerald-100 shadow-md transform -translate-y-0.5'
-                    : 'border-slate-200 bg-slate-50/50 hover:border-emerald-300 hover:bg-white hover:shadow-xs'
-                }`}
+                className={`relative flex flex-col items-center text-center p-3 sm:p-3.5 rounded-2xl border-2 transition-all duration-150 group cursor-pointer ${isSelected
+                  ? 'border-emerald-600 bg-emerald-50/90 ring-4 ring-emerald-100 shadow-md transform -translate-y-0.5'
+                  : 'border-slate-200 bg-slate-50/50 hover:border-emerald-300 hover:bg-white hover:shadow-xs'
+                  }`}
               >
                 {isSelected && (
                   <span className="absolute top-2.5 right-2.5 flex items-center justify-center w-5 h-5 rounded-full bg-emerald-700 text-white shadow-xs z-10">
@@ -313,11 +310,10 @@ export default function GuidedFarmQuestions({
           <button
             type="button"
             onClick={() => onCropInMindChange('Maize')}
-            className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition ${
-              cropInMind !== null
-                ? 'border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-200 shadow-xs'
-                : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300'
-            }`}
+            className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition ${cropInMind !== null
+              ? 'border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-200 shadow-xs'
+              : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300'
+              }`}
           >
             <span className="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2">
               <Leaf className="w-4 h-4 text-emerald-700" />
@@ -331,11 +327,10 @@ export default function GuidedFarmQuestions({
           <button
             type="button"
             onClick={() => onCropInMindChange(null)}
-            className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition ${
-              cropInMind === null
-                ? 'border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-200 shadow-xs'
-                : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300'
-            }`}
+            className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition ${cropInMind === null
+              ? 'border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-200 shadow-xs'
+              : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300'
+              }`}
           >
             <span className="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-700" />
@@ -361,11 +356,10 @@ export default function GuidedFarmQuestions({
                     key={`mind-${c.id}`}
                     type="button"
                     onClick={() => onCropInMindChange(c.id)}
-                    className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 ${
-                      isSelected
-                        ? 'bg-emerald-700 text-white shadow-xs'
-                        : 'bg-white border border-slate-300 text-slate-700 hover:border-emerald-400'
-                    }`}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 ${isSelected
+                      ? 'bg-emerald-700 text-white shadow-xs'
+                      : 'bg-white border border-slate-300 text-slate-700 hover:border-emerald-400'
+                      }`}
                   >
                     <span>{c.name}</span>
                     {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-200" />}
@@ -405,22 +399,20 @@ export default function GuidedFarmQuestions({
               <button
                 type="button"
                 onClick={() => onFarmUsageChange({ armyworm_attacks: true })}
-                className={`py-2 px-3 rounded-xl font-bold text-center border transition ${
-                  profile.armyworm_attacks
-                    ? 'bg-rose-700 text-white border-rose-700 shadow-xs'
-                    : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-                }`}
+                className={`py-2 px-3 rounded-xl font-bold text-center border transition ${profile.armyworm_attacks
+                  ? 'bg-rose-700 text-white border-rose-700 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
+                  }`}
               >
                 Yes, worms attacked
               </button>
               <button
                 type="button"
                 onClick={() => onFarmUsageChange({ armyworm_attacks: false })}
-                className={`py-2 px-3 rounded-xl font-bold text-center border transition ${
-                  !profile.armyworm_attacks
-                    ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs'
-                    : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-                }`}
+                className={`py-2 px-3 rounded-xl font-bold text-center border transition ${!profile.armyworm_attacks
+                  ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
+                  }`}
               >
                 No worm issues
               </button>
@@ -472,11 +464,10 @@ export default function GuidedFarmQuestions({
                 key={soil.id}
                 type="button"
                 onClick={() => onSoilSelect(soil.id)}
-                className={`relative flex items-center sm:flex-col text-left sm:text-center p-4 sm:p-5 rounded-2xl border-2 transition-all duration-150 group cursor-pointer gap-4 sm:gap-3 ${
-                  isSelected
-                    ? 'border-emerald-600 bg-emerald-50/80 ring-4 ring-emerald-100 shadow-md transform -translate-y-0.5'
-                    : 'border-slate-200 bg-slate-50/60 hover:border-emerald-300 hover:bg-white hover:shadow-xs'
-                }`}
+                className={`relative flex items-center sm:flex-col text-left sm:text-center p-4 sm:p-5 rounded-2xl border-2 transition-all duration-150 group cursor-pointer gap-4 sm:gap-3 ${isSelected
+                  ? 'border-emerald-600 bg-emerald-50/80 ring-4 ring-emerald-100 shadow-md transform -translate-y-0.5'
+                  : 'border-slate-200 bg-slate-50/60 hover:border-emerald-300 hover:bg-white hover:shadow-xs'
+                  }`}
               >
                 {isSelected && (
                   <span className="absolute top-2.5 right-2.5 flex items-center justify-center w-6 h-6 rounded-full bg-emerald-700 text-white shadow-xs">
@@ -525,11 +516,10 @@ export default function GuidedFarmQuestions({
                     key={size.label}
                     type="button"
                     onClick={() => onSizeChange(size.ha)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${
-                      isActive
-                        ? 'bg-emerald-700 text-white shadow-xs'
-                        : 'text-slate-700 hover:text-slate-900 hover:bg-white/60'
-                    }`}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${isActive
+                      ? 'bg-emerald-700 text-white shadow-xs'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-white/60'
+                      }`}
                   >
                     {size.label} ({size.acres} ac)
                   </button>
